@@ -1,11 +1,15 @@
 {
   "name": "incoding.profiler",
-  "version": "1.0.0",
+  "version": "1.0",
   "description": "profiler devtool for chrome for debugging incoding.framework.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx webpack"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
 }

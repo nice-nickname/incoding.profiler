@@ -1,30 +1,30 @@
 /**
  * Script to inject interceptions of executing messages from incoding.framework
  */
-
-let EVENT_ID = 0
+let MSG_ID = 0
 
 function interceptExecute(current, state) {
-    const eventId = EVENT_ID++
+    const eventId = MSG_ID++
 
     window.postMessage({
-        name: 'inc-execute-start',
-        eventId: eventId,
+        messageId: MSG_ID,
+        name: 'inc-execute',
         timestamp: performance.now(),
-        payload: state
-    })
+        state: 'execute_start',
+        payload: {a: 123}
+    }, '*')
 
     current.target = current.getTarget();
     current.internalExecute(state);
 
     window.postMessage({
-        name: 'inc-execute-finish',
-        eventId: eventId,
+        messageId: MSG_ID++,
+        name: 'inc-execute',
         timestamp: performance.now(),
-        payload: state
-    })
+        state: 'execute_finish',
+        payload: {a: 123}
+    }, '*')
 }
-
 
 
 ExecutableBase.prototype.execute = function(state) {
