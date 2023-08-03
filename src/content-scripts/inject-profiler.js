@@ -1,28 +1,40 @@
 /**
- * Script to inject interceptions of executing messages from incoding.framework
+ * injected-script
+ *
+ * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
+
 let MSG_ID = 0
 
+function getPayloadFromCurrent(current) {
+    return {
+        jsonData: current.jsonData,
+        // self: current.self,
+        // target: current.target,
+        onBind: current.onBind
+    }
+}
+
 function interceptExecute(current, state) {
-    const eventId = MSG_ID++
+    const messageId = MSG_ID++
 
     window.postMessage({
-        messageId: MSG_ID,
+        messageId: messageId,
         name: 'inc-execute',
         timestamp: performance.now(),
-        state: 'execute_start',
-        payload: {a: 123}
+        state: 'execute-start',
+        payload: getPayloadFromCurrent(current)
     }, '*')
 
     current.target = current.getTarget();
     current.internalExecute(state);
 
     window.postMessage({
-        messageId: MSG_ID++,
+        messageId: messageId,
         name: 'inc-execute',
         timestamp: performance.now(),
-        state: 'execute_finish',
-        payload: {a: 123}
+        state: 'execute-finish',
+        payload: getPayloadFromCurrent(current)
     }, '*')
 }
 

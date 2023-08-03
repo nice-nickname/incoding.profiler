@@ -6,10 +6,12 @@ const root = document.getElementById('root')
 
 const startProfiler = async () => {
     const backgroundConnection = chrome.runtime.connect({
-        name: 'devtools-page'
+        name: String(chrome.devtools.inspectedWindow.tabId)
     })
 
     backgroundConnection.onMessage.addListener(function (message) {
+        console.log('received', message)
+
         switch (message.name) {
             default:
                 break;
