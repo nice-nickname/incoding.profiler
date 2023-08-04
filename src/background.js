@@ -4,7 +4,7 @@
 
 'use strict'
 
-const ports = {}
+const connectionPorts = {}
 
 async function dynamiclyInjectContentScript() {
     const scriptsToInject = [
@@ -29,30 +29,79 @@ async function dynamiclyInjectContentScript() {
 dynamiclyInjectContentScript()
 
 chrome.runtime.onConnect.addListener(function onConnect(port) {
-    console.log(port)
-    const tabId = +port.name
+    const name = null
+    const tab = null
 
-    if (Number.isInteger(tabId)) {
-        ports[tabId] = port
+    if (Number.isInteger(+port.name)) {
+        name = 'devtools'
+        tab = +port.name
+    }
+    else {
+        name = 'contentScript'
+        tab = port.sender.tab.id
     }
 
+    connectionPorts[tab][name] = port
+
+    if (connectionPorts[tab].devtools != null && connectionPorts[tab].contentScript != null) {
+        establishBidirectionalConnection(connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
+    }
     // port.onDisconnected.addListener(port => {
     //     delete ports[tabId]
     // })
 })
 
+function establishBidirectionalConnection(one, two) {
+
+    const listen = (anotherPort) => function (message) {
+        try {
+            anotherPort.postMessage(message)
+        }
+        catch (error) {
+            console.error(error)
+            shutdown()
+        }
+    }
+
+    const listenerOne = listen(two)
+    const listenerTwo = listen(one)
+
+    one.onMessage.addListener(listenerOne)
+    two.onMessage.addListener(listenerTwo)
+
+
+    one.onDisconnect.addListener(shutdown);
+    two.onDisconnect.addListener(shutdown);
+
+
+    function shutdown() {
+        one.onMessage.removeListener(listenerOne);
+        two.onMessage.removeListener(listenerTwo);
+        one.disconnect();
+        two.disconnect();
+
+        ports[tabId] = null;
+    }
+}
+
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (sender.tab) {
-        let tabId = sender.tab.id;
-        if (tabId in ports) {
-            ports[tabId].postMessage(message);
+    const tab = sender.tab
+
+    if (tab) {
+        let tabId = tab.id;
+
+        if (tabId in connectionPorts) {
+            connectionPorts[tabId]
         }
-        else {
-            console.log("Tab not found in connection list.");
+
+        const { devtools, contentScript } = connectionPorts[tabId]
+
+        switch (message.name) {
+
+            default:
+                break;
         }
     }
-    else {
-        console.log("sender.tab not defined.");
-    }
+
     return true;
 });

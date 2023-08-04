@@ -5,19 +5,16 @@
 const root = document.getElementById('root')
 
 const startProfiler = async () => {
-    const backgroundConnection = chrome.runtime.connect({
-        name: String(chrome.devtools.inspectedWindow.tabId)
+    const tabId = String(chrome.devtools.inspectedWindow.tabId)
+    const connection = chrome.runtime.connect({
+        name: tabId
     })
 
-    backgroundConnection.onMessage.addListener(function (message) {
-        console.log('received', message)
+    connection.onMessage.addListener(function (message, sender) {
 
-        switch (message.name) {
-            default:
-                break;
-        }
     })
 }
+
 
 chrome.devtools.inspectedWindow.eval(
     'ExecutableBase.name',
