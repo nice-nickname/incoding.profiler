@@ -1,4 +1,6 @@
 /**
+ * background
+ *
  * Background serivice-worker for message exchanging
  */
 
@@ -29,8 +31,10 @@ async function dynamiclyInjectContentScript() {
 dynamiclyInjectContentScript()
 
 chrome.runtime.onConnect.addListener(function onConnect(port) {
-    const name = null
-    const tab = null
+    console.log('connected', port.name);
+
+    let name = null
+    let tab = null
 
     if (Number.isInteger(+port.name)) {
         name = 'devtools'
@@ -41,14 +45,18 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
         tab = port.sender.tab.id
     }
 
+    if (connectionPorts[tab] == undefined) {
+        connectionPorts[tab] = {
+            debtools: null,
+            contentScript: null
+        }
+    }
+
     connectionPorts[tab][name] = port
 
     if (connectionPorts[tab].devtools != null && connectionPorts[tab].contentScript != null) {
         establishBidirectionalConnection(connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
     }
-    // port.onDisconnected.addListener(port => {
-    //     delete ports[tabId]
-    // })
 })
 
 function establishBidirectionalConnection(one, two) {
@@ -80,28 +88,6 @@ function establishBidirectionalConnection(one, two) {
         one.disconnect();
         two.disconnect();
 
-        ports[tabId] = null;
+        connectionPorts[tabId] = null;
     }
 }
-
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    const tab = sender.tab
-
-    if (tab) {
-        let tabId = tab.id;
-
-        if (tabId in connectionPorts) {
-            connectionPorts[tabId]
-        }
-
-        const { devtools, contentScript } = connectionPorts[tabId]
-
-        switch (message.name) {
-
-            default:
-                break;
-        }
-    }
-
-    return true;
-});

@@ -1,4 +1,6 @@
 /**
+ * devtools
+ *
  * Establish background connection and handle events
  */
 
@@ -11,7 +13,7 @@ const startProfiler = async () => {
     })
 
     connection.onMessage.addListener(function (message, sender) {
-
+        console.log('message received');
     })
 }
 
@@ -20,7 +22,7 @@ chrome.devtools.inspectedWindow.eval(
     'ExecutableBase.name',
     (result, error) => {
         if (result !== 'ExecutableBase' || error)
-            return root.innerHTML = 'This page does not support incoding.framework.js 🥲'
+            return root.innerHTML = 'This page does not support incoding.framework.js 😢'
 
         startProfiler()
     })
