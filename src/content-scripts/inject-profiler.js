@@ -4,6 +4,8 @@
  * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
 
+/* eslint-disable */
+
 let MESSAGE_ID = 0
 
 function interceptExecute(current, state) {
@@ -11,7 +13,7 @@ function interceptExecute(current, state) {
     current.internalExecute(state);
 }
 
-if (ExecutableBase !== undefined) {
+if (ExecutableBase != undefined) {
     ExecutableBase.prototype.execute = function(state) {
         var current = this;
         this.target = this.getTarget();
