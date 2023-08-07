@@ -6,12 +6,10 @@
 
 let MESSAGE_ID = 0
 
-
 function interceptExecute(current, state) {
     current.target = current.getTarget();
     current.internalExecute(state);
 }
-
 
 if (ExecutableBase !== undefined) {
     ExecutableBase.prototype.execute = function(state) {

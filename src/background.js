@@ -28,10 +28,26 @@ async function dynamiclyInjectContentScript() {
     }
 }
 
+async function installContentScript(tab) {
+    const contentScript = {
+        files: ['content_script.js'],
+        target: {
+            tabId: tab
+        },
+        world: "ISOLATED"
+    }
+
+    try {
+        await chrome.scripting.executeScript(contentScript)
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
 dynamiclyInjectContentScript()
 
 chrome.runtime.onConnect.addListener(function onConnect(port) {
-    console.log('connected', port.name);
 
     let name = null
     let tab = null
@@ -39,8 +55,13 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
     if (Number.isInteger(+port.name)) {
         name = 'devtools'
         tab = +port.name
+
+        installContentScript(tab)
+        console.log('connected devtools');
     }
     else {
+        console.log('connected content script');
+
         name = 'contentScript'
         tab = port.sender.tab.id
     }
@@ -55,11 +76,13 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
     connectionPorts[tab][name] = port
 
     if (connectionPorts[tab].devtools != null && connectionPorts[tab].contentScript != null) {
-        establishBidirectionalConnection(connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
+        establishBidirectionalConnection(tab, connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
     }
 })
 
-function establishBidirectionalConnection(one, two) {
+
+
+function establishBidirectionalConnection(tabId, one, two) {
 
     const listen = (anotherPort) => function (message) {
         try {
@@ -83,6 +106,7 @@ function establishBidirectionalConnection(one, two) {
 
 
     function shutdown() {
+        console.log('disconnected', new Date().toTimeString())
         one.onMessage.removeListener(listenerOne);
         two.onMessage.removeListener(listenerTwo);
         one.disconnect();

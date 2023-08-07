@@ -13,7 +13,18 @@ const startProfiler = async () => {
     })
 
     connection.onMessage.addListener(function (message, sender) {
-        console.log('message received');
+        console.log('devtools message received');
+
+        switch (message.name) {
+            case 'execute-start':
+                break;
+
+            case 'execute-finish':
+                break;
+
+            default:
+                break;
+        }
     })
 }
 

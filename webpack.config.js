@@ -13,7 +13,17 @@ module.exports = {
         path: path.join(__dirname, 'public')
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.js', '.ts'],
     },
-    mode: 'production'
+    module: {
+        rules: [
+            {
+                test: /\.ts?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    mode: 'production',
+
 }

@@ -4,24 +4,32 @@
  * Establishing window listener to direct messages from injected script to background service-worker
  */
 
-function establishRuntimeConnection() {
-    const connection = chrome.runtime.connect({
-        name: 'content-script'
-    })
 
-    connection.onMessage.addListener(function (message, sender) {
+// handler for events from devtools
+function onDevoolsMessage(message) {
 
-    })
-
-    return connection
 }
 
-const connection = establishRuntimeConnection()
+// remove listener to be able restore connection if debtools was closed
+function onDevtoolsDisconnect() {
+    window.removeEventListener('message', onIncodingWindowMessage)
+}
 
-window.addEventListener('message', function onMessage({source, data}) {
+// handler for message from inspected window
+function onIncodingWindowMessage({ source, data }) {
     if (source !== this.window || !data) {
         return;
     }
 
     connection.postMessage(data)
+}
+
+
+const connection = chrome.runtime.connect({
+    name: 'content-script'
 })
+
+connection.onMessage.addListener(onDevoolsMessage)
+connection.onDisconnect.addListener(onDevtoolsDisconnect)
+
+window.addEventListener('message', onIncodingWindowMessage)
