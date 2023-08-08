@@ -4,17 +4,65 @@
  * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
 
+import { uuidv4 } from "../utils"
+
 /* eslint-disable */
 
 let MESSAGE_ID = 0
 
-function interceptExecute(current, state) {
-    current.target = current.getTarget();
-    current.internalExecute(state);
+class IncodingMessage {
+
+    constructor(name, current, timestamp) {
+        this.id = MESSAGE_ID
+        this.name = name
+        this.payload = {
+            timestamp: timestamp,
+            data: current.jsonData,
+            event: current.event.type,
+            action: current.name,
+            self: this.htmlElementToSelector(current.self),
+            target: this.htmlElementToSelector(current.target)
+        }
+    }
+
+    htmlElementToSelector(jquery) {
+        const objectIdAttr = 'data-profiler-id'
+
+        if (!jquery || jquery.length === 0) {
+            return ''
+        }
+
+        const element = jquery[0]
+
+        if (!element || document.isSameNode(element)) {
+            return ''
+        }
+
+        if (!element.hasAttribute(objectIdAttr)) {
+            element.setAttribute(objectIdAttr, uuidv4())
+        }
+
+        const objectId = element.getAttribute(objectIdAttr)
+
+        return `[${objectIdAttr}='${objectId}']`
+    }
 }
 
-if (ExecutableBase != undefined) {
-    ExecutableBase.prototype.execute = function(state) {
+function interceptExecute(current, state) {
+    window.postMessage(new IncodingMessage('execute-start', current))
+
+    current.target = current.getTarget();
+
+    let tick = performance.now()
+    current.internalExecute(state);
+    let tock = performance.now()
+
+    window.postMessage(new IncodingMessage('execute-finish', current, tock - tick))
+    MESSAGE_ID++
+}
+
+if (window.ExecutableBase != undefined) {
+    window.ExecutableBase.prototype.execute = function (state) {
         var current = this;
         this.target = this.getTarget();
 

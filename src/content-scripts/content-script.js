@@ -5,17 +5,14 @@
  */
 
 
-// handler for events from devtools
 function onDevoolsMessage(message) {
 
 }
 
-// remove listener to be able restore connection if debtools was closed
 function onDevtoolsDisconnect() {
     window.removeEventListener('message', onIncodingWindowMessage)
 }
 
-// handler for message from inspected window
 function onIncodingWindowMessage({ source, data }) {
     if (source !== this.window || !data) {
         return;
