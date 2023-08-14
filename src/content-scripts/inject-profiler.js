@@ -4,60 +4,36 @@
  * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
 
-import { uuidv4 } from "../utils"
+import { jqueryToSelector, uuidv4 } from "../utils"
 
 /* eslint-disable */
 
 let MESSAGE_ID = 0
 
-class IncodingMessage {
-
-    constructor(name, current, timestamp) {
-        this.id = MESSAGE_ID
-        this.name = name
-        this.payload = {
-            timestamp: timestamp,
+function message(current, name) {
+    return {
+        id: MESSAGE_ID,
+        name: name,
+        payload: {
+            timestamp: performance.now(),
             data: current.jsonData,
             event: current.event.type,
             action: current.name,
-            self: this.htmlElementToSelector(current.self),
-            target: this.htmlElementToSelector(current.target)
+            self: jqueryToSelector(current.self),
+            target: jqueryToSelector(current.target)
         }
-    }
-
-    htmlElementToSelector(jquery) {
-        const objectIdAttr = 'data-profiler-id'
-
-        if (!jquery || jquery.length === 0) {
-            return ''
-        }
-
-        const element = jquery[0]
-
-        if (!element || document.isSameNode(element)) {
-            return ''
-        }
-
-        if (!element.hasAttribute(objectIdAttr)) {
-            element.setAttribute(objectIdAttr, uuidv4())
-        }
-
-        const objectId = element.getAttribute(objectIdAttr)
-
-        return `[${objectIdAttr}='${objectId}']`
     }
 }
 
+
 function interceptExecute(current, state) {
-    window.postMessage(new IncodingMessage('execute-start', current))
+    window.postMessage(message(current, 'execute-start'))
 
     current.target = current.getTarget();
 
-    let tick = performance.now()
     current.internalExecute(state);
-    let tock = performance.now()
 
-    window.postMessage(new IncodingMessage('execute-finish', current, tock - tick))
+    window.postMessage(message(current, 'execute-finish'))
     MESSAGE_ID++
 }
 

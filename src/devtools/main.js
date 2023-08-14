@@ -4,10 +4,12 @@
  * Establish background connection and handle events
  */
 
-import { IncodingEvent } from "./event-viewer/event-list"
+import ProfilerEvent from "./event-viewer/event"
 
 const root = document.getElementById('root')
 const eventList = document.querySelector('.event-list')
+
+const _events = {}
 
 const startProfiler = async () => {
     const tabId = String(chrome.devtools.inspectedWindow.tabId)
@@ -17,14 +19,20 @@ const startProfiler = async () => {
 
     connection.onMessage.addListener(function (message, sender) {
 
-
-
         switch (message.name) {
             case 'execute-start':
-                eventList.appendChild(new IncodingEvent(message).htmlContent)
+                {
+                    let event = new ProfilerEvent(message)
+                    eventList.appendChild(event.html)
+                    _events[message.id] = event
+                }
                 break;
 
             case 'execute-finish':
+                {
+                    let event = _events[message.id]
+                    event.update(message)
+                }
                 break;
 
             default:

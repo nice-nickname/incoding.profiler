@@ -109,19 +109,32 @@ html {
 
     background-color: rgb(238, 238, 238);
 }
+
+.label.action {
+    flex-basis: 10%;
+}
+
 /* #endregion */
 
 /* #region action colors */
-.action-marker[data-action="Eval"] {
-    background-color: rgb(255, 0, 0);
+.action-marker[data-action^="Direct"] {
+    background-color: rgb(238, 238, 238);
 }
 
-.action-marker[data-action="Ajax"] {
-    background-color: rgb(0, 0, 255);
+.action-marker[data-action^="Eval"] {
+    background-color: rgb(243, 147, 147);
 }
 
-.action-marker[data-action="Direct"] {
-    background-color: rgb(174, 207, 236);
+.action-marker[data-action^="Ajax"] {
+    background-color: rgb(144, 188, 253);
+}
+
+.action-marker[data-action^="Jquery"] {
+    background-color: rgb(183, 245, 150);
+}
+
+.action-marker[data-action^="Insert"] {
+    background-color: rgb(247, 255, 139);
 }
 /* #endregion*/
 
