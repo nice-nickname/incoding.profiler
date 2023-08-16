@@ -21,11 +21,6 @@ module.exports = {
                 test: /\.ts?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
-            },
-            {
-                test: /\.hbs/,
-                loader: 'handlebars-loader',
-                exclude: /node_modules/
             }
         ],
     },
