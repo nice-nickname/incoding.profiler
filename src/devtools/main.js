@@ -4,12 +4,22 @@
  * Establish background connection and handle events
  */
 
-import ProfilerEvent from "./event-viewer/event"
-
 const root = document.getElementById('root')
-const eventList = document.querySelector('.event-list')
 
-const _events = {}
+
+function onProfilerMessage(message, sender) {
+    switch (message.name) {
+        case 'execute-start':
+            break;
+
+        case 'execute-finish':
+            break;
+
+        default:
+            break;
+    }
+}
+
 
 const startProfiler = async () => {
     const tabId = String(chrome.devtools.inspectedWindow.tabId)
@@ -17,28 +27,7 @@ const startProfiler = async () => {
         name: tabId
     })
 
-    connection.onMessage.addListener(function (message, sender) {
-
-        switch (message.name) {
-            case 'execute-start':
-                {
-                    let event = new ProfilerEvent(message)
-                    eventList.appendChild(event.html)
-                    _events[message.id] = event
-                }
-                break;
-
-            case 'execute-finish':
-                {
-                    let event = _events[message.id]
-                    event.update(message)
-                }
-                break;
-
-            default:
-                break;
-        }
-    })
+    connection.onMessage.addListener(onProfilerMessage)
 }
 
 
