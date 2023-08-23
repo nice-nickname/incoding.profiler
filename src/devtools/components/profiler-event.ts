@@ -1,35 +1,24 @@
-import { LitElement, css, html } from "lit";
-import { customElement, property, state } from "lit/decorators"
+import './action-marker'
 
-interface ProfilerEventData {
-    jsonData: unknown
-
-    action: string
-    eventName: string
-
-    self: string[]
-    target?: string[]
-}
-
+import { LitElement, html } from "lit";
+import { customElement, property, state } from "lit/decorators.js"
+import { IncodingEventMessage } from "../messages/messages-list";
 
 
 @customElement('profiler-event')
 export class ProfilerEventElement extends LitElement {
 
-    @property({ type: Object }) data: ProfilerEventData
+    @property({ type: Object }) data: IncodingEventMessage
 
-    @property({ type: Number }) profiledId: number
+    @state() private executionTimeMessage: string = 'pending'
 
-    @state() executionTimeMessage: string = 'pending'
-
-    setExecutionTime(timeMs: number) {
+    set executionTime(timeMs: number) {
         this.executionTimeMessage = `${timeMs.toFixed(2)} ms`
     }
 
-    protected render() {
+    render() {
         return html`
             <action-marker action="${this.data.action}"></action-marker>
-            <div>${this.data.action}</div>
             <div>${this.data.eventName}</div>
             <div>${this.executionTimeMessage}</div>
             <div>

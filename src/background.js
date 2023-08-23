@@ -8,6 +8,7 @@
 
 const connectionPorts = {}
 
+
 async function dynamiclyInjectContentScript() {
     const scriptsToInject = [
         {
@@ -27,6 +28,7 @@ async function dynamiclyInjectContentScript() {
         console.error(error)
     }
 }
+
 
 async function installContentScript(tab) {
     const contentScript = {
@@ -76,7 +78,6 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
         establishBidirectionalConnection(tab, connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
     }
 })
-
 
 
 function establishBidirectionalConnection(tabId, one, two) {

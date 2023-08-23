@@ -14,6 +14,7 @@ export function uuidv4() {
 /**
  * Converting jQuery array of element to array of selectors
  * @param {JQuery} elements
+ * @returns {string[]}
  */
 export function jqueryToSelector(elements) {
     const result = []
@@ -42,19 +43,6 @@ export function jqueryToSelector(elements) {
         }
         return el.getAttribute(PROFILER_ELEMENT_Id)
     }
-}
-
-
-/**
- * Converts html string to dom-element
- * @param {string} html
- * @returns {HTMLElement}
- */
-export function stringToHtml(html) {
-    let template = document.createElement('template')
-    template.innerHTML = html
-
-    return template.content.children.item(0)
 }
 
 

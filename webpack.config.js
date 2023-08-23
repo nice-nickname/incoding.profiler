@@ -4,7 +4,7 @@ module.exports = {
     entry: {
         loader: './src/loader.js',
         background: './src/background.js',
-        devtools: './src/devtools/main.js',
+        devtools: './src/devtools/main.ts',
         inject_profiler: './src/content-scripts/inject-profiler.js',
         content_script: './src/content-scripts/content-script.js'
     },
@@ -25,5 +25,6 @@ module.exports = {
         ],
     },
     mode: 'production',
+    devtool: 'source-map'
 
 }
