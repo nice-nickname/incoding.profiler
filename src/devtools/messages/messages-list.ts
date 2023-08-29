@@ -1,18 +1,5 @@
-import JsonData from "../models/jsonData"
+import IncodingEvent from "../models/incodingEvent"
 
-export interface IncodingEventMessage {
-    uuid: string
-    jsonData: JsonData
+export type IncodingEventMessage = Omit<IncodingEvent, 'executionTimeMs'>
 
-    action: string
-    eventName: string
-
-    self: string[]
-    target?: string[]
-}
-
-export interface IncodingEventExecutedMessage {
-    uuid: string
-    executionTimeMs: number
-    jsonData: JsonData
-}
+export type IncodingEventExecutedMessage = Pick<IncodingEvent, 'uuid' | 'jsonData' | 'executionTimeMs'>

@@ -4,9 +4,13 @@
  * Establish background connection and handle events
  */
 
+import './pages/EventList/index'
+
 import { ProfilerMessage } from "./messages/messages";
+import { IncodingEventExecutedMessage, IncodingEventMessage } from './messages/messages-list';
 
 const root = document.getElementById('root')
+const eventListPage = document.createElement('event-list-page')
 
 chrome.devtools.inspectedWindow.eval(
     'ExecutableBase.name',
@@ -25,6 +29,8 @@ async function startProfiler() {
     })
 
     connection.onMessage.addListener(onProfilerMessage)
+
+    root.appendChild(eventListPage)
 }
 
 
@@ -33,9 +39,11 @@ function onProfilerMessage(message: ProfilerMessage) {
 
     switch (message.name) {
         case 'execute-start':
+            document.querySelector('event-list').addExecutionMessage(message.data as IncodingEventMessage)
             break;
 
         case 'execute-finish':
+            document.querySelector('event-list').addExecutedMessage(message.data as IncodingEventExecutedMessage)
             break;
 
         default:

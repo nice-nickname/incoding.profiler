@@ -1,3 +1,5 @@
+/* #region root styles */
+
 *,
 ::before,
 ::after {
@@ -48,47 +50,9 @@ html {
     height: 100vh;
 }
 
-/* #region panel-events layout */
+/* #endregion root styles */
 
-.panel-events {
-    height: 100%;
-
-    display: flex;
-}
-
-.panel-events .event-list {
-    width: 70%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    overflow-y: auto;
-}
-
-.panel-events .json-viewer {
-    width: 30%;
-    border-left: 1px solid var(--border-color);
-}
-
-/* #endregion */
-
-/* #region event list panel */
-.event {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-
-    padding: 0.25rem 1rem;
-
-    border-bottom: 1px solid var(--border-color);
-}
-
-.button-group {
-    margin-left: auto;
-    display: flex;
-    gap: 0.5rem;
-}
+/* #region button styles */
 
 .button {
     padding-left: 0.5rem;
@@ -97,47 +61,4 @@ html {
     border-radius: 0.25rem;
 }
 
-.action-marker {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 1rem;
-
-    display: inline-block;
-    vertical-align: middle;
-
-    align-self: center;
-
-    background-color: rgb(238, 238, 238);
-}
-
-.label.action {
-    flex-basis: 10%;
-}
-
 /* #endregion */
-
-/* #region action colors */
-.action-marker[data-action^="Direct"] {
-    background-color: rgb(238, 238, 238);
-}
-
-.action-marker[data-action^="Eval"] {
-    background-color: rgb(243, 147, 147);
-}
-
-.action-marker[data-action^="Ajax"] {
-    background-color: rgb(144, 188, 253);
-}
-
-.action-marker[data-action^="Jquery"] {
-    background-color: rgb(183, 245, 150);
-}
-
-.action-marker[data-action^="Insert"] {
-    background-color: rgb(247, 255, 139);
-}
-/* #endregion*/
-
-/* #region performance colors */
-
-/* #endregion performance colors */

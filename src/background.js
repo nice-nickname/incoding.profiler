@@ -50,7 +50,6 @@ async function installContentScript(tab) {
 dynamiclyInjectContentScript()
 
 chrome.runtime.onConnect.addListener(function onConnect(port) {
-
     let name = null
     let tab = null
 
@@ -81,7 +80,6 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
 
 
 function establishBidirectionalConnection(tabId, one, two) {
-
     const listen = (anotherPort) => function (message) {
         try {
             anotherPort.postMessage(message)
