@@ -39,11 +39,11 @@ function onProfilerMessage(message: ProfilerMessage) {
 
     switch (message.name) {
         case 'execute-start':
-            document.querySelector('event-list').addExecutionMessage(message.data as IncodingEventMessage)
+            eventListPage.eventListRef.addExecutionMessage(message.data as IncodingEventMessage)
             break;
 
         case 'execute-finish':
-            document.querySelector('event-list').addExecutedMessage(message.data as IncodingEventExecutedMessage)
+            eventListPage.eventListRef.addExecutedMessage(message.data as IncodingEventExecutedMessage)
             break;
 
         default:

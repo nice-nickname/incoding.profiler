@@ -18,6 +18,11 @@ const styles = css`
 
         border: 1px solid rgb(212, 212, 212);
     }
+
+    .action {
+        margin-left: 0.25rem;
+        vertical-align: middle;
+    }
 `
 
 @customElement('action-marker')
@@ -29,11 +34,8 @@ export class ActionMarkerElement extends LitElement {
 
     render() {
         return html`
-            <div>
-                <span class="marker" style="
-                    background-color: ${getColorByAction(this.action)};"></span>
-                ${this.action}
-            </div>
+            <span class="marker" style="background-color: ${getColorByAction(this.action)};"></span>
+            <span class="action">${this.action}</span>
         `;
     }
 }
