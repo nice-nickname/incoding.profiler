@@ -1,7 +1,15 @@
-import { LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
+import { LitElement, html } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import JsonData from "../../../models/jsonData";
 
 @customElement('event-viewer')
-export class EventViewer extends LitElement {
+export class EventViewerElement extends LitElement {
 
+    @property({ type: Object }) jsonData: JsonData
+
+    render() {
+        return html`
+            <json-viewer .data=${this.jsonData}></json-viewer>
+        `
+    }
 }

@@ -5,6 +5,7 @@ import { EventListElement } from './panels/event-list';
 
 import { LitElement, css, html } from "lit";
 import { customElement, query } from "lit/decorators.js";
+import { EventViewerElement } from './panels/event-viewer';
 
 const styles = css`
     .panel-events {
@@ -31,6 +32,9 @@ export class EventListPage extends LitElement {
 
     @query('event-list')
     public eventListRef: EventListElement
+
+    @query('event-viewer')
+    public eventViewerRef: EventViewerElement
 
     render() {
         return html`
