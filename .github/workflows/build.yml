@@ -25,5 +25,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated build archiver
-          commit_user_name: Vin Diesel [bot]
+          commit_user_name: vin_diesel[bot]
 
