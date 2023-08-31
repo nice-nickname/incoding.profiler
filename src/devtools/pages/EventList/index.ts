@@ -1,8 +1,11 @@
 import './panels/event-list'
-import './panels/json-viewer'
+import './panels/event-viewer'
+
+import { EventListElement } from './panels/event-list';
 
 import { LitElement, css, html } from "lit";
-import { customElement } from "lit/decorators";
+import { customElement, query } from "lit/decorators.js";
+import { EventViewerElement } from './panels/event-viewer';
 
 const styles = css`
     .panel-events {
@@ -14,14 +17,9 @@ const styles = css`
     .panel-events event-list {
         width: 70%;
         height: 100%;
-
-        display: flex;
-        flex-direction: column;
-
-        overflow-y: auto;
     }
 
-    .panel-events json-viewer {
+    .panel-events event-viewer {
         width: 30%;
         border-left: 1px solid var(--border-color);
     }
@@ -32,11 +30,17 @@ export class EventListPage extends LitElement {
 
     static styles = [styles]
 
+    @query('event-list')
+    public eventListRef: EventListElement
+
+    @query('event-viewer')
+    public eventViewerRef: EventViewerElement
+
     render() {
         return html`
             <div class="panel-events">
                 <event-list></event-list>
-                <json-viewer></json-viewer>
+                <event-viewer></event-viewer>
             </div>
         `
     }

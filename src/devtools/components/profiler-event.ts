@@ -1,4 +1,5 @@
 import './action-marker'
+import './time-marker'
 
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js"
@@ -16,6 +17,19 @@ const styles = css`
         border-bottom: 1px solid var(--border-color);
     }
 
+    .event:hover {
+        background-color: var(--bg-color-highlight);
+        cursor: pointer;
+    }
+
+    action-marker {
+        flex-basis: 100px;
+    }
+
+    time-marker {
+        flex-basis: 70px;
+    }
+
     .button-group {
         margin-left: auto;
         display: flex;
@@ -27,20 +41,16 @@ const styles = css`
 @customElement('profiler-event')
 export class ProfilerEventElement extends LitElement {
 
+    static styles = [styles]
+
     @property({ type: Object }) data: IncodingEvent
 
     render() {
-        let executionTimeMessage = 'pending'
-
-        if (this.data.executionTimeMs !== undefined) {
-            executionTimeMessage = this.data.executionTimeMs.toFixed(2)
-        }
-
         return html`
-            <div>
+            <div class="event">
                 <action-marker .action=${this.data.action}></action-marker>
+                <time-marker timeInMs="${this.data.executionTimeMs}"></time-marker>
                 <div>${this.data.eventName}</div>
-                <div>${executionTimeMessage}</div>
                 <div class="button-group">
                     <button>jsonData</button>
                     <button>self</button>

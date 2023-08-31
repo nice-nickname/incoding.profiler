@@ -1,0 +1,21 @@
+import { css } from "lit";
+
+export default css`
+    ::-webkit-scrollbar {
+        background-color: #393b41;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 1px;
+    }
+
+    ::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #a4abb5;
+        border: 1px solid transparent;
+        background-clip: content-box;
+        border-radius: 0.125rem;
+}
+`
