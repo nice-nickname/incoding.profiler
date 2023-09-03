@@ -6,11 +6,12 @@
 
 import './pages/EventList/index'
 
-import { ProfilerMessage } from "./messages/messages";
-import { IncodingEventExecutedMessage, IncodingEventMessage } from './messages/messages-list';
+import { ProfilerMessage } from "../messages/messages";
+import { IncodingEventExecutedMessage, IncodingEventMessage } from '../messages/messages-list';
+import { reduxStore } from './slices';
+import { push, update } from './slices/eventList';
 
 const root = document.getElementById('root')
-const eventListPage = document.createElement('event-list-page')
 
 chrome.devtools.inspectedWindow.eval(
     'ExecutableBase.name',
@@ -30,7 +31,7 @@ async function startProfiler() {
 
     connection.onMessage.addListener(onProfilerMessage)
 
-    root.appendChild(eventListPage)
+    root.appendChild(document.createElement('event-list-page'))
 }
 
 
@@ -39,11 +40,11 @@ function onProfilerMessage(message: ProfilerMessage) {
 
     switch (message.name) {
         case 'execute-start':
-            eventListPage.eventListRef.addExecutionMessage(message.data as IncodingEventMessage)
+            reduxStore.dispatch(push(<IncodingEventMessage>message.data))
             break;
 
         case 'execute-finish':
-            eventListPage.eventListRef.addExecutedMessage(message.data as IncodingEventExecutedMessage)
+            reduxStore.dispatch(update(<IncodingEventExecutedMessage>message.data))
             break;
 
         default:

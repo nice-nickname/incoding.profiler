@@ -4,7 +4,7 @@ import { LitElement, css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
 
-import { IncodingEventExecutedMessage, IncodingEventMessage } from "../../../messages/messages-list";
+import { IncodingEventExecutedMessage, IncodingEventMessage } from "../../../../messages/messages-list";
 import IncodingEvent from "../../../models/incodingEvent";
 import scrollStyles from "../../../utils/scrollStyles";
 

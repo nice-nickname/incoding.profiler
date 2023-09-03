@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@alenaksu/json-viewer": "^2.0.1",
+    "@reduxjs/toolkit": "^1.9.5",
     "lit": "^2.8.0"
   }
 }

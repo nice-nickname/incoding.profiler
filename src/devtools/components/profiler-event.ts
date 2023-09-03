@@ -5,6 +5,8 @@ import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js"
 
 import IncodingEvent from '../models/incodingEvent';
+import { reduxStore } from '../slices';
+import { select } from '../slices/eventList';
 
 const styles = css`
     .event {
@@ -58,5 +60,9 @@ export class ProfilerEventElement extends LitElement {
                 </div>
             </div>
         `
+    }
+
+    click() {
+        reduxStore.dispatch(select(this.data))
     }
 }

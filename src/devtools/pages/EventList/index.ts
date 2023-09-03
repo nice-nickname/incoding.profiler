@@ -1,11 +1,9 @@
+import { reduxStore } from '../../slices';
 import './panels/event-list'
 import './panels/event-viewer'
 
-import { EventListElement } from './panels/event-list';
-
 import { LitElement, css, html } from "lit";
-import { customElement, query } from "lit/decorators.js";
-import { EventViewerElement } from './panels/event-viewer';
+import { customElement, state } from "lit/decorators.js";
 
 const styles = css`
     .panel-events {
@@ -30,11 +28,9 @@ export class EventListPage extends LitElement {
 
     static styles = [styles]
 
-    @query('event-list')
-    public eventListRef: EventListElement
-
-    @query('event-viewer')
-    public eventViewerRef: EventViewerElement
+    constructor() {
+        super()
+    }
 
     render() {
         return html`
