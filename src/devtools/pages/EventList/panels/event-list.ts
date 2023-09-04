@@ -7,6 +7,7 @@ import { repeat } from "lit/directives/repeat.js"
 import { IncodingEventExecutedMessage, IncodingEventMessage } from "../../../../messages/messages-list";
 import IncodingEvent from "../../../models/incodingEvent";
 import scrollStyles from "../../../utils/scrollStyles";
+import { reduxStore } from "../../../slices";
 
 const styles = css`
     .container {
@@ -26,6 +27,12 @@ export class EventListElement extends LitElement {
 
     @state() private events: IncodingEvent[] = []
 
+    constructor() {
+        super()
+
+        reduxStore.subscribe(() => this.events = reduxStore.getState().eventList.events)
+    }
+
     render() {
         return html`
             <div class="container">
@@ -34,21 +41,5 @@ export class EventListElement extends LitElement {
                 `)}
             </div>
         `
-    }
-
-    addExecutionMessage(data: IncodingEventMessage) {
-        this.events = [...this.events, data]
-    }
-
-    addExecutedMessage(data: IncodingEventExecutedMessage) {
-        let oldEvent = this.events.find(s => s.uuid === data.uuid)
-        oldEvent.executionTimeMs = data.executionTimeMs
-        oldEvent.jsonData = data.jsonData
-
-        this.events = [...this.events]
-    }
-
-    refresh() {
-        this.events = []
     }
 }

@@ -2,7 +2,7 @@ import './action-marker'
 import './time-marker'
 
 import { LitElement, css, html } from "lit";
-import { customElement, property, state } from "lit/decorators.js"
+import { customElement, property, query, state } from "lit/decorators.js"
 
 import IncodingEvent from '../models/incodingEvent';
 import { reduxStore } from '../slices';
@@ -47,6 +47,8 @@ export class ProfilerEventElement extends LitElement {
 
     @property({ type: Object }) data: IncodingEvent
 
+    @query('.event') eventElement: HTMLElement;
+
     render() {
         return html`
             <div class="event">
@@ -62,7 +64,7 @@ export class ProfilerEventElement extends LitElement {
         `
     }
 
-    click() {
+    _click() {
         reduxStore.dispatch(select(this.data))
     }
 }
