@@ -11,7 +11,7 @@ import { IncodingEventExecutedMessage, IncodingEventMessage } from '../messages/
 import { reduxStore } from './slices';
 import { push, update } from './slices/eventList';
 
-const root = document.getElementById('root')
+const root = document.getElementById('root')!
 
 chrome.devtools.inspectedWindow.eval(
     'ExecutableBase.name',

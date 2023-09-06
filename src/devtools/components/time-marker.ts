@@ -5,7 +5,7 @@ import { customElement, property } from "lit/decorators.js";
 export class TimeMarkerElement extends LitElement {
 
     @property({ type: Number })
-    public timeInMs?: number
+    public timeInMs?: number | undefined
 
     render() {
         let displayTime = 'pending'

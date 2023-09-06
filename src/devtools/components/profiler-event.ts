@@ -53,7 +53,7 @@ export class ProfilerEventElement extends LitElement {
         return html`
             <div class="event">
                 <action-marker .action=${this.data.action}></action-marker>
-                <time-marker timeInMs="${this.data.executionTimeMs}"></time-marker>
+                <time-marker timeInMs="${this.data.executionTimeMs!}"></time-marker>
                 <div>${this.data.eventName}</div>
                 <div class="button-group">
                     <button>jsonData</button>
