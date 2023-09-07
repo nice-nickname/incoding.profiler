@@ -1,12 +1,12 @@
 import "../../../components/profiler-event"
 
 import { LitElement, css, html } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, state, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
 
-import { IncodingEventExecutedMessage, IncodingEventMessage } from "../../../messages/messages-list";
 import IncodingEvent from "../../../models/incodingEvent";
 import scrollStyles from "../../../utils/scrollStyles";
+import { reduxStore } from "../../../slices";
 
 const styles = css`
     .container {
@@ -26,9 +26,25 @@ export class EventListElement extends LitElement {
 
     @state() private events: IncodingEvent[] = []
 
+    @state() private scrollAttached: boolean = true
+
+    @query('.container') private container: HTMLDivElement
+
+    constructor() {
+        super()
+
+        reduxStore.subscribe(() => {
+            this.events = reduxStore.getState().eventList.events
+
+            if (this.scrollAttached) {
+                this.container.scrollTop = this.container.scrollHeight
+            }
+        })
+    }
+
     render() {
         return html`
-            <div class="container">
+            <div class="container" @scroll=${this._onScroll}>
                 ${repeat(this.events, event => event.uuid + event.executionTimeMs, (event) => html`
                     <profiler-event .data=${event}></profiler-event>
                 `)}
@@ -36,19 +52,9 @@ export class EventListElement extends LitElement {
         `
     }
 
-    addExecutionMessage(data: IncodingEventMessage) {
-        this.events = [...this.events, data]
-    }
+    _onScroll() {
+        let containerScroll = this.container.scrollHeight - this.container.clientHeight
 
-    addExecutedMessage(data: IncodingEventExecutedMessage) {
-        let oldEvent = this.events.find(s => s.uuid === data.uuid)
-        oldEvent.executionTimeMs = data.executionTimeMs
-        oldEvent.jsonData = data.jsonData
-
-        this.events = [...this.events]
-    }
-
-    refresh() {
-        this.events = []
+        this.scrollAttached = this.container.scrollTop === containerScroll;
     }
 }

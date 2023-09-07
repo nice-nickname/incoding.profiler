@@ -3,7 +3,7 @@ import Actions from "./actions"
 
 export default interface IncodingEvent {
     uuid: string
-    jsonData: JsonData
+    jsonData: JsonData | null
 
     action: Actions
     eventName: string

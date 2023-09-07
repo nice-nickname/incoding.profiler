@@ -4,7 +4,7 @@
  * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
 
-import sendMessage from "../devtools/messages/messages"
+import sendMessage from "../messages/messages"
 import { jqueryToSelector, uuidv4 } from "../utils"
 
 /* eslint-disable */

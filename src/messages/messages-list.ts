@@ -1,4 +1,4 @@
-import IncodingEvent from "../models/incodingEvent"
+import IncodingEvent from "../devtools/models/incodingEvent"
 
 export type IncodingEventMessage = Omit<IncodingEvent, 'executionTimeMs'>
 

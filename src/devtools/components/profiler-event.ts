@@ -2,9 +2,11 @@ import './action-marker'
 import './time-marker'
 
 import { LitElement, css, html } from "lit";
-import { customElement, property, state } from "lit/decorators.js"
+import { customElement, property, query } from "lit/decorators.js"
 
 import IncodingEvent from '../models/incodingEvent';
+import { reduxStore } from '../slices';
+import { select } from '../slices/eventList';
 
 const styles = css`
     .event {
@@ -45,11 +47,13 @@ export class ProfilerEventElement extends LitElement {
 
     @property({ type: Object }) data: IncodingEvent
 
+    @query('.event') eventElement: HTMLElement;
+
     render() {
         return html`
             <div class="event">
                 <action-marker .action=${this.data.action}></action-marker>
-                <time-marker timeInMs="${this.data.executionTimeMs}"></time-marker>
+                <time-marker timeInMs="${this.data.executionTimeMs!}"></time-marker>
                 <div>${this.data.eventName}</div>
                 <div class="button-group">
                     <button>jsonData</button>
@@ -58,5 +62,9 @@ export class ProfilerEventElement extends LitElement {
                 </div>
             </div>
         `
+    }
+
+    _click() {
+        reduxStore.dispatch(select(this.data))
     }
 }
