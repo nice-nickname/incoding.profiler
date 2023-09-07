@@ -2,7 +2,7 @@ import './action-marker'
 import './time-marker'
 
 import { LitElement, css, html } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js"
+import { customElement, property, query } from "lit/decorators.js"
 
 import IncodingEvent from '../models/incodingEvent';
 import { reduxStore } from '../slices';

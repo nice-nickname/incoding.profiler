@@ -1,7 +1,9 @@
 import "../../../components/profiler-event"
+
 import { LitElement, css, html } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, state, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
+
 import IncodingEvent from "../../../models/incodingEvent";
 import scrollStyles from "../../../utils/scrollStyles";
 import { reduxStore } from "../../../slices";
@@ -24,19 +26,35 @@ export class EventListElement extends LitElement {
 
     @state() private events: IncodingEvent[] = []
 
+    @state() private scrollAttached: boolean = true
+
+    @query('.container') private container: HTMLDivElement
+
     constructor() {
         super()
 
-        reduxStore.subscribe(() => this.events = reduxStore.getState().eventList.events)
+        reduxStore.subscribe(() => {
+            this.events = reduxStore.getState().eventList.events
+
+            if (this.scrollAttached) {
+                this.container.scrollTop = this.container.scrollHeight
+            }
+        })
     }
 
     render() {
         return html`
-            <div class="container">
+            <div class="container" @scroll=${this._onScroll}>
                 ${repeat(this.events, event => event.uuid + event.executionTimeMs, (event) => html`
                     <profiler-event .data=${event}></profiler-event>
                 `)}
             </div>
         `
+    }
+
+    _onScroll() {
+        let containerScroll = this.container.scrollHeight - this.container.clientHeight
+
+        this.scrollAttached = this.container.scrollTop === containerScroll;
     }
 }
