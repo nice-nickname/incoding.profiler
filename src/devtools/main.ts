@@ -36,8 +36,6 @@ async function startProfiler() {
 
 
 function onProfilerMessage(message: ProfilerMessage) {
-    console.log(message);
-
     switch (message.name) {
         case 'execute-start':
             reduxStore.dispatch(push(<IncodingEventMessage>message.data))
