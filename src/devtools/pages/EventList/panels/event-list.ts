@@ -44,7 +44,7 @@ export class EventListElement extends LitElement {
 
     render() {
         return html`
-            <div class="container" @scroll=${this._onScroll}>
+            <div class="container" @mousewheel=${this._onMouseWheel} >
                 ${repeat(this.events, event => event.uuid + event.executionTimeMs, (event) => html`
                     <profiler-event .data=${event}></profiler-event>
                 `)}
@@ -52,7 +52,7 @@ export class EventListElement extends LitElement {
         `
     }
 
-    _onScroll() {
+    _onMouseWheel() {
         let containerScroll = this.container.scrollHeight - this.container.clientHeight
 
         this.scrollAttached = this.container.scrollTop === containerScroll;
