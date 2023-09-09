@@ -8,8 +8,8 @@ import './pages/EventList/index'
 
 import { ProfilerMessage } from "../messages/messages";
 import { IncodingEventExecutedMessage, IncodingEventMessage } from '../messages/messages-list';
-import { reduxStore } from './slices';
 import { push, update } from './slices/eventList';
+import store from './store';
 
 const root = document.getElementById('root')!
 
@@ -38,11 +38,11 @@ async function startProfiler() {
 function onProfilerMessage(message: ProfilerMessage) {
     switch (message.name) {
         case 'execute-start':
-            reduxStore.dispatch(push(<IncodingEventMessage>message.data))
+            store.dispatch(push(<IncodingEventMessage>message.data))
             break;
 
         case 'execute-finish':
-            reduxStore.dispatch(update(<IncodingEventExecutedMessage>message.data))
+            store.dispatch(update(<IncodingEventExecutedMessage>message.data))
             break;
 
         default:

@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js"
-import { reduxStore } from "../../../slices";
 import { clear } from "../../../slices/eventList";
+import store from "../../../store";
 
 @customElement('event-list-header')
 export class EventListHeaderElement extends LitElement {
@@ -21,6 +21,6 @@ export class EventListHeaderElement extends LitElement {
     }
 
     _clear() {
-        reduxStore.dispatch(clear())
+        store.dispatch(clear())
     }
 }

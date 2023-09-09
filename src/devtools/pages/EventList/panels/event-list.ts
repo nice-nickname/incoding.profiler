@@ -6,7 +6,7 @@ import { repeat } from "lit/directives/repeat.js"
 
 import IncodingEvent from "../../../models/incodingEvent";
 import scrollStyles from "../../../utils/scrollStyles";
-import { reduxStore } from "../../../slices";
+import store from "../../../store";
 
 const styles = css`
     .container {
@@ -33,8 +33,8 @@ export class EventListElement extends LitElement {
     constructor() {
         super()
 
-        reduxStore.subscribe(() => {
-            this.events = reduxStore.getState().eventList.events
+        store.subscribe(() => {
+            this.events = store.getState().eventList.events
 
             if (this.scrollAttached) {
                 this.container.scrollTop = this.container.scrollHeight

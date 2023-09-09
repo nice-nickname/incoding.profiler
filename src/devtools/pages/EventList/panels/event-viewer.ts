@@ -3,7 +3,8 @@ import '@alenaksu/json-viewer'
 import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import JsonData from "../../../models/jsonData";
-import { reduxStore } from '../../../slices';
+import store from '../../../store';
+
 
 @customElement('event-viewer')
 export class EventViewerElement extends LitElement {
@@ -13,10 +14,10 @@ export class EventViewerElement extends LitElement {
     constructor() {
         super()
 
-        reduxStore.subscribe(() => {
-            const newJsonData = reduxStore.getState().eventList?.selected?.jsonData
+        store.subscribe(() => {
+            const newJsonData = store.getState().eventList?.selected?.jsonData
             if (newJsonData) {
-                
+
             }
         })
     }
