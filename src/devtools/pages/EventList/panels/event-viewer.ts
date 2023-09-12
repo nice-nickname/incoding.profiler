@@ -15,9 +15,9 @@ export class EventViewerElement extends LitElement {
         super()
 
         store.subscribe(() => {
-            const newJsonData = store.getState().eventList?.selected?.jsonData
-            if (newJsonData) {
-
+            const selectedEvent = store.getState().eventViewer.selected
+            if (selectedEvent && selectedEvent.jsonData) {
+                this.jsonData = selectedEvent.jsonData
             }
         })
     }

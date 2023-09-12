@@ -51,7 +51,7 @@ export class ProfilerEventElement extends LitElement {
 
     render() {
         return html`
-            <div class="event">
+            <div class="event" @click="${this._click}">
                 <action-marker .action=${this.data.action}></action-marker>
                 <time-marker timeInMs="${this.data.executionTimeMs!}"></time-marker>
                 <div>${this.data.eventName}</div>

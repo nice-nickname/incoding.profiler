@@ -4,12 +4,10 @@ import { IncodingEventExecutedMessage, IncodingEventMessage } from "../../messag
 
 interface EventListState {
     events: IncodingEvent[]
-    selected: IncodingEvent | null
 }
 
 const initialState: EventListState = {
-    events: [],
-    selected: null
+    events: []
 }
 
 export const eventListSlice = createSlice({
