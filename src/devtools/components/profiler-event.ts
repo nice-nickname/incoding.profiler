@@ -5,8 +5,8 @@ import { LitElement, css, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js"
 
 import IncodingEvent from '../models/incodingEvent';
-import { select } from '../slices/eventList';
 import store from '../store';
+import { select } from '../slices/eventViewer';
 
 const styles = css`
     .event {

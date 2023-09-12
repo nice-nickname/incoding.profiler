@@ -1,6 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js"
-import { clear } from "../../../slices/eventList";
+import { clearEvents } from "../../../slices/eventList";
 import store from "../../../store";
 
 @customElement('event-list-header')
@@ -21,6 +21,6 @@ export class EventListHeaderElement extends LitElement {
     }
 
     _clear() {
-        store.dispatch(clear())
+        store.dispatch(clearEvents())
     }
 }

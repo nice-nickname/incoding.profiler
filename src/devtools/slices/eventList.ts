@@ -16,10 +16,10 @@ export const eventListSlice = createSlice({
     name: 'event-list',
     initialState,
     reducers: {
-        push: (state, action: PayloadAction<IncodingEventMessage>) => {
+        addEvent: (state, action: PayloadAction<IncodingEventMessage>) => {
             state.events = [...state.events, action.payload]
         },
-        update: (state, action: PayloadAction<IncodingEventExecutedMessage>) => {
+        updateEvent: (state, action: PayloadAction<IncodingEventExecutedMessage>) => {
             const { uuid, jsonData, executionTimeMs } = action.payload
 
             const finishedEvent = state.events.find(item => item.uuid === uuid)!
@@ -28,19 +28,12 @@ export const eventListSlice = createSlice({
 
             state.events = [...state.events]
         },
-        clear: state => {
+        clearEvents: state => {
             state.events = []
-        },
-
-        select: (state, action: PayloadAction<IncodingEvent>) => {
-            state.selected = action.payload
-        },
-        unselect: state => {
-            state.selected = null
         }
     }
 })
 
-export const { push, update, clear, select, unselect } = eventListSlice.actions
+export const { addEvent, updateEvent, clearEvents } = eventListSlice.actions
 
 export default eventListSlice.reducer

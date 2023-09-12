@@ -8,7 +8,7 @@ import './pages/EventList/index'
 
 import { ProfilerMessage } from "../messages/messages";
 import { IncodingEventExecutedMessage, IncodingEventMessage } from '../messages/messages-list';
-import { push, update } from './slices/eventList';
+import { addEvent, updateEvent } from './slices/eventList';
 import store from './store';
 
 const root = document.getElementById('root')!
@@ -38,11 +38,11 @@ async function startProfiler() {
 function onProfilerMessage(message: ProfilerMessage) {
     switch (message.name) {
         case 'execute-start':
-            store.dispatch(push(<IncodingEventMessage>message.data))
+            store.dispatch(addEvent(<IncodingEventMessage>message.data))
             break;
 
         case 'execute-finish':
-            store.dispatch(update(<IncodingEventExecutedMessage>message.data))
+            store.dispatch(updateEvent(<IncodingEventExecutedMessage>message.data))
             break;
 
         default:
