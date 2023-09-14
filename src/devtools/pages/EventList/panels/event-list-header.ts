@@ -1,3 +1,5 @@
+import '../../../components/icon'
+
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js"
 import { clearEvents } from "../../../slices/eventList";
@@ -16,6 +18,7 @@ export class EventListHeaderElement extends LitElement {
         return html`
             <div class="header">
                 <button @click=${this._clear}>clear</button>
+                <m-icon icon="clear_all"></m-icon>
             </div>
         `
     }
