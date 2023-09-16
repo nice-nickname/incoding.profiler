@@ -5,8 +5,10 @@ import { customElement, state, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
 
 import IncodingEvent from "../../../models/incodingEvent";
-import scrollStyles from "../../../utils/scrollStyles";
 import store from "../../../store";
+
+import scrollStyles from "../../../styles/scroll.css"
+
 
 const styles = css`
     .container {
@@ -53,7 +55,7 @@ export class EventListElement extends LitElement {
     }
 
     _onMouseWheel() {
-        let containerScroll = this.container.scrollHeight - this.container.clientHeight
+        const containerScroll = this.container.scrollHeight - this.container.clientHeight
 
         this.scrollAttached = this.container.scrollTop === containerScroll;
     }

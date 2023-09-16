@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js"
 import { clearEvents } from "../../../slices/eventList";
 import store from "../../../store";
 
+
 @customElement('event-list-header')
 export class EventListHeaderElement extends LitElement {
 

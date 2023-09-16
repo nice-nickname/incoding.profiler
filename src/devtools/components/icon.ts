@@ -19,6 +19,8 @@ export class IconElement extends LitElement {
             direction: ltr;
             -moz-font-feature-settings: 'liga';
             -moz-osx-font-smoothing: grayscale;
+
+            user-select: none;
         }
     `
 
