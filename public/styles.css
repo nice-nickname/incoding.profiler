@@ -54,14 +54,3 @@ html {
 }
 
 /* #endregion root styles */
-
-/* #region button styles */
-
-.button {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-
-    border-radius: 0.25rem;
-}
-
-/* #endregion */

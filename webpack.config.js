@@ -21,6 +21,13 @@ module.exports = {
                 test: /\.ts?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.css$/,
+                loader: 'lit-css-loader',
+                options: {
+                    specifier: 'lit-element'
+                }
             }
         ],
     },

@@ -5,7 +5,6 @@ import './panels/event-list-header'
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 
-
 const styles = css`
     .panel-events {
         height: 100%;
