@@ -15,7 +15,7 @@ export class EventListHeaderElement extends LitElement {
         }
     `
 
-    render() {
+    protected render() {
         return html`
             <div class="header">
                 <button @click=${this._clear}>clear</button>

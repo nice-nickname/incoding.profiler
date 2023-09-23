@@ -32,7 +32,7 @@ export class ActionMarkerElement extends LitElement {
 
     @property() action: Actions;
 
-    render() {
+    protected render() {
         return html`
             <span class="marker" style="background-color: ${getColorByAction(this.action)};"></span>
             <span class="action">${this.action}</span>

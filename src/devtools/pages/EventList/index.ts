@@ -13,11 +13,7 @@ export class EventListPage extends LitElement {
 
     static styles = [styles]
 
-    constructor() {
-        super()
-    }
-
-    render() {
+    protected render() {
         return html`
             <div class="panel-events">
                 <div class="event-list">

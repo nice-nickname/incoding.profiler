@@ -7,7 +7,7 @@ export class TimeMarkerElement extends LitElement {
     @property({ type: Number })
     public timeInMs?: number | undefined
 
-    render() {
+    protected render() {
         let displayTime = 'pending'
 
         if (this.timeInMs !== undefined) {

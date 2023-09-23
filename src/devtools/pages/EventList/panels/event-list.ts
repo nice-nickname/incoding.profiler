@@ -1,13 +1,14 @@
 import "../../../components/profiler-event"
 
-import { LitElement, css, html } from "lit";
+import { css, html } from "lit";
 import { customElement, state, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
 
 import IncodingEvent from "../../../models/incodingEvent";
-import store from "../../../store";
+import store, { RootState } from "../../../store";
 
 import scrollStyles from "../../../styles/scroll.css"
+import StatefulLitElement from "../../../core/StatefulLItElement";
 
 
 const styles = css`
@@ -22,7 +23,7 @@ const styles = css`
 `
 
 @customElement('event-list')
-export class EventListElement extends LitElement {
+export class EventListElement extends StatefulLitElement {
 
     static styles = [styles, scrollStyles]
 
@@ -32,19 +33,15 @@ export class EventListElement extends LitElement {
 
     @query('.container') private container: HTMLDivElement
 
-    constructor() {
-        super()
+    protected onStateChanged(state: RootState): void {
+        this.events = store.getState().eventList.events
 
-        store.subscribe(() => {
-            this.events = store.getState().eventList.events
-
-            if (this.scrollAttached) {
-                this.container.scrollTop = this.container.scrollHeight
-            }
-        })
+        if (this.scrollAttached) {
+            this.container.scrollTop = this.container.scrollHeight
+        }
     }
 
-    render() {
+    protected render() {
         return html`
             <div class="container" @mousewheel=${this._onMouseWheel} >
                 ${repeat(this.events, event => event.uuid + event.executionTimeMs, (event) => html`

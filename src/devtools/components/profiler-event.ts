@@ -49,7 +49,7 @@ export class ProfilerEventElement extends LitElement {
 
     @query('.event') eventElement: HTMLElement;
 
-    render() {
+    protected render() {
         return html`
             <div class="event" @click="${this._click}">
                 <action-marker .action=${this.data.action}></action-marker>
