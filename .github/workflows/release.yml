@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: install dependencies
+        run: npm ci
+
       - name: build devtools
         run: npm run build
 
