@@ -1,0 +1,65 @@
+name: Release
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: build devtools
+        run: npm run build
+
+      - name: archive build
+        run: node archiver.js
+
+      - name: get version
+        id: get_version
+        uses: PaulHatch/semantic-version@v5.0.3
+        with:
+          tag_prefix: ""
+          bump_each_commit: false
+          version_format: "${major}.${minor}.${patch}"
+
+      - name: create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: main
+        with:
+          tag_name: ${{env.BRANCH}}/${{steps.get_version.outputs.version}}
+          release_name: Release ${{env.BRANCH}}/${{steps.get_version.outputs.version}}
+          draft: false
+          prerelease: false
+
+      - name: upload zip asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: main
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/incoding.profiler.zip
+          asset_name: incoding.profiler-${{steps.get_version.outputs.version}}.zip
+          asset_content_type: application/zip
+
+      - name: upload tar asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: main
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/incoding.profiler.tar
+          asset_name: incoding.profiler-${{steps.get_version.outputs.version}}.tar
+          asset_content_type: application/tar
