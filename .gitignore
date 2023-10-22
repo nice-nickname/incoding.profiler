@@ -133,3 +133,5 @@ dist
 public/*.js
 public/*LICENSE*
 public/*.map
+
+build/
