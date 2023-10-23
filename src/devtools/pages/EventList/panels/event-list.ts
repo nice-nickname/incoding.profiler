@@ -5,10 +5,11 @@ import { customElement, state, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
 
 import IncodingEvent from "../../../models/incodingEvent";
-import store, { RootState } from "../../../store";
+import { RootState } from "../../../store";
 
 import scrollStyles from "../../../styles/scroll.css"
 import StatefulLitElement from "../../../core/StatefulLItElement";
+import { selectEvents } from "../../../store/EventList/selectors";
 
 
 const styles = css`
@@ -34,7 +35,7 @@ export class EventListElement extends StatefulLitElement {
     @query('.container') private container: HTMLDivElement
 
     protected onStateChanged(state: RootState): void {
-        this.events = store.getState().eventList.events
+        this.events = selectEvents(state)
 
         if (this.scrollAttached) {
             this.container.scrollTop = this.container.scrollHeight

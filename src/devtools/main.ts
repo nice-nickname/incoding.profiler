@@ -4,11 +4,12 @@
  * Establish background connection and handle events
  */
 
+import "./components"
 import './pages/EventList/index'
 
 import { ProfilerMessage } from "../messages/messages";
 import { IncodingEventExecutedMessage, IncodingEventMessage } from '../messages/messages-list';
-import { addEvent, updateEvent } from './slices/eventList';
+import { addEvent, updateEvent } from './store/EventList/slice';
 import store from './store';
 
 const root = document.getElementById('root')!

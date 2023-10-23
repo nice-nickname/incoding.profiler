@@ -1,49 +1,15 @@
-import './action-marker'
-import './time-marker'
-
-import { LitElement, css, html } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js"
+import IncodingEvent from '../../models/incodingEvent';
+import { select } from '../../store/EventViewer/slice';
+import store from '../../store';
 
-import IncodingEvent from '../models/incodingEvent';
-import store from '../store';
-import { select } from '../slices/eventViewer';
-
-const styles = css`
-    .event {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-
-        padding: 0.25rem 1rem;
-
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .event:hover {
-        background-color: var(--bg-color-highlight);
-        cursor: pointer;
-    }
-
-    action-marker {
-        flex-basis: 100px;
-    }
-
-    time-marker {
-        flex-basis: 70px;
-    }
-
-    .button-group {
-        margin-left: auto;
-        display: flex;
-        gap: 0.5rem;
-    }
-
-`
+import styles from "./styles.css"
 
 @customElement('profiler-event')
 export class ProfilerEventElement extends LitElement {
 
-    static styles = [styles]
+    static styles = styles
 
     @property({ type: Object }) data: IncodingEvent
 

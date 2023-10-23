@@ -1,0 +1,28 @@
+.event {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    padding: 0.25rem 1rem;
+
+    border-bottom: 1px solid var(--border-color);
+}
+
+.event:hover {
+    background-color: var(--bg-color-highlight);
+    cursor: pointer;
+}
+
+action-marker {
+    flex-basis: 100px;
+}
+
+time-marker {
+    flex-basis: 70px;
+}
+
+.button-group {
+    margin-left: auto;
+    display: flex;
+    gap: 0.5rem;
+}

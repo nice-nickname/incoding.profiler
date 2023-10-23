@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import IncodingEvent from "../models/incodingEvent";
+import IncodingEvent from "../../models/incodingEvent";
 
 interface EventViewerState {
     selected: IncodingEvent | null
@@ -14,7 +14,7 @@ export const eventViewerSlice = createSlice({
     initialState,
     reducers: {
         select: (state, action: PayloadAction<IncodingEvent>) => {
-            state.selected = action.payload
+            // state.selected = action.payload
         },
         unselect: (state) => {
             state.selected = null

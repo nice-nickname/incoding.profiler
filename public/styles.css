@@ -28,17 +28,16 @@
 }
 
 :root {
-    --bg-color: #202124;
+    --bg-color: #282828;
     --text-color: #e9e9e9;
 
     --success-color: #84ff84;
     --warning-color: #ffcb7d;
     --danger-color: #ff6e6e;
 
-    --border-color: #3a3a3a;
+    --border-color: #474747;
 
-
-    --bg-color-highlight: #2e2f33;
+    --bg-color-highlight: #3e3e3e;
 }
 
 html {
