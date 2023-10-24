@@ -26,8 +26,8 @@ jobs:
 
       - name: archive build
         run: |
-          tar -czf incoding.profiler.tar.gz build
-          zip -q -r -9 incoding.profiler.zip build
+          zip -q -r -9 -D incoding.profiler.zip public
+          cd public && tar -czf ../incoding.profiler.tar.gz *
 
       - name: get version
         id: get_version
