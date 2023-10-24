@@ -2,7 +2,7 @@ import '../../../components/icon'
 
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js"
-import { clearEvents } from "../../../slices/eventList";
+import { clearEvents } from "../../../store/EventList/slice";
 import store from "../../../store";
 
 
