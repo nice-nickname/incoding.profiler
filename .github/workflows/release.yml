@@ -33,9 +33,9 @@ jobs:
         id: get_version
         uses: PaulHatch/semantic-version@v5.0.3
         with:
-          tag_prefix: ""
-          bump_each_commit: false
-          version_format: "${major}.${minor}.${increment}"
+          tag_prefix: "main/"
+          bump_each_commit: true
+          version_format: "${major}.${minor}.${patch}"
 
       - name: create release
         id: create_release
