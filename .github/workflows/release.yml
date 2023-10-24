@@ -4,9 +4,6 @@ on:
   push:
     branches: [main]
 
-env:
-  BUILD_TYPE: Release
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,6 +15,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: install zip
+        run: sudo apt-get install zip
+
       - name: install dependencies
         run: npm ci
 
@@ -25,7 +25,9 @@ jobs:
         run: npm run build
 
       - name: archive build
-        run: node archiver.js
+        run: |
+          tar -czf incoding.profiler.tar.gz build
+          zip -q -r -9 incoding.profiler.zip repos
 
       - name: get version
         id: get_version
@@ -51,20 +53,18 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: main
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/incoding.profiler.zip
-          asset_name: incoding.profiler-${{steps.get_version.outputs.version}}.zip
+          asset_path: ./incoding.profiler.zip
+          asset_name: incoding.profiler.zip
           asset_content_type: application/zip
 
-      - name: upload tar asset
+      - name: upload tar.gz asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: main
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/incoding.profiler.tar
-          asset_name: incoding.profiler-${{steps.get_version.outputs.version}}.tar
+          asset_path: ./incoding.profiler.tar.gz
+          asset_name: incoding.profiler.tar.gz
           asset_content_type: application/tar
