@@ -11,20 +11,29 @@ export class EventListHeaderElement extends LitElement {
 
     static styles = css`
         .header {
-            height: 2rem;
+            display: flex;
+            align-items: center;
+            height: 1.75rem;
+        }
+
+        .separator {
+            width: 1px;
+            height: 1rem;
+
+            background: var(--border-color);
+            margin: 0 6px;
         }
     `
 
     protected render() {
         return html`
             <div class="header">
-                <button @click=${this._clear}>clear</button>
-                <m-icon icon="clear_all"></m-icon>
+                <m-icon icon="stop_circle"></m-icon>
+                <m-icon icon="block"></m-icon>
+                <div class="separator"></div>
+                <div>select</div>
+                <div class="separator"></div>
             </div>
         `
-    }
-
-    _clear() {
-        store.dispatch(clearEvents())
     }
 }
