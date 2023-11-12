@@ -8,7 +8,7 @@ import IncodingEvent from "../../../models/incodingEvent";
 import { RootState } from "../../../store";
 
 import scrollStyles from "../../../styles/scroll.css"
-import StatefulLitElement from "../../../core/StatefulLItElement";
+import StatefulLitElement from "../../../lib/StatefulLItElement";
 import { selectEvents } from "../../../store/EventList/selectors";
 
 

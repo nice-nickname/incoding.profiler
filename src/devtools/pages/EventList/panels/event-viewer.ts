@@ -4,7 +4,7 @@ import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import JsonData from "../../../models/jsonData";
 import { RootState } from '../../../store';
-import StatefulLitElement from '../../../core/StatefulLItElement';
+import StatefulLitElement from '../../../lib/StatefulLItElement';
 
 
 @customElement('event-viewer')

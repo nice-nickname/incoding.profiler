@@ -1,6 +1,7 @@
 :host {
-    width: 20px;
-    height: 20px;
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .material-symbols-outlined {
@@ -19,7 +20,7 @@
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' -27, 'opsz' 20;
 
     user-select: none;
-    font-size: 20px;
+    font-size: 1.25rem;
 
     color: var(--icon-color);
 }

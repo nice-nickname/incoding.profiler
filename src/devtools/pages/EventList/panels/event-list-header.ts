@@ -1,19 +1,21 @@
-import '../../../components/icon'
-
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js"
-import { clearEvents } from "../../../store/EventList/slice";
-import store from "../../../store";
+import SearchEvent from '../../../components/inputs/search/SearchChangeEvent';
+import store from '../../../store';
+import { clearEvents, pauseEvents, resumeEvents } from '../../../store/EventList/slice';
+import ButtonToggleEvent from '../../../components/controls/button-toggle/ButtonToggleEvent';
 
 
 @customElement('event-list-header')
 export class EventListHeaderElement extends LitElement {
 
     static styles = css`
-        .header {
+        :host {
             display: flex;
             align-items: center;
-            height: 1.75rem;
+            padding: 0 6px;
+
+            height: 26px;
         }
 
         .separator {
@@ -27,13 +29,40 @@ export class EventListHeaderElement extends LitElement {
 
     protected render() {
         return html`
-            <div class="header">
-                <m-icon icon="stop_circle"></m-icon>
-                <m-icon icon="block"></m-icon>
-                <div class="separator"></div>
-                <div>select</div>
-                <div class="separator"></div>
-            </div>
+            <btn-group>
+                <btn-toggle @toggle=${this.togglePauseEvents}>
+                    <btn-icon slot="disabled" icon="stop_circle"></btn-icon>
+                    <btn-icon slot="enabled" icon="stop_circle" color="var(--danger-color)"></btn-icon>
+                </btn-toggle>
+
+                <btn-icon icon="block" @click=${this.clearEventList}></btn-icon>
+            </btn-group>
+
+            <div class="separator"></div>
+
+            <div>select</div>
+
+            <div class="separator"></div>
+
+            <input-search placeholder="search..." @search=${this.searchEvents}></input-search>
         `
+    }
+
+    private clearEventList() {
+        store.dispatch(clearEvents())
+    }
+
+    private togglePauseEvents(ev: ButtonToggleEvent) {
+        console.log(ev.enabled);
+
+        if (ev.enabled) {
+            store.dispatch(resumeEvents())
+        } else {
+            store.dispatch(pauseEvents())
+        }
+    }
+
+    private searchEvents(ev: SearchEvent) {
+        console.log(ev.value)
     }
 }

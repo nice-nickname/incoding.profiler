@@ -102,6 +102,8 @@ function establishBidirectionalConnection(tabId, one, two) {
 
 
     function shutdown() {
+        console.warn('devtools connection shutdown')
+
         one.onMessage.removeListener(listenerOne);
         two.onMessage.removeListener(listenerTwo);
         one.disconnect();

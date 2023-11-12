@@ -13,7 +13,7 @@ declare global {
         "profiler-event": ProfilerEventElement;
         "action-marker": ActionMarkerElement;
         "time-marker": TimeMarkerElement;
-        "m-icon": IconElement;
+        "material-icon": IconElement;
 
         "event-list": EventListElement;
         "event-list-page": EventListPage;

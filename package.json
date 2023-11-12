@@ -4,7 +4,8 @@
   "description": "profiler devtool for chrome for debugging incoding.framework.js",
   "main": "index.js",
   "scripts": {
-    "build": "npx webpack",
+    "build": "npx webpack build --mode production -d source-map",
+    "dev": "npx webpack watch --mode production",
     "lint": "eslint src/",
     "lintfix": "eslint src/ --fix"
   },

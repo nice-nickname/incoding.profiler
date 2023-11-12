@@ -1,6 +1,6 @@
 .marker {
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 0.5rem;
+    height: 0.5rem;
 
     border-radius: 1rem;
 
@@ -13,6 +13,9 @@
 }
 
 .action {
+    display: inline-block;
+    height: 100%;
+
     margin-left: 0.25rem;
     vertical-align: middle;
 }
