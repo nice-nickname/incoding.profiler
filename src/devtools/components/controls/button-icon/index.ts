@@ -14,9 +14,13 @@ export class IconButtonElement extends LitElement {
 
     @property() color?: string
 
+    constructor() {
+        super()
+    }
+
     protected render() {
         return html`
-            <button title="${this.title}" @click=${this.dispatchChange}>
+            <button title="${this.title}">
                 <material-icon .icon=${this.icon} .color=${this.color}></material-icon>
             </button>
         `

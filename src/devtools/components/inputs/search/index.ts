@@ -2,8 +2,12 @@ import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import SearchEvent from "./SearchChangeEvent";
 
+import styles from "./styles.css"
+
 @customElement('input-search')
 export class InputSearchElement extends LitElement {
+
+    static styles = [styles]
 
     @property() placeholder: string = ''
 
@@ -17,6 +21,7 @@ export class InputSearchElement extends LitElement {
 
     private onsearch(ev: KeyboardEvent) {
         const value = this.searchInput.value
+
         this.dispatchEvent(new SearchEvent(value))
     }
 }

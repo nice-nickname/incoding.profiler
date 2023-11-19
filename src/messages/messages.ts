@@ -1,6 +1,6 @@
 import {
     IncodingEventExecutedMessage,
-    IncodingEventMessage
+    IncodingEventMessage,
 } from "./messages-list"
 
 interface Messages {
@@ -13,7 +13,7 @@ export interface ProfilerMessage {
     data: Messages[keyof Messages]
 }
 
-export default function sendMessage<TKey extends keyof Messages>(source: Window | chrome.runtime.Port, name: TKey, data: Messages[TKey]) {
+function sendMessage<TKey extends keyof Messages>(source: Window | chrome.runtime.Port, name: TKey, data: Messages[TKey]) {
     const message: ProfilerMessage = {
         data: data,
         name: name
@@ -21,3 +21,5 @@ export default function sendMessage<TKey extends keyof Messages>(source: Window 
 
     source.postMessage(message)
 }
+
+export default sendMessage

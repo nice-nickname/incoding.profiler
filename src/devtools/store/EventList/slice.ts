@@ -4,12 +4,14 @@ import { IncodingEventExecutedMessage, IncodingEventMessage } from "../../../mes
 
 interface EventListState {
     events: IncodingEvent[],
-    eventsPaused: boolean
+    eventsPaused: boolean,
+    search: string | null
 }
 
 const initialState: EventListState = {
     events: [],
-    eventsPaused: false
+    eventsPaused: false,
+    search: null
 }
 
 export const eventListSlice = createSlice({
@@ -45,6 +47,13 @@ export const eventListSlice = createSlice({
         },
         resumeEvents: state => {
             state.eventsPaused = false
+        },
+
+        resetSearch: state => {
+            state.search = null
+        },
+        searchEvents: (state, action: PayloadAction<string>) => {
+            state.search = action.payload
         }
     }
 })
@@ -54,7 +63,9 @@ export const {
     updateEvent,
     clearEvents,
     pauseEvents,
-    resumeEvents
+    resumeEvents,
+    searchEvents,
+    resetSearch
 } = eventListSlice.actions
 
 export default eventListSlice.reducer

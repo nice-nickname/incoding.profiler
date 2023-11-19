@@ -7,7 +7,7 @@ export class ButtonToggleElement extends LitElement {
 
     @state() enabled: boolean = true
 
-    @queryAssignedElements({ slot: 'enabled' }) enabledButton: Array<HTMLElement>
+    @queryAssignedElements({ slot: 'enabled' }) enabledButton: HTMLElement[]
 
     @queryAssignedElements({ slot: 'disabled' }) disabledButton: HTMLElement[]
 
@@ -31,7 +31,7 @@ export class ButtonToggleElement extends LitElement {
     }
 
     private initSlot() {
-        this.enabledButton.forEach(el => el.style.display = '')
+        this.enabledButton.forEach(el => el.style.display = 'block')
         this.disabledButton.forEach(el => el.style.display = 'none')
     }
 

@@ -1,5 +1,6 @@
 /**
- * Creating Guid
+ * Custom implementation of GUIDs due to crypto.randomUUID inaccessibility
+ * in devtools
  * @returns string
  * @see http://guid.us/GUID/JavaScript
  */

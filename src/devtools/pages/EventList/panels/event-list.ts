@@ -43,16 +43,30 @@ export class EventListElement extends StatefulLitElement {
     }
 
     protected render() {
+        const hasEvents = this.events.length != 0
+
         return html`
-            <div class="container" @mousewheel=${this._onMouseWheel} >
-                ${repeat(this.events, event => event.uuid + event.executionTimeMs, (event) => html`
-                    <profiler-event .data=${event}></profiler-event>
-                `)}
+            <div class="container" @mousewheel=${this.onMouseWheel}>
+                ${hasEvents ? this.renderList() : this.renderEmpty()}
             </div>
         `
     }
 
-    _onMouseWheel() {
+    private renderList() {
+        return html`
+            ${repeat(this.events, event => event.uuid + event.executionTimeMs, (event) => html`
+                <profiler-event .data=${event}></profiler-event>
+            `)}
+        `
+    }
+
+    private renderEmpty() {
+        return html`
+            <no-content text="No events to see... 🥲"></no-content>
+        `
+    }
+
+    private onMouseWheel() {
         const containerScroll = this.container.scrollHeight - this.container.clientHeight
 
         this.scrollAttached = this.container.scrollTop === containerScroll;

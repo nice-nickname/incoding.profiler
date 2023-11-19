@@ -2,7 +2,7 @@ import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js"
 import SearchEvent from '../../../components/inputs/search/SearchChangeEvent';
 import store from '../../../store';
-import { clearEvents, pauseEvents, resumeEvents } from '../../../store/EventList/slice';
+import { clearEvents, pauseEvents, resetSearch, resumeEvents, searchEvents } from '../../../store/EventList/slice';
 import ButtonToggleEvent from '../../../components/controls/button-toggle/ButtonToggleEvent';
 
 
@@ -44,7 +44,7 @@ export class EventListHeaderElement extends LitElement {
 
             <div class="separator"></div>
 
-            <input-search placeholder="search..." @search=${this.searchEvents}></input-search>
+            <input-search placeholder="search..." @search=${this.onSearchEvents}></input-search>
         `
     }
 
@@ -53,8 +53,6 @@ export class EventListHeaderElement extends LitElement {
     }
 
     private togglePauseEvents(ev: ButtonToggleEvent) {
-        console.log(ev.enabled);
-
         if (ev.enabled) {
             store.dispatch(resumeEvents())
         } else {
@@ -62,7 +60,13 @@ export class EventListHeaderElement extends LitElement {
         }
     }
 
-    private searchEvents(ev: SearchEvent) {
-        console.log(ev.value)
+    private onSearchEvents(ev: SearchEvent) {
+        const searchValue = ev.value
+
+        if (searchValue !== '') {
+            store.dispatch(searchEvents(searchValue))
+        } else {
+            store.dispatch(resetSearch())
+        }
     }
 }
