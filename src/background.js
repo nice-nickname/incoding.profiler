@@ -6,7 +6,41 @@
 
 'use strict'
 
+let keepingAliveInterval
+
 const connectionPorts = {}
+
+keepBackgroundAlive()
+dynamiclyInjectContentScript()
+
+chrome.runtime.onConnect.addListener(function onConnect(port) {
+    let name = null
+    let tab = null
+
+    if (Number.isInteger(+port.name)) {
+        name = 'devtools'
+        tab = +port.name
+
+        installContentScript(tab)
+    }
+    else {
+        name = 'contentScript'
+        tab = port.sender.tab.id
+    }
+
+    if (connectionPorts[tab] == undefined) {
+        connectionPorts[tab] = {
+            debtools: null,
+            contentScript: null
+        }
+    }
+
+    connectionPorts[tab][name] = port
+
+    if (connectionPorts[tab].devtools != null && connectionPorts[tab].contentScript != null) {
+        establishBidirectionalConnection(tab, connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
+    }
+})
 
 
 async function dynamiclyInjectContentScript() {
@@ -47,37 +81,6 @@ async function installContentScript(tab) {
     }
 }
 
-dynamiclyInjectContentScript()
-
-chrome.runtime.onConnect.addListener(function onConnect(port) {
-    let name = null
-    let tab = null
-
-    if (Number.isInteger(+port.name)) {
-        name = 'devtools'
-        tab = +port.name
-
-        installContentScript(tab)
-    }
-    else {
-        name = 'contentScript'
-        tab = port.sender.tab.id
-    }
-
-    if (connectionPorts[tab] == undefined) {
-        connectionPorts[tab] = {
-            debtools: null,
-            contentScript: null
-        }
-    }
-
-    connectionPorts[tab][name] = port
-
-    if (connectionPorts[tab].devtools != null && connectionPorts[tab].contentScript != null) {
-        establishBidirectionalConnection(tab, connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
-    }
-})
-
 
 function establishBidirectionalConnection(tabId, one, two) {
     const listen = (anotherPort) => function (message) {
@@ -110,5 +113,33 @@ function establishBidirectionalConnection(tabId, one, two) {
         two.disconnect();
 
         connectionPorts[tabId] = null;
+
+        killBackground()
     }
+}
+
+
+/**
+ * background.js tries to go inactive if no actions is perfomed by service_worker,
+ * so by that, we'll try to keep him alive by constantly running some actions
+ * @see https://developer.chrome.com/docs/extensions/migrating/to-service-workers
+ */
+async function keepBackgroundAlive() {
+    keepingAliveInterval = setInterval(tick, 5 * 1000)
+}
+
+
+/**
+ * some low-cost action
+ */
+async function tick() {
+    await chrome.storage.local.set({ '_': Date.now() })
+}
+
+
+/**
+ * allowing background.js to kill himself
+ */
+function killBackground() {
+    clearInterval(keepingAliveInterval)
 }
