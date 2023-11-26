@@ -1,8 +1,8 @@
 import { LitElement, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js"
-import IncodingEvent from '../../models/incodingEvent';
-import { select } from '../../store/EventViewer/slice';
-import store from '../../store';
+import IncodingEvent from '@devtools/models/incodingEvent';
+import { select } from '@devtools/store/EventViewer/slice';
+import store from '@devtools/store';
 
 import styles from "./styles.css"
 

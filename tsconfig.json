@@ -17,5 +17,10 @@
 
     "strict": true,
     "strictPropertyInitialization": false,
+
+    "baseUrl": "./",
+    "paths": {
+      "@devtools/*": ["./src/devtools/*"],
+    }
   }
 }

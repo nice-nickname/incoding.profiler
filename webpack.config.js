@@ -14,6 +14,9 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.ts'],
+        alias: {
+            '@devtools': path.resolve(__dirname, 'src/devtools/')
+        }
     },
     module: {
         rules: [

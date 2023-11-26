@@ -1,9 +1,15 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js"
-import SearchEvent from '../../../components/inputs/search/SearchChangeEvent';
-import store from '../../../store';
-import { clearEvents, pauseEvents, resetSearch, resumeEvents, searchEvents } from '../../../store/EventList/slice';
-import ButtonToggleEvent from '../../../components/controls/button-toggle/ButtonToggleEvent';
+import SearchEvent from '@devtools/components/inputs/search/SearchChangeEvent';
+import store from '@devtools/store';
+import {
+    clearEvents,
+    pauseEvents,
+    resetSearch,
+    resumeEvents,
+    searchEvents
+} from '@devtools/store/EventList/slice';
+import ButtonToggleEvent from '@devtools/components/controls/button-toggle/ButtonToggleEvent';
 
 
 @customElement('event-list-header')

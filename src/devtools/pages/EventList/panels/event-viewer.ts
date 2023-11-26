@@ -2,9 +2,10 @@ import '@alenaksu/json-viewer'
 
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import JsonData from "../../../models/jsonData";
-import { RootState } from '../../../store';
-import StatefulLitElement from '../../../lib/StatefulLItElement';
+import JsonData from "@devtools/models/jsonData"
+import { RootState } from '@devtools/store';
+import StatefulLitElement from '@devtools/core/StatefulLItElement';
+
 
 
 @customElement('event-viewer')

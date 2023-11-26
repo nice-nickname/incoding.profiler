@@ -2,7 +2,7 @@ import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import styles from "./styles.css"
-import resetButtonStyles from "../../../styles/reset-button.css"
+import resetButtonStyles from "@devtools/styles/reset-button.css"
 import ButtonClickEvent from "./ButtonClickEvent";
 
 @customElement('btn-icon')

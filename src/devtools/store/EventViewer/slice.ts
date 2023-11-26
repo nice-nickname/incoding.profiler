@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import IncodingEvent from "../../models/incodingEvent";
+import IncodingEvent from "@devtools/models/incodingEvent";
 
 interface EventViewerState {
     selected: IncodingEvent | null

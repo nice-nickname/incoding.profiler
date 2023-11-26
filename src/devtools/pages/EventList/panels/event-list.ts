@@ -1,15 +1,11 @@
-import "../../../components/profiler-event"
-
 import { css, html } from "lit";
 import { customElement, state, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
-
-import IncodingEvent from "../../../models/incodingEvent";
-import { RootState } from "../../../store";
-
-import scrollStyles from "../../../styles/scroll.css"
-import StatefulLitElement from "../../../lib/StatefulLItElement";
-import { selectEvents } from "../../../store/EventList/selectors";
+import IncodingEvent from "@devtools/models/incodingEvent";
+import { RootState } from "@devtools/store";
+import scrollStyles from "@devtools/styles/scroll.css"
+import StatefulLitElement from "@devtools/core/StatefulLItElement";
+import { selectEvents } from "@devtools/store/EventList/selectors";
 
 
 const styles = css`
