@@ -7,7 +7,6 @@ import { RootState } from '@devtools/store';
 import StatefulLitElement from '@devtools/core/StatefulLItElement';
 
 
-
 @customElement('event-viewer')
 export class EventViewerElement extends StatefulLitElement {
 

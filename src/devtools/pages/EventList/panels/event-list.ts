@@ -43,7 +43,9 @@ export class EventListElement extends StatefulLitElement {
 
         return html`
             <div class="container" @mousewheel=${this.onMouseWheel}>
-                ${hasEvents ? this.renderList() : this.renderEmpty()}
+                ${hasEvents
+                    ? this.renderList()
+                    : this.renderEmpty()}
             </div>
         `
     }

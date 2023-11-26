@@ -119,21 +119,18 @@ function establishBidirectionalConnection(tabId, one, two) {
 }
 
 
+async function ping() {
+    await chrome.storage.local.set({ '_': 'pong' + Date.now() })
+}
+
+
 /**
  * background.js tries to go inactive if no actions is perfomed by service_worker,
  * so by that, we'll try to keep him alive by constantly running some actions
  * @see https://developer.chrome.com/docs/extensions/migrating/to-service-workers
  */
 async function keepBackgroundAlive() {
-    keepingAliveInterval = setInterval(tick, 5 * 1000)
-}
-
-
-/**
- * some low-cost action
- */
-async function tick() {
-    await chrome.storage.local.set({ '_': Date.now() })
+    keepingAliveInterval = setInterval(ping, 5 * 1000)
 }
 
 
