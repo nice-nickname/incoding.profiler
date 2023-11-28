@@ -11,7 +11,11 @@ export class InputSearchElement extends LitElement {
 
     @property() placeholder: string = ''
 
+    @property({ type: Number }) delayMs: number = 100
+
     @query('input') searchInput: HTMLInputElement
+
+    private delayTimeout: number
 
     protected render() {
         return html`
@@ -22,6 +26,10 @@ export class InputSearchElement extends LitElement {
     private onsearch(ev: KeyboardEvent) {
         const value = this.searchInput.value
 
-        this.dispatchEvent(new SearchEvent(value))
+        clearTimeout(this.delayTimeout)
+
+        this.delayTimeout = window.setTimeout(() => {
+            this.dispatchEvent(new SearchEvent(value))
+        }, this.delayMs)
     }
 }
