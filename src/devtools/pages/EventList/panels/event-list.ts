@@ -6,6 +6,7 @@ import { RootState } from "@devtools/store";
 import scrollStyles from "@devtools/styles/scroll.css"
 import StatefulLitElement from "@devtools/core/StatefulLItElement";
 import { selectEvents } from "@devtools/store/EventList/selectors";
+import resources from "@devtools/resources";
 
 
 const styles = css`
@@ -60,7 +61,7 @@ export class EventListElement extends StatefulLitElement {
 
     private renderEmpty() {
         return html`
-            <no-content text="No events to see... 🥲"></no-content>
+            <no-content .text=${resources.no_items_in_list}></no-content>
         `
     }
 
