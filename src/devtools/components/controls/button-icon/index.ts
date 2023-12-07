@@ -1,27 +1,31 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import styles from "./styles.css"
 import resetButtonStyles from "@devtools/styles/reset-button.css"
 import ButtonClickEvent from "./ButtonClickEvent";
 
 @customElement('btn-icon')
 export class IconButtonElement extends LitElement {
 
-    static styles = [styles, resetButtonStyles]
+    static styles = [resetButtonStyles]
 
     @property() icon: string
 
     @property() color?: string
 
+    private size = '20px'
+
     constructor() {
         super()
+
+        this.style.width = this.size
+        this.style.height = this.size
     }
 
     protected render() {
         return html`
             <button title="${this.title}">
-                <material-icon .icon=${this.icon} .color=${this.color}></material-icon>
+                <material-icon .icon=${this.icon} .color=${this.color} size="${this.size}"></material-icon>
             </button>
         `
     }

@@ -1,5 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { styleMap } from 'lit/directives/style-map.js';
 
 import styles from "./styles.css"
 
@@ -12,11 +13,20 @@ export class IconElement extends LitElement {
 
     @property() color?: string
 
+    @property() size: string = '16px'
+
     protected render() {
-        const colorStyle = this.color ? `color: ${this.color};` : ``
+
+        this.style.width = this.size
+        this.style.height = this.size
+
+        const style = {
+            color: this.color,
+            fontSize: this.size
+        }
 
         return html`
-            <span class="material-symbols-outlined" style="${colorStyle}">
+            <span class="material-symbols-outlined" style="${styleMap(style)}">
                 ${this.icon}
             </span>
         `

@@ -58,6 +58,10 @@ html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html, body {
+    font-size: 12px !important;
+}
+
 #root {
     width: 100vw;
     height: 100vh;
