@@ -10,6 +10,7 @@ import './pages/EventList/index'
 import { ProfilerMessage } from "../messages/messages";
 import { IncodingEventExecutedMessage, IncodingEventMessage } from '../messages/messages-list';
 import { addEvent, updateEvent } from './store/EventList/slice';
+import resources from "@devtools/resources"
 import store from './store';
 
 const root = document.getElementById('root')!
@@ -18,7 +19,7 @@ chrome.devtools.inspectedWindow.eval(
     'ExecutableBase.name',
     (result, error) => {
         if (result !== 'ExecutableBase' || error)
-            return root.innerHTML = 'This page does not support incoding.framework.js 😢'
+            return root.innerHTML = resources.no_incoding_framework_found
 
         startProfiler()
     })

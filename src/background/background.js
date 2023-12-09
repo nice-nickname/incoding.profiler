@@ -6,11 +6,12 @@
 
 'use strict'
 
-let keepingAliveInterval
+import { keepBackgroundAlive } from "./persist-connection"
 
 const connectionPorts = {}
 
-keepBackgroundAlive()
+const killBackground = keepBackgroundAlive()
+
 dynamiclyInjectContentScript()
 
 chrome.runtime.onConnect.addListener(function onConnect(port) {
@@ -116,27 +117,4 @@ function establishBidirectionalConnection(tabId, one, two) {
 
         killBackground()
     }
-}
-
-
-async function ping() {
-    await chrome.storage.local.set({ '_': 'pong' + Date.now() })
-}
-
-
-/**
- * background.js tries to go inactive if no actions is perfomed by service_worker,
- * so by that, we'll try to keep him alive by constantly running some actions
- * @see https://developer.chrome.com/docs/extensions/migrating/to-service-workers
- */
-async function keepBackgroundAlive() {
-    keepingAliveInterval = setInterval(ping, 5 * 1000)
-}
-
-
-/**
- * allowing background.js to kill himself
- */
-function killBackground() {
-    clearInterval(keepingAliveInterval)
 }

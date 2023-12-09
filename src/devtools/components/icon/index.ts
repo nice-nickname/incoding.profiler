@@ -17,13 +17,13 @@ export class IconElement extends LitElement {
 
     protected render() {
 
-        this.style.width = this.size
-        this.style.height = this.size
-
         const style = {
             color: this.color,
             fontSize: this.size
         }
+
+        this.style.width = style.fontSize
+        this.style.height = style.fontSize
 
         return html`
             <span class="material-symbols-outlined" style="${styleMap(style)}">

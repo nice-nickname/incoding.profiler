@@ -6,8 +6,8 @@ module.exports = (env) => {
 
     return {
         entry: {
-            loader: './src/loader.js',
-            background: './src/background.js',
+            loader: './src/index.js',
+            background: './src/background/background.js',
             devtools: './src/devtools/main.ts',
             inject_profiler: './src/content-scripts/inject-profiler.js',
             content_script: './src/content-scripts/content-script.js'
