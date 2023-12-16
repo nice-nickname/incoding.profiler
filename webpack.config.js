@@ -8,7 +8,7 @@ module.exports = (env) => {
         entry: {
             loader: './src/index.js',
             background: './src/background/background.js',
-            devtools: './src/devtools/main.ts',
+            devtools: './src/devtools/index.ts',
             inject_profiler: './src/content-scripts/inject-profiler.js',
             content_script: './src/content-scripts/content-script.js'
         },
