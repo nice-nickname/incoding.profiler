@@ -9,7 +9,7 @@ module.exports = (env) => {
             loader: './src/index.js',
             background: './src/background/background.js',
             devtools: './src/devtools/index.ts',
-            inject_profiler: './src/content-scripts/inject-profiler.js',
+            inject_profiler: './src/content-scripts/injection/inject-profiler.js',
             content_script: './src/content-scripts/content-script.js'
         },
         output: {
