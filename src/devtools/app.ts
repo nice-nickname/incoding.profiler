@@ -4,22 +4,22 @@ import '@devtools/pages/EventList/index'
 import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { choose } from "lit/directives/choose.js"
+import { provide } from "@lit/context";
 import resources from "@devtools/resources";
-import { ProfilerMessage } from "../messages/messages";
 import store from "./store";
 import { addEvent, updateEvent } from "./store/EventList/slice";
-import {
-    IncodingEventExecutedMessage,
-    IncodingEventMessage
-} from "src/messages/messages-list";
+import RuntimeConnection, { DevtoolsConnection } from "@connection/RuntimeConnection";
+import runtimeConnectionCtx from "./context/connection";
 
 
 @customElement('incoding-profiler-devtools')
 export class IncodingProfilerDevtools extends LitElement {
 
-    @state() private status: 'loading' | 'started' | 'failed'
+    @state()
+    private status: 'loading' | 'started' | 'failed'
 
-    private connection: chrome.runtime.Port
+    @provide({ context: runtimeConnectionCtx })
+    private connection: DevtoolsConnection = new RuntimeConnection()
 
     override connectedCallback(): void {
         super.connectedCallback()
@@ -32,7 +32,6 @@ export class IncodingProfilerDevtools extends LitElement {
     override disconnectedCallback(): void {
         super.disconnectedCallback()
 
-        this.connection.onMessage.removeListener(this.onProfilerMessage)
         this.connection.disconnect()
 
         this.status = 'loading'
@@ -53,26 +52,17 @@ export class IncodingProfilerDevtools extends LitElement {
 
     private startProfiler() {
         const tabId = String(chrome.devtools.inspectedWindow.tabId)
-        this.connection = chrome.runtime.connect({ name: tabId })
+        this.connection.connect(tabId)
 
-        this.connection.onMessage.addListener(this.onProfilerMessage)
+        this.connection.on('event-execution-start', event => {
+            store.dispatch(addEvent(event))
+        })
+
+        this.connection.on('event-execution-finish', event => {
+            store.dispatch(updateEvent(event))
+        })
 
         this.status = 'started'
-    }
-
-    private onProfilerMessage(message: ProfilerMessage) {
-        switch (message.name) {
-            case 'execute-start':
-                store.dispatch(addEvent(<IncodingEventMessage>message.data))
-                break;
-
-            case 'execute-finish':
-                store.dispatch(updateEvent(<IncodingEventExecutedMessage>message.data))
-                break;
-
-            default:
-                break;
-        }
     }
 
     protected render() {

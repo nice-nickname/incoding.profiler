@@ -1,41 +1,55 @@
-import {
-    MessageRegistry,
-    MessagePayload,
-    OnMessageHandler,
-    MessageTypes
-} from './types'
+import Message, {
+    BrowserMessages,
+    DevtoolsMessages
+} from "./types"
 
-export class RuntimeConnection {
+class RuntimeConnection<
+    TListen extends object,
+    TEmit extends object
+> {
 
     private connection: chrome.runtime.Port
-    private listeners: Record<MessageTypes, Function>
+    private listeners: Partial<Record<keyof TListen, Function>> = {}
 
     connect(tab: string) {
         this.connection = chrome.runtime.connect({ name: tab })
 
         this.connection.onMessage.addListener(this.onMessage)
-    }
 
-    disconnect() {
-        this.connection.onMessage.removeListener(this.onMessage)
-
-        this.disconnect()
-    }
-
-    on<Tkey extends MessageTypes>(type: Tkey, handler: OnMessageHandler<Tkey>) {
-        this.listeners[type] = handler
-    }
-
-    post<TKey extends MessageTypes>(type: TKey, payload: MessagePayload<TKey>) {
-        this.connection.postMessage({
-            type,
-            payload
+        this.connection.onDisconnect.addListener(() => {
+            this.connection.onMessage.removeListener(this.onMessage)
         })
     }
 
-    private onMessage(message: MessageRegistry) {
+    disconnect() {
+        this.disconnect()
+    }
+
+    on<Tkey extends keyof TListen>(type: Tkey, handler: (payload: TListen[Tkey]) => void) {
+        this.listeners[type] = handler
+    }
+
+    emit<TKey extends keyof TEmit>(type: TKey, payload: TEmit[TKey]) {
+        const message: Message<TEmit> = {
+            type: type,
+            payload: payload
+        }
+
+        this.connection.postMessage(message)
+    }
+
+    private onMessage = (message: Message<TListen>) => {
         const handler = this.listeners[message.type]
 
+        if (!handler) {
+            console.warn(`there is no handler assosiated with ${String(message.type)}`)
+            return
+        }
         handler?.call(this, message.payload)
     }
 }
+
+export type DevtoolsConnection = RuntimeConnection<DevtoolsMessages, BrowserMessages>
+export type BrowserConnection = RuntimeConnection<BrowserMessages, DevtoolsMessages>
+
+export default RuntimeConnection

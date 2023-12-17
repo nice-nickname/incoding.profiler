@@ -1,26 +1,14 @@
-import {
-    IncodingEventMessage,
-    IncodingEventExecutedMessage
-} from "@devtools/api"
+import type DevtoolsMessages from "@devtools/api"
+import type BrowserMessages from "@content-scripts/api"
 
-
-export interface Message<TKey extends string, TPayload = void> {
-    type: TKey,
-    payload: TPayload
+type Message<TMessages> = {
+    type: keyof TMessages,
+    payload: TMessages[keyof TMessages]
 }
 
-export type MessageRegistry =
-    IncodingEventMessage |
-    IncodingEventExecutedMessage
-    ;
+export {
+    DevtoolsMessages,
+    BrowserMessages
+}
 
-export type MessageTypes = MessageRegistry['type']
-
-export type MessageByKey<TKey extends MessageTypes>
-    = Extract<MessageRegistry, { type: TKey }>
-
-export type MessagePayload<TKey extends MessageTypes>
-    = MessageByKey<TKey>['payload']
-
-export type OnMessageHandler<TKey extends MessageTypes>
-    = (payload: MessagePayload<TKey>) => void
+export default Message

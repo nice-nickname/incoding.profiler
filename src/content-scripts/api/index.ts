@@ -1,3 +1,8 @@
-import { Message } from "src/connection/types";
 
-export type HighlightElement = Message<'highlight-element', string>
+export type InspectDOMElementMessage = string
+
+type BrowserMessages = {
+    'inspect-element': InspectDOMElementMessage
+}
+
+export default BrowserMessages

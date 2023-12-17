@@ -28,6 +28,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@lit/context": "^1.1.0",
     "@reduxjs/toolkit": "^1.9.5",
     "lit": "^3.1.0"
   }

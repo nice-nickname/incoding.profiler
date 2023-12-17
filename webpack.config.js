@@ -10,7 +10,7 @@ module.exports = (env) => {
             background: './src/background/background.js',
             devtools: './src/devtools/index.ts',
             inject_profiler: './src/content-scripts/injection/inject-profiler.js',
-            content_script: './src/content-scripts/content-script.js'
+            content_script: './src/content-scripts/content-script.ts'
         },
         output: {
             filename: '[name].js',
@@ -19,7 +19,9 @@ module.exports = (env) => {
         resolve: {
             extensions: ['.js', '.ts'],
             alias: {
-                '@devtools': path.resolve(__dirname, 'src/devtools/')
+                '@devtools': path.resolve(__dirname, 'src/devtools/'),
+                '@content-scripts': path.resolve(__dirname, 'src/content-scripts/'),
+                '@connection': path.resolve(__dirname, 'src/connection/')
             }
         },
         module: {
