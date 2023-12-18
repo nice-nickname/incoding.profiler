@@ -21,7 +21,8 @@
     "baseUrl": "./",
     "paths": {
       "@devtools/*": ["./src/devtools/*"],
-      "@content-scripts/*": ["./src/content-scripts/*"]
+      "@content-scripts/*": ["./src/content-scripts/*"],
+      "@connection/*": ["./src/connection/*"]
     },
     "resolveJsonModule": true
   }

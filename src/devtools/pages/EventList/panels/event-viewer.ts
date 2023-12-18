@@ -1,4 +1,3 @@
-import '@alenaksu/json-viewer'
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import JsonData from "@devtools/models/jsonData"
@@ -30,6 +29,6 @@ export class EventViewerElement extends StatefulLitElement {
     }
 
     private renderContent() {
-        return html`<json-viewer .data=${this.jsonData}></json-viewer>`
+        return html``
     }
 }

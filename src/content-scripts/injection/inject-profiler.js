@@ -4,21 +4,23 @@
  * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
 
-import sendMessage from "../messages/messages"
-import { jqueryToSelector, uuidv4 } from "../utils"
+import { jqueryToSelector, uuidv4 } from "../../utils"
 
 /* eslint-disable */
 
 function interceptExecute(current, state) {
     const messageId = uuidv4()
 
-    sendMessage(window, 'execute-start', {
-        uuid: messageId,
-        action: current.name,
-        eventName: current.event.type,
-        jsonData: current.jsonData,
-        self: jqueryToSelector(current.self),
-        target: jqueryToSelector(current.target)
+    window.postMessage({
+        type: 'event-execution-start',
+        payload: {
+            uuid: messageId,
+            action: current.name,
+            eventName: current.event.type,
+            jsonData: current.jsonData,
+            self: jqueryToSelector(current.self),
+            target: jqueryToSelector(current.target)
+        }
     })
 
 const tick = performance.now()
@@ -28,10 +30,13 @@ const tick = performance.now()
 
 const tock = performance.now()
 
-    sendMessage(window, 'execute-finish', {
-        uuid: messageId,
-        executionTimeMs: tock - tick,
-        jsonData: current.jsonData
+    window.postMessage({
+        type: 'event-execution-finish',
+        payload: {
+            uuid: messageId,
+            executionTimeMs: tock - tick,
+            jsonData: current.jsonData
+        }
     })
 }
 
