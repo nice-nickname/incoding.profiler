@@ -32,10 +32,6 @@ class RuntimeConnection<
         this.disconnect()
     }
 
-    on<Tkey extends keyof ListenMessages<TListen>>(type: Tkey, handler: (payload: ListenMessages<TListen>[Tkey]) => void) {
-        this.listeners[type] = handler
-    }
-
     emit<TKey extends keyof TEmit>(type: TKey, payload: TEmit[TKey]) {
         const message: Message<TEmit> = {
             type: type,
@@ -43,6 +39,10 @@ class RuntimeConnection<
         }
 
         this.connection.postMessage(message)
+    }
+
+    on<Tkey extends keyof ListenMessages<TListen>>(type: Tkey, handler: (payload: ListenMessages<TListen>[Tkey]) => void) {
+        this.listeners[type] = handler
     }
 
     private onMessage = (message: Message<ListenMessages<TListen>>) => {

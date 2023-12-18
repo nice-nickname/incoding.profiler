@@ -7,7 +7,7 @@ type Message<TMessages> = {
 }
 
 type ConnectedMessage = void
-type DisconnectedMessage = number
+type DisconnectedMessage = void
 
 type SharedMessages = {
     'connected': ConnectedMessage,

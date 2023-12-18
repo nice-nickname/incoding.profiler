@@ -1,11 +1,8 @@
 
 export type InspectDOMElementMessage = string
 
-export type InspecDomElementsMessage = string[]
-
 type BrowserMessages = {
-    'inspect-element': InspectDOMElementMessage,
-    'inspect-elements': InspecDomElementsMessage
+    'inspect-element': InspectDOMElementMessage
 }
 
 export default BrowserMessages

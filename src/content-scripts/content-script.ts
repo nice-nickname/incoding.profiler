@@ -8,14 +8,6 @@ import RuntimeConnection, { BrowserConnection } from "@connection/RuntimeConnect
 
 const connection: BrowserConnection = new RuntimeConnection()
 
-function onWindowMessage({ source, data }: any) {
-    if (source !== window || !data) {
-        return;
-    }
-
-    connection.emit(data.type, data.payload)
-}
-
 connection.on('connected', () => {
     window.addEventListener('message', onWindowMessage)
 })
@@ -29,3 +21,11 @@ connection.on('inspect-element', elementId => {
 })
 
 connection.connect('content-script')
+
+function onWindowMessage({ source, data }: any) {
+    if (source !== window || !data) {
+        return;
+    }
+
+    connection.emit(data.type, data.payload)
+}
