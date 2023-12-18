@@ -5,22 +5,27 @@
  */
 
 import RuntimeConnection, { BrowserConnection } from "@connection/RuntimeConnection"
-import Message, { DevtoolsMessages } from "@connection/types";
-
 
 const connection: BrowserConnection = new RuntimeConnection()
 
-connection.connect('content-script')
-
-window.addEventListener('message', function({ source, data }) {
-    if (source !== this.window || !data) {
+function onWindowMessage({ source, data }: any) {
+    if (source !== window || !data) {
         return;
     }
-    const message = data as Message<DevtoolsMessages>
 
-    connection.emit(message.type, message.payload)
+    connection.emit(data.type, data.payload)
+}
+
+connection.on('connected', () => {
+    window.addEventListener('message', onWindowMessage)
+})
+
+connection.on('disconnected', () => {
+    window.removeEventListener('message', onWindowMessage)
 })
 
 connection.on('inspect-element', elementId => {
     window.inspect(document.querySelector(`data-profiler-id="${elementId}"`))
 })
+
+connection.connect('content-script')

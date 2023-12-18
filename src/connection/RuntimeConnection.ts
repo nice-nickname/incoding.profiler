@@ -1,7 +1,10 @@
 import Message, {
     BrowserMessages,
-    DevtoolsMessages
+    DevtoolsMessages,
+    SharedMessages
 } from "./types"
+
+type ListenMessages<T> = T & SharedMessages
 
 class RuntimeConnection<
     TListen extends object,
@@ -9,7 +12,7 @@ class RuntimeConnection<
 > {
 
     private connection: chrome.runtime.Port
-    private listeners: Partial<Record<keyof TListen, Function>> = {}
+    private listeners: Partial<Record<keyof ListenMessages<TListen>, Function>> = {}
 
     connect(tab: string) {
         this.connection = chrome.runtime.connect({ name: tab })
@@ -17,15 +20,19 @@ class RuntimeConnection<
         this.connection.onMessage.addListener(this.onMessage)
 
         this.connection.onDisconnect.addListener(() => {
+            this.onMessage({ type: "disconnected" })
+
             this.connection.onMessage.removeListener(this.onMessage)
         })
+
+        this.onMessage({ type: "connected" })
     }
 
     disconnect() {
         this.disconnect()
     }
 
-    on<Tkey extends keyof TListen>(type: Tkey, handler: (payload: TListen[Tkey]) => void) {
+    on<Tkey extends keyof ListenMessages<TListen>>(type: Tkey, handler: (payload: ListenMessages<TListen>[Tkey]) => void) {
         this.listeners[type] = handler
     }
 
@@ -38,7 +45,7 @@ class RuntimeConnection<
         this.connection.postMessage(message)
     }
 
-    private onMessage = (message: Message<TListen>) => {
+    private onMessage = (message: Message<ListenMessages<TListen>>) => {
         const handler = this.listeners[message.type]
 
         if (!handler) {

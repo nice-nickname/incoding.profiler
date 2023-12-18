@@ -52,7 +52,6 @@ export class IncodingProfilerDevtools extends LitElement {
 
     private startProfiler() {
         const tabId = String(chrome.devtools.inspectedWindow.tabId)
-        this.connection.connect(tabId)
 
         this.connection.on('event-execution-start', event => {
             store.dispatch(addEvent(event))
@@ -61,6 +60,8 @@ export class IncodingProfilerDevtools extends LitElement {
         this.connection.on('event-execution-finish', event => {
             store.dispatch(updateEvent(event))
         })
+
+        this.connection.connect(tabId)
 
         this.status = 'started'
     }
