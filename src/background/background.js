@@ -31,7 +31,7 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
 
     if (connectionPorts[tab] == undefined) {
         connectionPorts[tab] = {
-            debtools: null,
+            devtools: null,
             contentScript: null
         }
     }
