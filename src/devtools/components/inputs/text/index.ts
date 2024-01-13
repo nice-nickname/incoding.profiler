@@ -5,11 +5,11 @@ import { LitComponentElement } from "@devtools/components/lit-component";
 
 import styles from "./styles.css"
 
-export type SearchEventDetail = {
+export type ValueChangeEventDetail = {
     search: string
 }
 
-@customElement('input-search')
+@customElement('input-text')
 export class InputSearchElement extends LitComponentElement {
 
     static styles = [styles]
@@ -18,7 +18,7 @@ export class InputSearchElement extends LitComponentElement {
 
     @property({ type: Number }) delayMs: number = 100
 
-    @property() searchValue: string = ''
+    @property() value: string = ''
 
     @query('input') input: HTMLInputElement
 
@@ -26,19 +26,19 @@ export class InputSearchElement extends LitComponentElement {
         return html`
             <input type="text"
                 .placeholder=${this.placeholder}
-                .value=${live(this.searchValue)}
+                .value=${live(this.value)}
                 @input=${this.handleInput}
                 @keyup=${this.handleSearch} />
         `
     }
 
     private handleInput() {
-        this.searchValue = this.input.value
+        this.value = this.input.value
     }
 
     private handleSearch() {
-        this.fireEvent('search', {
-            search: this.searchValue
+        this.fireEvent('value-change', {
+            search: this.value
         })
     }
 }

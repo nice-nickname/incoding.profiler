@@ -16,10 +16,6 @@ connection.on('disconnected', () => {
     window.removeEventListener('message', onWindowMessage)
 })
 
-connection.on('inspect-element', elementId => {
-    window.inspect(document.querySelector(`data-profiler-id="${elementId}"`))
-})
-
 connection.connect('content-script')
 
 function onWindowMessage({ source, data }: any) {

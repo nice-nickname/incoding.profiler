@@ -1,9 +1,14 @@
 import "./action-marker"
-import "./time-marker"
-import "./icon"
 import "./profiler-event"
-import "./controls/button-icon"
-import "./controls/button-group"
-import "./controls/button-toggle"
-import "./inputs/search"
+import "./time-marker"
+
 import "./no-content"
+
+import "./icon"
+
+import "./inputs/text"
+
+import "./buttons/button-icon"
+import "./buttons/button-group"
+import "./buttons/button-toggle"
+

@@ -1,5 +1,5 @@
 import "@devtools/components"
-import '@devtools/pages/EventList/index'
+import '@devtools/pages/event-list/index'
 
 import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
@@ -7,7 +7,7 @@ import { choose } from "lit/directives/choose.js"
 import { provide } from "@lit/context";
 import resources from "@devtools/resources";
 import store from "./store";
-import { addEvent, updateEvent } from "./store/EventList/slice";
+import { addEvent, updateEvent } from "./store/event-list/slice";
 import RuntimeConnection, { DevtoolsConnection } from "@connection/RuntimeConnection";
 import runtimeConnectionCtx from "./context/connection";
 

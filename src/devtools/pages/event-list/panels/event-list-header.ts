@@ -7,10 +7,10 @@ import {
     resetSearch,
     resumeEvents,
     searchEvents
-} from '@devtools/store/EventList/slice';
+} from '@devtools/store/event-list/slice';
 import { debounce } from "@devtools/utils/debounce";
-import { ToggleEventDetails } from "@devtools/components/controls/button-toggle";
-import { SearchEventDetail } from "@devtools/components/inputs/search";
+import { ToggleEventDetails } from "@devtools/components/buttons/button-toggle";
+import { ValueChangeEventDetail } from "@devtools/components/inputs/text";
 
 
 @customElement('event-list-header')
@@ -51,10 +51,13 @@ export class EventListHeaderElement extends LitElement {
 
             <div class="separator"></div>
 
-            <input-search
-                placeholder="search..."
-                @search=${debounce(this.handleSearchEvents, 300)}>
-            </input-search>
+            <div>
+                <input-text
+                    placeholder="search..."
+                    @value-change=${debounce(this.handleSearch, 300)}
+                >
+                </input-text>
+            </div>
         `
     }
 
@@ -70,7 +73,7 @@ export class EventListHeaderElement extends LitElement {
         }
     }
 
-    private handleSearchEvents(ev: CustomEvent<SearchEventDetail>) {
+    private handleSearch(ev: CustomEvent<ValueChangeEventDetail>) {
         const search = ev.detail.search
 
         if (search !== '') {

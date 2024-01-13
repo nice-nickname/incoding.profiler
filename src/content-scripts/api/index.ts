@@ -1,8 +1,4 @@
 
-export type InspectDOMElementMessage = string
-
-type BrowserMessages = {
-    'inspect-element': InspectDOMElementMessage
-}
+type BrowserMessages = { }
 
 export default BrowserMessages

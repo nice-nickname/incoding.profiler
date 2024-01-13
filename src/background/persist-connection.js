@@ -14,11 +14,9 @@ function keepBackgroundAlive() {
     }
 }
 
-
 async function ping() {
     await chrome.storage.local.set({ '_': 'pong' + Date.now() })
 }
-
 
 export {
     keepBackgroundAlive

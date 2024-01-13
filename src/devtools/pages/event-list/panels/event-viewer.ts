@@ -1,9 +1,9 @@
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import JsonData from "@devtools/models/jsonData"
+import JsonData from "@devtools/types/json-data"
 import { RootState } from '@devtools/store';
 import StatefulLitElement from '@devtools/core/StatefulLItElement';
-import { selectSelectedJsonData } from '@devtools/store/EventViewer/selectors';
+import { selectSelectedJsonData } from '@devtools/store/event-viewer/selectors';
 import resources from '@devtools/resources';
 
 

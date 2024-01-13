@@ -1,4 +1,4 @@
-import JsonData from "@devtools/models/jsonData"
+import JsonData from "@devtools/types/json-data"
 import Actions from "./actions"
 
 export default interface IncodingEvent {

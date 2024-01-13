@@ -6,11 +6,12 @@ module.exports = (env) => {
 
     return {
         entry: {
-            loader: './src/index.js',
+            popup: './src/popup/index.ts',
             background: './src/background/background.js',
             devtools: './src/devtools/index.ts',
-            inject_profiler: './src/content-scripts/injection/inject-profiler.js',
-            content_script: './src/content-scripts/content-script.ts'
+            content_script: './src/content-scripts/content-script.ts',
+
+            inject_profiler: './src/content-scripts/injection/inject-profiler.js'
         },
         output: {
             filename: '[name].js',
@@ -21,7 +22,7 @@ module.exports = (env) => {
             alias: {
                 '@devtools': path.resolve(__dirname, 'src/devtools/'),
                 '@content-scripts': path.resolve(__dirname, 'src/content-scripts/'),
-                '@connection': path.resolve(__dirname, 'src/connection/')
+                '@connection': path.resolve(__dirname, 'src/shared/connection/')
             }
         },
         module: {

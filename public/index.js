@@ -1,7 +1,9 @@
 /**
  * Devtools panel initialization
  */
-chrome.devtools.panels.create('Incoding profiler', '', 'panel.html',
+
+
+chrome.devtools.panels.create('Incoding profiler', '', 'devtools.html',
     function(panel) {
 
     }
