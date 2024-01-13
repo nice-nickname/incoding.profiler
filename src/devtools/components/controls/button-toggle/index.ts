@@ -1,20 +1,25 @@
-import { LitElement, html } from "lit";
-import { customElement, queryAssignedElements, state } from "lit/decorators.js";
-import ButtonToggleEvent from "./ButtonToggleEvent";
+import { html } from "lit";
+import { customElement, property, queryAssignedElements, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js"
+import { LitComponentElement } from "@devtools/components/lit-component";
+
+import styles from "./styles.css"
+
+export type ToggleEventDetails = {
+    disabled: boolean
+}
 
 @customElement('btn-toggle')
-export class ButtonToggleElement extends LitElement {
+export class ButtonToggleElement extends LitComponentElement {
 
-    @state() enabled: boolean = true
+    static styles = [styles]
 
-    @queryAssignedElements({ slot: 'enabled' }) enabledButton: HTMLElement[]
-
-    @queryAssignedElements({ slot: 'disabled' }) disabledButton: HTMLElement[]
+    @property({ type: Boolean }) disabled: boolean = false
 
     protected render() {
         return html`
-            <slot name="enabled" @slotchange=${this.initSlot}></slot>
-            <slot name="disabled" @slotchange=${this.initSlot}></slot>
+            <slot class=${classMap({ hidden: this.disabled })} name="enabled"></slot>
+            <slot class=${classMap({ hidden: !this.disabled })} name="disabled"></slot>
         `
     }
 
@@ -30,23 +35,11 @@ export class ButtonToggleElement extends LitElement {
         this.removeEventListener('click', this.toggleEnabled)
     }
 
-    private initSlot() {
-        this.enabledButton.forEach(el => el.style.display = 'block')
-        this.disabledButton.forEach(el => el.style.display = 'none')
-    }
-
     private toggleEnabled() {
-        this.enabled = !this.enabled
+        this.disabled = !this.disabled
 
-        if (this.enabled) {
-            this.enabledButton.forEach(el => el.style.display = 'block')
-            this.disabledButton.forEach(el => el.style.display = 'none')
-        }
-        else {
-            this.enabledButton.forEach(el => el.style.display = 'none')
-            this.disabledButton.forEach(el => el.style.display = 'block')
-        }
-
-        this.dispatchEvent(new ButtonToggleEvent(this.enabled))
+        this.fireEvent<ToggleEventDetails>('toggle', {
+            disabled: this.disabled
+        })
     }
 }

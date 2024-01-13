@@ -1,6 +1,5 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js"
-import SearchEvent from '@devtools/components/inputs/search/SearchChangeEvent';
 import store from '@devtools/store';
 import {
     clearEvents,
@@ -9,7 +8,9 @@ import {
     resumeEvents,
     searchEvents
 } from '@devtools/store/EventList/slice';
-import ButtonToggleEvent from '@devtools/components/controls/button-toggle/ButtonToggleEvent';
+import { debounce } from "@devtools/utils/debounce";
+import { ToggleEventDetails } from "@devtools/components/controls/button-toggle";
+import { SearchEventDetail } from "@devtools/components/inputs/search";
 
 
 @customElement('event-list-header')
@@ -50,7 +51,10 @@ export class EventListHeaderElement extends LitElement {
 
             <div class="separator"></div>
 
-            <input-search placeholder="search..." @search=${this.onSearchEvents}></input-search>
+            <input-search
+                placeholder="search..."
+                @search=${debounce(this.handleSearchEvents, 300)}>
+            </input-search>
         `
     }
 
@@ -58,19 +62,19 @@ export class EventListHeaderElement extends LitElement {
         store.dispatch(clearEvents())
     }
 
-    private togglePauseEvents(ev: ButtonToggleEvent) {
-        if (ev.enabled) {
+    private togglePauseEvents(ev: CustomEvent<ToggleEventDetails>) {
+        if (!ev.detail.disabled) {
             store.dispatch(resumeEvents())
         } else {
             store.dispatch(pauseEvents())
         }
     }
 
-    private onSearchEvents(ev: SearchEvent) {
-        const searchValue = ev.value
+    private handleSearchEvents(ev: CustomEvent<SearchEventDetail>) {
+        const search = ev.detail.search
 
-        if (searchValue !== '') {
-            store.dispatch(searchEvents(searchValue))
+        if (search !== '') {
+            store.dispatch(searchEvents(search))
         } else {
             store.dispatch(resetSearch())
         }

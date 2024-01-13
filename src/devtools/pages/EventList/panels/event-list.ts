@@ -2,11 +2,12 @@ import { css, html } from "lit";
 import { customElement, state, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
 import IncodingEvent from "@devtools/models/incodingEvent";
-import { RootState } from "@devtools/store";
+import store, { RootState } from "@devtools/store";
 import scrollStyles from "@devtools/styles/scroll.css"
 import StatefulLitElement from "@devtools/core/StatefulLItElement";
 import { selectEvents } from "@devtools/store/EventList/selectors";
 import resources from "@devtools/resources";
+import { select } from "@devtools/store/EventViewer/slice";
 
 
 const styles = css`
@@ -43,7 +44,7 @@ export class EventListElement extends StatefulLitElement {
         const hasEvents = this.events.length != 0
 
         return html`
-            <div class="container" @mousewheel=${this.onMouseWheel}>
+            <div class="container" @mousewheel=${this.onMouseWheel} @data-selected=${this.onDataClick}>
                 ${hasEvents
                     ? this.renderList()
                     : this.renderEmpty()}
@@ -69,5 +70,9 @@ export class EventListElement extends StatefulLitElement {
         const containerScroll = this.container.scrollHeight - this.container.clientHeight
 
         this.scrollAttached = this.container.scrollTop === containerScroll;
+    }
+
+    private onDataClick(ev: CustomEvent<IncodingEvent>) {
+        store.dispatch(select(ev.detail))
     }
 }

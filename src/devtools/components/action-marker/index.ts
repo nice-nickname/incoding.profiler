@@ -1,12 +1,13 @@
-import { LitElement, html } from "lit";
+import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import Actions from "../../models/actions";
-import getColorByAction from "../../utils/actionColors";
+import Actions from "@devtools/models/actions";
+import getColorByAction from "@devtools/utils/actionColors";
+import { LitComponentElement } from "../lit-component";
 
 import styles from "./styles.css"
 
 @customElement('action-marker')
-export class ActionMarkerElement extends LitElement {
+export class ActionMarkerElement extends LitComponentElement {
 
     static styles = styles
 

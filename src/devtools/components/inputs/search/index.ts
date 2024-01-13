@@ -1,11 +1,16 @@
-import { LitElement, html } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
-import SearchEvent from "./SearchChangeEvent";
+import { html } from "lit";
+import { customElement, property, query, state } from "lit/decorators.js";
+import { live } from "lit/directives/live.js"
+import { LitComponentElement } from "@devtools/components/lit-component";
 
 import styles from "./styles.css"
 
+export type SearchEventDetail = {
+    search: string
+}
+
 @customElement('input-search')
-export class InputSearchElement extends LitElement {
+export class InputSearchElement extends LitComponentElement {
 
     static styles = [styles]
 
@@ -13,23 +18,27 @@ export class InputSearchElement extends LitElement {
 
     @property({ type: Number }) delayMs: number = 100
 
-    @query('input') searchInput: HTMLInputElement
+    @property() searchValue: string = ''
 
-    private delayTimeout: number
+    @query('input') input: HTMLInputElement
 
     protected render() {
         return html`
-            <input type="text" placeholder="${this.placeholder}" @keyup=${this.onsearch} />
+            <input type="text"
+                .placeholder=${this.placeholder}
+                .value=${live(this.searchValue)}
+                @input=${this.handleInput}
+                @keyup=${this.handleSearch} />
         `
     }
 
-    private onsearch(ev: KeyboardEvent) {
-        const value = this.searchInput.value
+    private handleInput() {
+        this.searchValue = this.input.value
+    }
 
-        clearTimeout(this.delayTimeout)
-
-        this.delayTimeout = window.setTimeout(() => {
-            this.dispatchEvent(new SearchEvent(value))
-        }, this.delayMs)
+    private handleSearch() {
+        this.fireEvent('search', {
+            search: this.searchValue
+        })
     }
 }

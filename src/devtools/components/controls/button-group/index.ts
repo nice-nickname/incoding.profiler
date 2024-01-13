@@ -1,8 +1,9 @@
-import { LitElement, css, html } from "lit";
+import { LitComponentElement } from "@devtools/components/lit-component";
+import { css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 
 @customElement('btn-group')
-export class ButtonGroupElement extends LitElement {
+export class ButtonGroupElement extends LitComponentElement {
 
     static styles = css`
         :host {

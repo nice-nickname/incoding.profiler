@@ -1,11 +1,10 @@
-import { LitElement, html } from "lit";
+import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-
 import resetButtonStyles from "@devtools/styles/reset-button.css"
-import ButtonClickEvent from "./ButtonClickEvent";
+import { LitComponentElement } from "@devtools/components/lit-component";
 
 @customElement('btn-icon')
-export class IconButtonElement extends LitElement {
+export class IconButtonElement extends LitComponentElement {
 
     static styles = [resetButtonStyles]
 
@@ -28,9 +27,5 @@ export class IconButtonElement extends LitElement {
                 <material-icon .icon=${this.icon} .color=${this.color} size="${this.size}"></material-icon>
             </button>
         `
-    }
-
-    private dispatchChange() {
-        this.dispatchEvent(new ButtonClickEvent())
     }
 }
