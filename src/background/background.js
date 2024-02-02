@@ -45,15 +45,23 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
 
 
 async function dynamiclyInjectContentScript() {
-    const scriptsToInject = [
-        {
-            id: 'inject-profiler',
-            matches: ['<all_urls>'],
-            js: ['inject_profiler.js'],
-            world: 'MAIN',
-            runAt: 'document_end'
-        }
-    ]
+    const scriptsToInject =
+        __FIREFOX__ ? [
+            {
+                id: 'inject-profiler',
+                matches: ['<all_urls>'],
+                js: ['inject_profiler.js'],
+                runAt: 'document_end'
+            }
+        ] : [
+            {
+                id: 'inject-profiler',
+                matches: ['<all_urls>'],
+                js: ['inject_profiler.js'],
+                world: 'MAIN',
+                runAt: 'document_end'
+            }
+        ]
 
     try {
         await chrome.scripting.unregisterContentScripts()

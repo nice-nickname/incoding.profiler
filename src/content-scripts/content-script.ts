@@ -8,6 +8,17 @@ import RuntimeConnection, { BrowserConnection } from "@connection/RuntimeConnect
 
 const connection: BrowserConnection = new RuntimeConnection()
 
+fetch(chrome.runtime.getURL('inject_profiler.js'))
+    .then(res => res.text())
+    .then(code => {
+        const script = document.createElement('script')
+
+        script.innerHTML = code
+
+        document.body.appendChild(script)
+    })
+    .catch(alert)
+
 connection.on('connected', () => {
     window.addEventListener('message', onWindowMessage)
 })

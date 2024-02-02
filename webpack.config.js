@@ -1,8 +1,14 @@
 const path = require('path')
+const webpack = require('webpack')
 const PrebuildExtensionPlugin = require('./platforms/PrebuildExtensionPlugin')
 
 module.exports = (env) => {
-    const plugin = new PrebuildExtensionPlugin(env.mode, env.platform)
+    const buildPlugin = new PrebuildExtensionPlugin(env.mode, env.platform)
+    const definePlugin = new webpack.DefinePlugin({
+        __FIREFOX__: buildPlugin.platform === 'firefox',
+        __CHROME__: buildPlugin.platform === 'chrome',
+        __EDGE__: buildPlugin.platform === 'edge'
+    })
 
     return {
         entry: {
@@ -15,7 +21,7 @@ module.exports = (env) => {
         },
         output: {
             filename: '[name].js',
-            path: plugin.getDestinationPath()
+            path: buildPlugin.getDestinationPath()
         },
         resolve: {
             extensions: ['.js', '.ts'],
@@ -41,6 +47,6 @@ module.exports = (env) => {
                 }
             ],
         },
-        plugins: [plugin]
+        plugins: [buildPlugin, definePlugin]
     }
 }
