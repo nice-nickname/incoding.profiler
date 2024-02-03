@@ -29,7 +29,7 @@ class RuntimeConnection<
     }
 
     disconnect() {
-        this.disconnect()
+        this.connection.disconnect()
     }
 
     emit<TKey extends keyof TEmit>(type: TKey, payload: TEmit[TKey]) {
