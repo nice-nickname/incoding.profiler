@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "incoding.profiler",
+  "description": "Devtools extension for profiling incoding.framework.js",
+
+  "version": "1.0",
+  "devtools_page": "index.html",
+
+  "page_action": {
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+
+  "content_scripts": [
+    {
+      "js": ["content_script.js"],
+      "run_at": "document_start",
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "permissions": [
+    "activeTab", "scripting", "storage",
+    "<all_urls>"
+  ]
+}

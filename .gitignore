@@ -130,6 +130,5 @@ dist
 .pnp.*
 
 # public build files
-public/*.js
-public/*LICENSE*
-public/*.map
+debug/
+release/

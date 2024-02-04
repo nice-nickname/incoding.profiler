@@ -1,5 +1,5 @@
 import { LitElement } from "lit";
-import store, { RootState } from "../store";
+import store, { RootState } from "@devtools/store";
 import { Unsubscribe } from "@reduxjs/toolkit";
 
 export default class StatefulLitElement extends LitElement {

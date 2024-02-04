@@ -1,0 +1,35 @@
+name: 'Build release'
+inputs:
+  target:
+    description: 'target browser to build'
+    required: true
+    default: 'World'
+
+  upload-url:
+    description: 'upload url for release'
+    required: true
+
+  github-token:
+    description: 'github token'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: build devtools
+      run: npm run prod:${{ inputs.target }}
+      shell: bash
+
+    - name: archive build
+      run: |
+        zip -q -r -9 incoding.profiler.${{ inputs.target }}.zip release/${{ inputs.target }}
+      shell: bash
+
+    - name: upload zip asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      with:
+        upload_url: ${{ inputs.upload-url }}
+        asset_path: ./incoding.profiler.${{ inputs.target }}.zip
+        asset_name: incoding.profiler.${{ inputs.target }}.zip
+        asset_content_type: application/zip

@@ -17,5 +17,13 @@
 
     "strict": true,
     "strictPropertyInitialization": false,
+
+    "baseUrl": "./",
+    "paths": {
+      "@devtools/*": ["./src/devtools/*"],
+      "@content-scripts/*": ["./src/content-scripts/*"],
+      "@connection/*": ["./src/shared/connection/*"]
+    },
+    "resolveJsonModule": true
   }
 }

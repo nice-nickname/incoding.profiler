@@ -1,23 +1,49 @@
-## incoding.profiler
+# incoding.profiler
 
-Profiling devtools for [Incoding.Framework](https://github.com/Incoding-Software/Incoding-Framework).
+> Profiling devtools for [Incoding.Framework](https://github.com/Incoding-Software/Incoding-Framework).
+
 
 ## Browser support
-This exntesion supports only __Chrome 88__ or later (due to Manifet V3)
+This extension uses [Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/) and currently supports this browsers:
+
+- Chrome
+- Microsoft Edge (Chrome)
 
 ## Installation
 
-Download latest build archive from [latest release](https://github.com/nice-nickname/incoding.profiler/releases/latest).
+You can download latest build archive for all available platforms from [latest release](https://github.com/nice-nickname/incoding.profiler/releases/latest).
 
-Eiter you can clone this repo and make your own build with following commands (requires [node and npm](https://nodejs.org)):
+But, if you want to create your own build, you'll need to run following commands:
+
 ```bash
-cd incoding profiler 
+# Install dependencies
 npm ci
-npm run build
+
+# Build extension in production mode
+npm run prod:<your_browser>
 ```
 
-Then, if build succeeded follow this steps:
-- Open browser extensions
-- Select __Manage extensions__
-- Check __Developer mode__ 
-- Click __Load unpacked__ and select build folder
+The above command will build the app in production mode, output files are placed in `prod/<your_browser>` folder.
+
+## Run development mode
+
+In order to build the app for development, run the following command:
+
+```bash
+# Run build and watch for changes
+npm run dev:<your_browser>
+```
+
+This will build extension in developer mode and watch for local changes. Use this option only if you want to make any changes in extension sources. Output files will be in `debug/<your_browser>` folder.
+
+## Installation in browser
+
+After you downloaded latest release and choosed desired browser (or created your own build), use output folder with source files and follow these steps:
+- Open browser extensions manager
+- Select **Manage extensions**
+- Check **Developer mode**
+- Click **Load packed** and select build folder
+
+### Reloading extension in development mode
+
+If you're running **development** mode, and there is code changes to be applied, just re-open browser devtools, and all files will be updated.

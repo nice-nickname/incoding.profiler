@@ -1,13 +1,14 @@
-import { LitElement, html } from "lit";
+import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js"
-import IncodingEvent from '../../models/incodingEvent';
-import { select } from '../../store/EventViewer/slice';
-import store from '../../store';
+import IncodingEvent from '@devtools/types/incoding-event';
+import { LitComponentElement } from "../lit-component";
 
 import styles from "./styles.css"
 
+
+
 @customElement('profiler-event')
-export class ProfilerEventElement extends LitElement {
+export class ProfilerEventElement extends LitComponentElement {
 
     static styles = styles
 
@@ -17,20 +18,15 @@ export class ProfilerEventElement extends LitElement {
 
     protected render() {
         return html`
-            <div class="event" @click="${this._click}">
+            <div class="event" @click="${this.handleClick}">
                 <action-marker .action=${this.data.action}></action-marker>
-                <time-marker timeInMs="${this.data.executionTimeMs!}"></time-marker>
+                <time-marker .timeInMs=${this.data.executionTimeMs}></time-marker>
                 <div>${this.data.eventName}</div>
-                <div class="button-group">
-                    <button>jsonData</button>
-                    <button>self</button>
-                    <button>target</button>
-                </div>
             </div>
         `
     }
 
-    _click() {
-        store.dispatch(select(this.data))
+    private handleClick() {
+        this.fireEvent('data-selected', this.data)
     }
 }

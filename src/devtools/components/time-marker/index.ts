@@ -1,8 +1,9 @@
-import { LitElement, html } from "lit";
+import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { LitComponentElement } from "../lit-component";
 
 @customElement('time-marker')
-export class TimeMarkerElement extends LitElement {
+export class TimeMarkerElement extends LitComponentElement {
 
     @property({ type: Number })
     public timeInMs?: number | undefined
