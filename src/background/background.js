@@ -10,9 +10,9 @@ import { keepBackgroundAlive } from "./persist-connection"
 
 const connectionPorts = {}
 
-const killBackground = keepBackgroundAlive()
-
-dynamiclyInjectContentScript()
+if (!__FIREFOX__) {
+    keepBackgroundAlive()
+}
 
 chrome.runtime.onConnect.addListener(function onConnect(port) {
     let name = null
@@ -21,8 +21,6 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
     if (Number.isInteger(+port.name)) {
         name = 'devtools'
         tab = +port.name
-
-        installContentScript(tab)
     }
     else {
         name = 'contentScript'
@@ -42,54 +40,6 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
         establishBidirectionalConnection(tab, connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
     }
 })
-
-
-async function dynamiclyInjectContentScript() {
-    const scriptsToInject =
-        __FIREFOX__ ? [
-            {
-                id: 'inject-profiler',
-                matches: ['<all_urls>'],
-                js: ['inject_profiler.js'],
-                runAt: 'document_end'
-            }
-        ] : [
-            {
-                id: 'inject-profiler',
-                matches: ['<all_urls>'],
-                js: ['inject_profiler.js'],
-                world: 'MAIN',
-                runAt: 'document_end'
-            }
-        ]
-
-    try {
-        await chrome.scripting.unregisterContentScripts()
-        await chrome.scripting.registerContentScripts(scriptsToInject)
-    }
-    catch (error) {
-        console.error(error)
-    }
-}
-
-
-async function installContentScript(tab) {
-    const contentScript = {
-        files: ['content_script.js'],
-        target: {
-            tabId: tab
-        },
-        world: "ISOLATED"
-    }
-
-    try {
-        await chrome.scripting.executeScript(contentScript)
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
-
 
 function establishBidirectionalConnection(tabId, one, two) {
     const listen = (anotherPort) => function (message) {
@@ -122,7 +72,5 @@ function establishBidirectionalConnection(tabId, one, two) {
         two.disconnect();
 
         connectionPorts[tabId] = null;
-
-        killBackground()
     }
 }

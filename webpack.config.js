@@ -13,10 +13,9 @@ module.exports = (env) => {
     return {
         entry: {
             popup: './src/popup/index.ts',
-            background: './src/background/background.js',
             devtools: './src/devtools/index.ts',
+            background: './src/background/background.js',
             content_script: './src/content-scripts/content-script.ts',
-
             inject_profiler: './src/content-scripts/injection/inject-profiler.js'
         },
         output: {

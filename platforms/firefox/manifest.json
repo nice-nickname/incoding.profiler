@@ -11,8 +11,17 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": true
   },
+
+  "content_scripts": [
+    {
+      "js": ["content_script.js"],
+      "run_at": "document_start",
+      "matches": ["<all_urls>"]
+    }
+  ],
 
   "permissions": [
     "activeTab", "scripting", "storage",
