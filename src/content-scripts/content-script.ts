@@ -18,11 +18,13 @@ connection.on('disconnected', () => {
 
 document.onreadystatechange = () => {
     if (document.readyState === 'interactive') {
+        connection.connect('content-script')
+
         injectProfilerToPage()
     }
 
     if (document.readyState === 'complete') {
-        connection.connect('content-script')
+        connection.emit('refresh')
     }
 };
 

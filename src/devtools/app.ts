@@ -7,7 +7,7 @@ import { choose } from "lit/directives/choose.js"
 import { provide } from "@lit/context";
 import resources from "@devtools/resources";
 import store from "./store";
-import { addEvent, updateEvent } from "./store/event-list/slice";
+import { addEvent, clearEvents, updateEvent } from "./store/event-list/slice";
 import RuntimeConnection, { DevtoolsConnection } from "@connection/RuntimeConnection";
 import runtimeConnectionCtx from "./context/connection";
 
@@ -59,6 +59,10 @@ export class IncodingProfilerDevtools extends LitElement {
 
         this.connection.on('event-execution-finish', event => {
             store.dispatch(updateEvent(event))
+        })
+
+        this.connection.on('refresh', () => {
+            store.dispatch(clearEvents())
         })
 
         this.connection.connect(tabId)

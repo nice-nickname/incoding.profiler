@@ -32,7 +32,7 @@ class RuntimeConnection<
         this.connection.disconnect()
     }
 
-    emit<TKey extends keyof TEmit>(type: TKey, payload: TEmit[TKey]) {
+    emit<TKey extends keyof TEmit>(type: TKey, payload?: TEmit[TKey]) {
         const message: Message<TEmit> = {
             type: type,
             payload: payload
