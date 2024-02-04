@@ -41,7 +41,10 @@ class RuntimeConnection<
         this.connection.postMessage(message)
     }
 
-    on<Tkey extends keyof ListenMessages<TListen>>(type: Tkey, handler: (payload: ListenMessages<TListen>[Tkey]) => void) {
+    on<Tkey extends keyof ListenMessages<TListen>>(
+        type: Tkey,
+        handler: (payload: ListenMessages<TListen>[Tkey]) => void) {
+
         this.listeners[type] = handler
     }
 

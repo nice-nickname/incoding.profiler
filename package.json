@@ -6,10 +6,12 @@
   "scripts": {
     "prod:chrome": "npx webpack build --mode production --env mode=release --env platform=chrome",
     "prod:edge": "npx webpack build --mode production --env mode=release --env platform=edge",
-    "prod:firefox": "npx webpack build --mode production --env mode=release --env platform=edge",
+    "prod:firefox": "npx webpack build --mode production --env mode=release --env platform=firefox",
+
     "dev:chrome": "npx webpack watch --mode production -d source-map --env mode=debug --env platform=chrome",
     "dev:edge": "npx webpack watch --mode production -d source-map --env mode=debug --env platform=edge",
     "dev:firefox": "npx webpack watch --mode production -d source-map --env mode=debug --env platform=firefox",
+
     "lint": "eslint src/",
     "lintfix": "eslint src/ --fix"
   },
