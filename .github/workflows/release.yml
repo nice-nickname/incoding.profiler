@@ -42,13 +42,22 @@ jobs:
           prerelease: false
 
       - name: create chrome release
-        uses: ./.github/workflows/build-release.yml
-        env:
-          TARGET: chrome
-          UPLOAD_URL: ${{ steps.create_release.outputs.upload_url }}
+        uses: ./.github/actions/build-release
+        with:
+          target: chrome
+          upload-url: ${{ steps.create_release.outputs.upload_url }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: create chrome release
-        uses: ./.github/workflows/build-release.yml
-        env:
-          TARGET: edge
-          UPLOAD_URL: ${{ steps.create_release.outputs.upload_url }}
+        uses: ./.github/actions/build-release
+        with:
+          target: edge
+          upload-url: ${{ steps.create_release.outputs.upload_url }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: create chrome release
+        uses: ./.github/actions/build-release
+        with:
+          target: firefox
+          upload-url: ${{ steps.create_release.outputs.upload_url }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
