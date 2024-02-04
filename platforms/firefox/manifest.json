@@ -24,7 +24,9 @@
   ],
 
   "permissions": [
-    "activeTab", "scripting", "storage",
+    "activeTab",
+    "scripting",
+    "storage",
     "<all_urls>"
   ]
 }

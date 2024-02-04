@@ -8,6 +8,7 @@ This extension uses [Manifest V3](https://developer.chrome.com/docs/extensions/m
 
 - Chrome
 - Microsoft Edge (Chrome)
+- Firefox 
 
 ## Installation
 
