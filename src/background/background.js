@@ -37,40 +37,35 @@ chrome.runtime.onConnect.addListener(function onConnect(port) {
     connectionPorts[tab][name] = port
 
     if (connectionPorts[tab].devtools != null && connectionPorts[tab].contentScript != null) {
-        establishBidirectionalConnection(tab, connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
+        establishConnection(connectionPorts[tab].devtools, connectionPorts[tab].contentScript)
     }
 })
 
-function establishBidirectionalConnection(tabId, one, two) {
-    const listen = (anotherPort) => function (message) {
+function establishConnection(one, two) {
+    const processMessageTo = (other) => function (message) {
         try {
-            anotherPort.postMessage(message)
+            other.postMessage(message)
         }
         catch (error) {
             console.error(error)
-            shutdown()
+
+            other.disconnect()
         }
     }
 
-    const listenerOne = listen(two)
-    const listenerTwo = listen(one)
-
-    one.onMessage.addListener(listenerOne)
-    two.onMessage.addListener(listenerTwo)
-
-
-    one.onDisconnect.addListener(shutdown);
-    two.onDisconnect.addListener(shutdown);
-
-
-    function shutdown() {
-        console.warn('devtools connection shutdown')
-
-        one.onMessage.removeListener(listenerOne);
-        two.onMessage.removeListener(listenerTwo);
-        one.disconnect();
-        two.disconnect();
-
-        connectionPorts[tabId] = null;
+    const shutdown = (port, listener) => function () {
+        port.onMessage.removeListener(listener)
     }
+
+    const listenOne = processMessageTo(two)
+    const listenTwo = processMessageTo(one)
+
+    const shutdownOne = shutdown(one, listenOne)
+    const shutdownTwo = shutdown(two, listenTwo)
+
+    one.onMessage.addListener(listenOne)
+    two.onMessage.addListener(listenTwo)
+
+    one.onDisconnect.addListener(shutdownOne)
+    two.onDisconnect.addListener(shutdownTwo)
 }
