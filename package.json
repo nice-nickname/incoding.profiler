@@ -7,11 +7,9 @@
     "prod:chrome": "npx webpack build --mode production --env mode=release --env platform=chrome",
     "prod:edge": "npx webpack build --mode production --env mode=release --env platform=edge",
     "prod:firefox": "npx webpack build --mode production --env mode=release --env platform=firefox",
-
     "dev:chrome": "npx webpack watch --mode production -d source-map --env mode=debug --env platform=chrome",
     "dev:edge": "npx webpack watch --mode production -d source-map --env mode=debug --env platform=edge",
     "dev:firefox": "npx webpack watch --mode production -d source-map --env mode=debug --env platform=firefox",
-
     "lint": "eslint src/",
     "lintfix": "eslint src/ --fix"
   },
@@ -21,6 +19,7 @@
     "@types/chrome": "^0.0.243",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
+    "chalk": "^4.1.2",
     "eslint": "^8.49.0",
     "fs-extra": "^11.1.1",
     "lit-css-loader": "^2.0.1",

@@ -1,9 +1,9 @@
 const path = require('path')
 const webpack = require('webpack')
-const PrebuildExtensionPlugin = require('./platforms/PrebuildExtensionPlugin')
+const PrebuildWebpackPlugin = require('./platforms/prebuild-webpack-plugin')
 
 module.exports = (env) => {
-    const buildPlugin = new PrebuildExtensionPlugin(env.mode, env.platform)
+    const buildPlugin = new PrebuildWebpackPlugin(env.mode, env.platform)
     const definePlugin = new webpack.DefinePlugin({
         __FIREFOX__: buildPlugin.platform === 'firefox',
         __CHROME__: buildPlugin.platform === 'chrome',

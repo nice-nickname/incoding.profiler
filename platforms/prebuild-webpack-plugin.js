@@ -1,15 +1,16 @@
 const path = require('path')
 const fse = require('fs-extra')
+const chalk = require('chalk')
 
 const pluginName = 'prebuild-extension-plugin'
 
-module.exports = class PrebuildExtensionPlugin {
+module.exports = class PrebuildWebpackPlugin {
 
     constructor(mode, platform) {
         this.mode = this.validateMode(mode)
         this.platform = this.validatePlatform(platform)
 
-        console.log(`incoding.profiler started in '${this.mode}' mode, target platform '${this.platform}'`)
+        this.welcome()
     }
 
     apply(compiler) {
@@ -49,5 +50,14 @@ module.exports = class PrebuildExtensionPlugin {
         }
 
         return platform
+    }
+
+    welcome() {
+        const mode = chalk.bold(chalk.greenBright(this.mode))
+        const platform = chalk.bold(chalk.yellowBright(this.platform))
+
+        console.log(
+            `incoding.profiler started in ${mode} mode, target platform ${platform}\n`
+        )
     }
 }
