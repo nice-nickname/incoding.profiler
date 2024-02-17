@@ -1,4 +1,4 @@
-import IncodingEvent from "@devtools/types/incoding-event"
+import { IncodingEvent } from "src/types"
 
 export type IncodingEventMessage =
     Omit<IncodingEvent, 'executionTimeMs'>

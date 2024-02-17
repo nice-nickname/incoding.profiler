@@ -1,4 +1,4 @@
-type Actions =
+export type Actions =
     'Direct' |
     'Eval' |
     'Ajax' |
@@ -15,5 +15,3 @@ type Actions =
     'Bind' |
     'Validation parse' |
     'Validation Refresh'
-
-export default Actions

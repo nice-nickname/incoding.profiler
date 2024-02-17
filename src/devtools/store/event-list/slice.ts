@@ -1,9 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import IncodingEvent from "@devtools/types/incoding-event";
 import {
     IncodingEventExecutedMessage,
     IncodingEventMessage
 } from "@devtools/api";
+import {
+    IncodingEvent
+} from "src/types";
 
 interface EventListState {
     events: IncodingEvent[],

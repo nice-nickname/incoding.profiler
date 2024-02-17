@@ -1,7 +1,8 @@
-import JsonData from "@devtools/types/json-data"
-import Actions from "./actions"
+import { Actions } from "./actions"
+import { JsonData } from "./json-data"
 
-export default interface IncodingEvent {
+
+export interface IncodingEvent {
     uuid: string
     jsonData: JsonData | null
 

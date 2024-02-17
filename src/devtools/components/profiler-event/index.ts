@@ -1,11 +1,9 @@
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js"
-import IncodingEvent from '@devtools/types/incoding-event';
+import { IncodingEvent } from 'src/types';
 import { LitComponentElement } from "../lit-component";
 
 import styles from "./styles.css"
-
-
 
 @customElement('profiler-event')
 export class ProfilerEventElement extends LitComponentElement {

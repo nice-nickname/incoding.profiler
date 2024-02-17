@@ -1,13 +1,13 @@
 import { css, html } from "lit";
 import { customElement, state, query } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js"
-import IncodingEvent from "@devtools/types/incoding-event";
 import store, { RootState } from "@devtools/store";
 import scrollStyles from "@devtools/styles/scroll.css"
-import StatefulLitElement from "@devtools/core/StatefulLItElement";
+import StatefulLitElement from "@devtools/components/stateful-lit-component";
 import { selectEvents } from "@devtools/store/event-list/selectors";
 import resources from "@devtools/resources";
 import { select } from "@devtools/store/event-viewer/slice";
+import { IncodingEvent } from "src/types";
 
 
 const styles = css`

@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import Actions from "@devtools/types/actions";
 import getColorByAction from "@devtools/utils/actionColors";
+import { Actions } from "src/types";
 import { LitComponentElement } from "../lit-component";
 
 import styles from "./styles.css"

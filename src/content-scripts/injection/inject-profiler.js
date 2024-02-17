@@ -4,7 +4,7 @@
  * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
 
-import { jqueryToSelector, uuidv4 } from "../../utils"
+import { jqueryToSelector, uuidv4 } from "./utils"
 
 /* eslint-disable */
 

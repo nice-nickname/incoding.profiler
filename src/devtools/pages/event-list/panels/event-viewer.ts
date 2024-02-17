@@ -1,10 +1,10 @@
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import JsonData from "@devtools/types/json-data"
 import { RootState } from '@devtools/store';
-import StatefulLitElement from '@devtools/core/StatefulLItElement';
+import StatefulLitElement from '@devtools/components/stateful-lit-component';
 import { selectSelectedJsonData } from '@devtools/store/event-viewer/selectors';
 import resources from '@devtools/resources';
+import { JsonData } from "src/types";
 
 
 @customElement('event-viewer')

@@ -1,4 +1,4 @@
-import Actions from "@devtools/types/actions";
+import { Actions } from "src/types"
 
 const actionColors: { [key in Actions]: string } = {
     'Direct': 'rgb(238, 238, 238)',
