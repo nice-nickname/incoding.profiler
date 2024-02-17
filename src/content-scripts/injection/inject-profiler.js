@@ -4,12 +4,12 @@
  * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
 
-import { jqueryToSelector, uuidv4 } from "./utils"
+import { jqueryToSelector, uuid } from "./utils"
 
 /* eslint-disable */
 
 function interceptExecute(current, state) {
-    const messageId = uuidv4()
+    const messageId = uuid()
 
     window.postMessage({
         type: 'event-execution-start',

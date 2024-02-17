@@ -1,14 +1,11 @@
+import { nanoid } from "nanoid";
+
 /**
- * Custom implementation of GUIDs due to crypto.randomUUID inaccessibility
- * in devtools
  * @returns string
  * @see http://guid.us/GUID/JavaScript
  */
-export function uuidv4() {
-    function S4() {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    }
-    return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
+export function uuid() {
+    return nanoid(10)
 }
 
 
@@ -40,7 +37,7 @@ export function jqueryToSelector(elements) {
         }
 
         if (!el.hasAttribute(PROFILER_ELEMENT_Id)) {
-            el.setAttribute(PROFILER_ELEMENT_Id, uuidv4())
+            el.setAttribute(PROFILER_ELEMENT_Id, uuid())
         }
         return el.getAttribute(PROFILER_ELEMENT_Id)
     }
