@@ -8,6 +8,9 @@ import { selectEvents } from "@devtools/store/event-list/selectors";
 import resources from "@devtools/resources";
 import { select } from "@devtools/store/event-viewer/slice";
 import { IncodingEvent } from "src/types";
+import { consume } from "@lit/context";
+import runtimeConnectionCtx from "@devtools/context/connection";
+import { DevtoolsConnection } from "@connection/RuntimeConnection";
 
 
 const styles = css`

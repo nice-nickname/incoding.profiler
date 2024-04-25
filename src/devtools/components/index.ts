@@ -1,6 +1,7 @@
 import "./action-marker"
 import "./profiler-event"
 import "./time-marker"
+import "./tag-link"
 
 import "./no-content"
 

@@ -29,7 +29,9 @@ export function jqueryToSelector(elements) {
         }
     }
 
-    return result
+    return result.length === 1 ?
+        result[0] :
+        result
 
     function toSelector(el) {
         if (!('hasAttribute' in el)) {
@@ -39,7 +41,12 @@ export function jqueryToSelector(elements) {
         if (!el.hasAttribute(PROFILER_ELEMENT_Id)) {
             el.setAttribute(PROFILER_ELEMENT_Id, uuid())
         }
-        return el.getAttribute(PROFILER_ELEMENT_Id)
+        return {
+            profilerId: el.getAttribute(PROFILER_ELEMENT_Id),
+            classes: Array.from(el.classList),
+            id: el.id,
+            tagName: el.tagName.toLowerCase()
+        }
     }
 }
 

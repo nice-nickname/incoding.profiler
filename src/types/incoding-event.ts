@@ -1,6 +1,6 @@
 import { Actions } from "./actions"
 import { JsonData } from "./json-data"
-
+import { Tag } from "./tag"
 
 export interface IncodingEvent {
     uuid: string
@@ -9,7 +9,7 @@ export interface IncodingEvent {
     action: Actions
     eventName: string
 
-    self: string[]
-    target?: string[]
+    self: Tag
+    target?: Tag[]
     executionTimeMs?: number
 }

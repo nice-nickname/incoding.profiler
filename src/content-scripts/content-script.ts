@@ -16,6 +16,14 @@ connection.on('disconnected', () => {
     window.removeEventListener('message', onWindowMessage)
 })
 
+function onWindowMessage({ source, data }: any) {
+    if (source !== window || !data) {
+        return;
+    }
+
+    connection.emit(data.type, data.payload)
+}
+
 document.onreadystatechange = () => {
     if (document.readyState === 'interactive') {
         connection.connect('content-script')
@@ -27,14 +35,6 @@ document.onreadystatechange = () => {
         connection.emit('refresh')
     }
 };
-
-function onWindowMessage({ source, data }: any) {
-    if (source !== window || !data) {
-        return;
-    }
-
-    connection.emit(data.type, data.payload)
-}
 
 /**
  * Firefox manifest does not support executionWorld.MAIN, so we have to

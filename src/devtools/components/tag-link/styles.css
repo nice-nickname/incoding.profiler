@@ -1,0 +1,16 @@
+pre {
+    all: unset;
+    font-family: 'Consolas';
+}
+
+.tag, .brace {
+    color: var(--code-token-tagName);
+}
+
+.classList {
+    color: var(--code-token-classList);
+}
+
+.id {
+    color: var(--code-token-id);
+}
