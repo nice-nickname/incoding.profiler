@@ -50,6 +50,10 @@
     --icon-color: #c7c7c7;
     --icon-color-hover: #e8eaed;
     --icon-color-active: #e8eaed;
+
+    --code-token-tagName: #6eaceb;
+    --code-token-classList: #fe8d59;
+    --code-token-id: #fe8d59;
 }
 
 html {

@@ -12,19 +12,29 @@ export class ProfilerEventElement extends LitComponentElement {
 
     @property({ type: Object }) data: IncodingEvent
 
-    @query('.event') eventElement: HTMLElement;
-
     protected render() {
+        console.log(this.data)
+
         return html`
             <div class="event" @click="${this.handleClick}">
                 <action-marker .action=${this.data.action}></action-marker>
                 <time-marker .timeInMs=${this.data.executionTimeMs}></time-marker>
                 <div>${this.data.eventName}</div>
+
+                <tag-link .tag=${this.data.self} @click=${this.handleInspectSelf}></tag-link>
             </div>
         `
     }
 
     private handleClick() {
         this.fireEvent('data-selected', this.data)
+    }
+
+    private handleInspectSelf() {
+        const element = `$('[data-profiler-id="${this.data.self.profilerId}"]')[0]`
+
+        chrome.devtools.inspectedWindow.eval(`inspect(${element})`, function(res, err) {
+            console.log(res, err, element)
+        })
     }
 }
