@@ -3,7 +3,6 @@ inputs:
   target:
     description: 'target browser to build'
     required: true
-    default: 'World'
 
   upload-url:
     description: 'upload url for release'
