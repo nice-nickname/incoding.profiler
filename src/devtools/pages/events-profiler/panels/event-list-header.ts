@@ -1,5 +1,5 @@
-import { LitElement, css, html } from "lit";
-import { customElement } from "lit/decorators.js"
+import { ToggleEventDetails } from "@devtools/components/buttons/button-toggle/button-toggle";
+import { ValueChangeEventDetail } from "@devtools/components/inputs/text/input-text";
 import store from '@devtools/store';
 import {
     clearEvents,
@@ -9,8 +9,8 @@ import {
     searchEvents
 } from '@devtools/store/event-list/slice';
 import { debounce } from "@devtools/utils/debounce";
-import { ToggleEventDetails } from "@devtools/components/buttons/button-toggle";
-import { ValueChangeEventDetail } from "@devtools/components/inputs/text";
+import { LitElement, css, html } from "lit";
+import { customElement } from "lit/decorators.js";
 
 
 @customElement('event-list-header')
@@ -66,7 +66,7 @@ export class EventListHeaderElement extends LitElement {
     }
 
     private togglePauseEvents(ev: CustomEvent<ToggleEventDetails>) {
-        if (!ev.detail.disabled) {
+        if (!ev.detail.enabled) {
             store.dispatch(resumeEvents())
         } else {
             store.dispatch(pauseEvents())

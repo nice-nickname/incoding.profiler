@@ -1,16 +1,15 @@
-import "@devtools/components"
-import '@devtools/pages/event-list/index'
-
+import RuntimeConnection, { DevtoolsConnection } from "@connection/RuntimeConnection";
+import runtimeConnectionCtx from "@devtools/context/connection";
+import resources from "@devtools/resources";
+import store from "@devtools/store";
+import { addEvent, clearEvents, updateEvent } from "@devtools/store/event-list/slice";
+import { provide } from "@lit/context";
 import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { choose } from "lit/directives/choose.js"
-import { provide } from "@lit/context";
-import resources from "@devtools/resources";
-import store from "./store";
-import { addEvent, clearEvents, updateEvent } from "./store/event-list/slice";
-import RuntimeConnection, { DevtoolsConnection } from "@connection/RuntimeConnection";
-import runtimeConnectionCtx from "./context/connection";
+import { choose } from "lit/directives/choose.js";
 
+import "@devtools/components";
+import '@devtools/pages';
 
 @customElement('incoding-profiler-devtools')
 export class IncodingProfilerDevtools extends LitElement {
@@ -35,6 +34,16 @@ export class IncodingProfilerDevtools extends LitElement {
         this.connection.disconnect()
 
         this.status = 'loading'
+    }
+
+    protected render() {
+        return html`
+            ${choose(this.status, [
+            ['loading', () => html`${resources.profiler_loading}`],
+            ['failed', () => html`${resources.no_incoding_framework_found}`],
+            ['started', () => html`<pages-layout></pages-layout>`],
+        ])}
+        `
     }
 
     private checkIncodingFrameworkAndStart() {
@@ -68,27 +77,5 @@ export class IncodingProfilerDevtools extends LitElement {
         this.connection.connect(tabId)
 
         this.status = 'started'
-    }
-
-    protected render() {
-        return html`
-            ${choose(this.status, [
-                ['loading', this.renderLoading],
-                ['started', this.renderContent],
-                ['failed', this.renderFail]
-            ])}
-        `
-    }
-
-    private renderContent() {
-        return html`<event-list-page></event-list-page>`
-    }
-
-    private renderLoading() {
-        return html`${resources.profiler_loading}`
-    }
-
-    private renderFail() {
-        return html`${resources.no_incoding_framework_found}`
     }
 }

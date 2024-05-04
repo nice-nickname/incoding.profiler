@@ -6,9 +6,9 @@ const pluginName = 'prebuild-extension-plugin'
 
 module.exports = class PrebuildWebpackPlugin {
 
-    constructor(mode, platform) {
-        this.mode = this.validateMode(mode)
-        this.platform = this.validatePlatform(platform)
+    constructor(env) {
+        this.mode = this.validateMode(env.mode)
+        this.platform = this.validatePlatform(env.platform)
 
         this.welcome()
     }

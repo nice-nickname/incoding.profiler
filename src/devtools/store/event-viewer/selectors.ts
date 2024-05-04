@@ -1,5 +1,5 @@
 import { RootState } from "..";
 
-const selectSelectedJsonData = (state: RootState) => state.eventViewer.selected?.jsonData || null
+const selectSelectedJsonData = (state: RootState) => state.eventViewer.selected || null
 
-export { selectSelectedJsonData }
+export { selectSelectedJsonData };

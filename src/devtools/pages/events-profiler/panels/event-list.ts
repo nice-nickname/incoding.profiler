@@ -1,17 +1,13 @@
-import { css, html } from "lit";
-import { customElement, state, query } from "lit/decorators.js";
-import { repeat } from "lit/directives/repeat.js"
-import store, { RootState } from "@devtools/store";
-import scrollStyles from "@devtools/styles/scroll.css"
 import StatefulLitElement from "@devtools/components/stateful-lit-component";
-import { selectEvents } from "@devtools/store/event-list/selectors";
 import resources from "@devtools/resources";
+import store, { RootState } from "@devtools/store";
+import { selectEvents } from "@devtools/store/event-list/selectors";
 import { select } from "@devtools/store/event-viewer/slice";
+import scrollStyles from "@devtools/styles/scroll.css";
+import { css, html } from "lit";
+import { customElement, query, state } from "lit/decorators.js";
+import { repeat } from "lit/directives/repeat.js";
 import { IncodingEvent } from "src/types";
-import { consume } from "@lit/context";
-import runtimeConnectionCtx from "@devtools/context/connection";
-import { DevtoolsConnection } from "@connection/RuntimeConnection";
-
 
 const styles = css`
     .container {
@@ -58,7 +54,7 @@ export class EventListElement extends StatefulLitElement {
     private renderList() {
         return html`
             ${repeat(this.events, event => event.uuid + event.executionTimeMs, (event) => html`
-                <profiler-event .data=${event}></profiler-event>
+                <incoding-event .data=${event}></incoding-event>
             `)}
         `
     }

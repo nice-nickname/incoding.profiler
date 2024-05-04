@@ -1,12 +1,12 @@
-import { html } from "lit";
-import { customElement, property, queryAssignedElements, state } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js"
 import { LitComponentElement } from "@devtools/components/lit-component";
+import { html } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 
-import styles from "./styles.css"
+import styles from "./button-toggle.css";
 
 export type ToggleEventDetails = {
-    disabled: boolean
+    enabled: boolean
 }
 
 @customElement('btn-toggle')
@@ -16,6 +16,18 @@ export class ButtonToggleElement extends LitComponentElement {
 
     @property({ type: Boolean }) disabled: boolean = false
 
+    override connectedCallback(): void {
+        super.connectedCallback()
+
+        this.addEventListener('click', this.toggleEnabled)
+    }
+
+    override disconnectedCallback(): void {
+        super.disconnectedCallback()
+
+        this.removeEventListener('click', this.toggleEnabled)
+    }
+
     protected render() {
         return html`
             <slot class=${classMap({ hidden: this.disabled })} name="enabled"></slot>
@@ -23,23 +35,11 @@ export class ButtonToggleElement extends LitComponentElement {
         `
     }
 
-    connectedCallback(): void {
-        super.connectedCallback()
-
-        this.addEventListener('click', this.toggleEnabled)
-    }
-
-    disconnectedCallback(): void {
-        super.disconnectedCallback()
-
-        this.removeEventListener('click', this.toggleEnabled)
-    }
-
     private toggleEnabled() {
         this.disabled = !this.disabled
 
         this.fireEvent<ToggleEventDetails>('toggle', {
-            disabled: this.disabled
+            enabled: this.disabled
         })
     }
 }

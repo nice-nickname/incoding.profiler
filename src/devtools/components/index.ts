@@ -1,15 +1,15 @@
-import "./action-marker"
-import "./profiler-event"
-import "./time-marker"
-import "./tag-link"
+import "./action-marker/action-marker"
+import "./incoding-event/incoding-event"
+import "./time-marker/time-marker"
+import "./tag-link/tag-link"
 
-import "./no-content"
+import "./no-content/no-content"
 
-import "./icon"
+import "./icon/icon"
 
-import "./inputs/text"
+import "./inputs/text/input-text"
 
-import "./buttons/button-icon"
-import "./buttons/button-group"
-import "./buttons/button-toggle"
+import "./buttons/button-icon/button-icon"
+import "./buttons/button-group/button-group"
+import "./buttons/button-toggle/button-toggle"
 

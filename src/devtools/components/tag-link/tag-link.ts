@@ -1,14 +1,15 @@
-import { customElement, property } from "lit/decorators.js";
-import { LitComponentElement } from "../lit-component";
 import { html } from "lit";
+import { customElement, property } from "lit/decorators.js";
 import { Tag } from "src/types/index";
+import { LitComponentElement } from "../lit-component";
 
-import styles from "./styles.css"
+import resetButtonStyles from "../../styles/reset-button.css";
+import styles from "./tag-link.css";
 
 @customElement('tag-link')
 export class TagLinkElement extends LitComponentElement {
 
-    static styles = styles
+    static styles = [styles, resetButtonStyles]
 
     @property({ attribute: false }) tag: Tag
 
@@ -22,8 +23,18 @@ export class TagLinkElement extends LitComponentElement {
         const idElement = html`<span class="id">${id}</span>`
 
         return html`
-            <pre>${openBrace}${tagElement}${classElement}${idElement}${closingBrace}</pre>
+            <button @click=${this.handleClick}>
+                <pre>${openBrace}${tagElement}${classElement}${idElement}${closingBrace}</pre>
+            </button>
         `
+    }
+
+    private handleClick() {
+        const element = `$('[data-profiler-id="${this.tag.profilerId}"]')[0]`
+
+        chrome.devtools.inspectedWindow.eval(`inspect(${element})`, function(res, err) {
+            console.log(res, err, element)
+        })
     }
 
     private formatTag() {

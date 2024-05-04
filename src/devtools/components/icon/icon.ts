@@ -3,7 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import { styleMap } from 'lit/directives/style-map.js';
 import { LitComponentElement } from "../lit-component";
 
-import styles from "./styles.css"
+import styles from "./icon.css";
 
 @customElement('material-icon')
 export class IconElement extends LitComponentElement {

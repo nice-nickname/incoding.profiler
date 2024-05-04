@@ -1,9 +1,9 @@
-import { html } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
-import { live } from "lit/directives/live.js"
 import { LitComponentElement } from "@devtools/components/lit-component";
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
+import { live } from "lit/directives/live.js";
 
-import styles from "./styles.css"
+import styles from "./input-text.css";
 
 export type ValueChangeEventDetail = {
     search: string

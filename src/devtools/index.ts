@@ -4,7 +4,6 @@
  * Establish background connection and handle events
  */
 
-
 import "@devtools/app"
 import { html, render } from "lit"
 

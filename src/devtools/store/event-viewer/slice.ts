@@ -14,7 +14,7 @@ export const eventViewerSlice = createSlice({
     initialState,
     reducers: {
         select: (state, action: PayloadAction<IncodingEvent>) => {
-            // state.selected = action.payload
+            state.selected = action.payload
         },
         unselect: (state) => {
             state.selected = null

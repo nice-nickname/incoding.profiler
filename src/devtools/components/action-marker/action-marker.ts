@@ -1,10 +1,10 @@
+import getColorByAction from "@devtools/utils/actionColors";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import getColorByAction from "@devtools/utils/actionColors";
 import { Actions } from "src/types";
 import { LitComponentElement } from "../lit-component";
 
-import styles from "./styles.css"
+import styles from "./action-marker.css";
 
 @customElement('action-marker')
 export class ActionMarkerElement extends LitComponentElement {

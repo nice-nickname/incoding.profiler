@@ -1,12 +1,14 @@
+import { LitComponentElement } from "@devtools/components/lit-component";
+import resetButtonStyles from "@devtools/styles/reset-button.css";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import resetButtonStyles from "@devtools/styles/reset-button.css"
-import { LitComponentElement } from "@devtools/components/lit-component";
+
+import styles from "./button-icon.css";
 
 @customElement('btn-icon')
 export class IconButtonElement extends LitComponentElement {
 
-    static styles = [resetButtonStyles]
+    static styles = [resetButtonStyles, styles]
 
     @property() icon: string
 
