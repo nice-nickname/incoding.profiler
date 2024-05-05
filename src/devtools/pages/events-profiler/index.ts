@@ -8,7 +8,7 @@ import { customElement } from "lit/decorators.js";
 import styles from './index.css'
 
 
-@customElement("event-list-page")
+@customElement("event-profiler-page")
 export class EventListPage extends LitElement {
 
     static styles = [styles]

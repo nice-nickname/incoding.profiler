@@ -4,8 +4,8 @@
 }
 
 .marker {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
 
     border-radius: 1rem;
 
@@ -13,8 +13,6 @@
     vertical-align: middle;
 
     align-self: center;
-
-    border: 1px solid rgb(212, 212, 212);
 }
 
 .action {
