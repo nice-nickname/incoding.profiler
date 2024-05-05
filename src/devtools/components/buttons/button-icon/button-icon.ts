@@ -1,3 +1,4 @@
+import { MaterialIconName } from "@devtools/components/icon/material-icon-name";
 import { LitComponentElement } from "@devtools/components/lit-component";
 import resetButtonStyles from "@devtools/styles/reset-button.css";
 import { html } from "lit";
@@ -10,7 +11,7 @@ export class IconButtonElement extends LitComponentElement {
 
     static styles = [resetButtonStyles, styles]
 
-    @property() icon: string
+    @property() icon: MaterialIconName
 
     @property() color?: string
 

@@ -2,6 +2,7 @@ import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { styleMap } from 'lit/directives/style-map.js';
 import { LitComponentElement } from "../lit-component";
+import { MaterialIconName } from "./material-icon-name";
 
 import styles from "./icon.css";
 
@@ -10,7 +11,7 @@ export class IconElement extends LitComponentElement {
 
     static styles = styles
 
-    @property() icon: string = ''
+    @property() icon: MaterialIconName
 
     @property() color?: string
 
