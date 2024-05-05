@@ -1,6 +1,8 @@
 import { ToggleEventDetails } from "@devtools/components/buttons/button-toggle/button-toggle";
 import { ValueChangeEventDetail } from "@devtools/components/inputs/text/input-text";
-import store from '@devtools/store';
+import StatefulLitElement from "@devtools/components/stateful-lit-component";
+import store, { RootState } from '@devtools/store';
+import { selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
 import {
     clearEvents,
     pauseEvents,
@@ -9,12 +11,12 @@ import {
     searchEvents
 } from '@devtools/store/event-list/slice';
 import { debounce } from "@devtools/utils/debounce";
-import { LitElement, css, html } from "lit";
+import { css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 
 
 @customElement('event-list-header')
-export class EventListHeaderElement extends LitElement {
+export class EventListHeaderElement extends StatefulLitElement {
 
     static styles = css`
         :host {
@@ -34,10 +36,18 @@ export class EventListHeaderElement extends LitElement {
         }
     `
 
+    private isEventsPaused: boolean
+    private eventsSearch: string | null
+
+    protected onInitializeState(state: RootState): void {
+        this.isEventsPaused = selectIsEventsPaused(state)
+        this.eventsSearch = selectEventsSearch(state)
+    }
+
     protected render() {
         return html`
             <btn-group>
-                <btn-toggle @toggle=${this.togglePauseEvents}>
+                <btn-toggle @toggle=${this.togglePauseEvents} ?disabled=${this.isEventsPaused}>
                     <btn-icon slot="disabled" icon="stop_circle"></btn-icon>
                     <btn-icon slot="enabled" icon="stop_circle" color="var(--danger-color)"></btn-icon>
                 </btn-toggle>
@@ -54,12 +64,15 @@ export class EventListHeaderElement extends LitElement {
             <div>
                 <input-text
                     placeholder="search..."
+                    value=${this.eventsSearch || ''}
                     @value-change=${debounce(this.handleSearch, 300)}
                 >
                 </input-text>
             </div>
         `
     }
+
+
 
     private clearEventList() {
         store.dispatch(clearEvents())

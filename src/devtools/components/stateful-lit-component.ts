@@ -2,7 +2,7 @@ import { LitElement } from "lit";
 import store, { RootState } from "@devtools/store";
 import { Unsubscribe } from "@reduxjs/toolkit";
 
-export default abstract class StatefulLitElement extends LitElement {
+export default class StatefulLitElement extends LitElement {
 
     private unsubscribe: Unsubscribe
 
@@ -10,10 +10,11 @@ export default abstract class StatefulLitElement extends LitElement {
         super.connectedCallback()
 
         this.unsubscribe = store.subscribe(() => {
-            this.onStateChanged(store.getState())
+            this.onStateChanged?.call(this, store.getState())
         })
 
-        this.onStateChanged(store.getState())
+        this.onInitializeState?.call(this, store.getState())
+        this.onStateChanged?.call(this, store.getState())
     }
 
     override disconnectedCallback(): void {
@@ -22,5 +23,7 @@ export default abstract class StatefulLitElement extends LitElement {
         this.unsubscribe()
     }
 
-    protected abstract onStateChanged(state: RootState): void;
+    protected onInitializeState?(state: RootState): void;
+
+    protected onStateChanged?(state: RootState): void;
 }

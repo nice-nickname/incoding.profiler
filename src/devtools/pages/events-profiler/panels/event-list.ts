@@ -39,11 +39,12 @@ export class EventListElement extends StatefulLitElement {
         }
     }
 
+
     protected render() {
         const hasEvents = this.events.length != 0
 
         return html`
-            <div class="container" @mousewheel=${this.onMouseWheel} @data-selected=${this.onDataClick}>
+            <div class="container" @mousewheel=${this.handleMouseWheel} @data-selected=${this.handleDataClick}>
                 ${hasEvents
                     ? this.renderList()
                     : this.renderEmpty()}
@@ -65,13 +66,13 @@ export class EventListElement extends StatefulLitElement {
         `
     }
 
-    private onMouseWheel() {
+    private handleMouseWheel() {
         const containerScroll = this.container.scrollHeight - this.container.clientHeight
 
         this.scrollAttached = this.container.scrollTop === containerScroll;
     }
 
-    private onDataClick(ev: CustomEvent<IncodingEvent>) {
+    private handleDataClick(ev: CustomEvent<IncodingEvent>) {
         store.dispatch(select(ev.detail))
     }
 }

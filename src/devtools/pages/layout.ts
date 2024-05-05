@@ -1,6 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import routes, { PageKey } from "./routes";
+import routes, { Page } from "./routes";
 
 @customElement('pages-layout')
 export class PagesLayout extends LitElement {
@@ -21,7 +21,7 @@ export class PagesLayout extends LitElement {
         }
     `
 
-    @state() private currentPage: PageKey
+    @state() private currentPage: Page
 
     constructor() {
         super()
@@ -46,7 +46,7 @@ export class PagesLayout extends LitElement {
         `
     }
 
-    private setPage(page: PageKey) {
+    private setPage(page: Page) {
         this.currentPage = page
     }
 }

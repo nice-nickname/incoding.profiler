@@ -17,7 +17,22 @@ const selectEvents = createSelector([eventsSelector, searchSelector],
         }
 
         return events.filter(predicate)
-    })
+    }
+)
+
+const eventsListSelector = (state: RootState) => state.eventList
+
+const selectIsEventsPaused = createSelector([eventsListSelector],
+    (events) => events.eventsPaused
+)
+
+const selectEventsSearch = createSelector([eventsListSelector],
+    (events) => events.search
+)
 
 
-export { selectEvents };
+export {
+    selectEvents,
+    selectIsEventsPaused,
+    selectEventsSearch
+};

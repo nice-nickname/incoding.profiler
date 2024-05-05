@@ -1,16 +1,10 @@
-import { TemplateResult, html } from "lit"
+import { html } from "lit"
 
-type Pages = {
-    'events-profiler': () => TemplateResult,
-    'preferences-page': () => TemplateResult
-}
-
-export type PageKey = keyof Pages
-
-const routes: Pages = {
+const routes = {
     'events-profiler': () => html`<event-list-page></event-list-page>`,
     'preferences-page': () =>  html`<preferences-page></preferences-page>`
 }
 
+export type Page = keyof typeof routes
 
 export default routes
