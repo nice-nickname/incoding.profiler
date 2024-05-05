@@ -3,16 +3,18 @@ import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { live } from "lit/directives/live.js";
 
+import defaultStyles from "../../styles/default-styles.css"
 import styles from "./input-text.css";
 
 export type ValueChangeEventDetail = {
     search: string
 }
 
+
 @customElement('input-text')
 export class InputSearchElement extends LitComponentElement {
 
-    static styles = [styles]
+    static styles = [defaultStyles, styles]
 
     @property() placeholder: string = ''
 

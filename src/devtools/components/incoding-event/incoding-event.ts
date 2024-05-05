@@ -3,12 +3,14 @@ import { customElement, property } from "lit/decorators.js";
 import { IncodingEvent } from 'src/types';
 import { LitComponentElement } from "../lit-component";
 
+import defaultStyles from "../styles/default-styles.css";
 import styles from "./incoding-event.css";
+
 
 @customElement('incoding-event')
 export class ProfilerEventElement extends LitComponentElement {
 
-    static styles = styles
+    static styles = [defaultStyles, styles]
 
     @property({ attribute: false }) data: IncodingEvent
 

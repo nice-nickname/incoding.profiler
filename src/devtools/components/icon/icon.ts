@@ -1,36 +1,46 @@
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from 'lit/directives/style-map.js';
 import { LitComponentElement } from "../lit-component";
 import { MaterialIconName } from "./material-icon-name";
+import { MaterialIconSize } from "./material-icon-size";
 
+import defaultStyles from "../styles/default-styles.css";
 import styles from "./icon.css";
+
 
 @customElement('material-icon')
 export class IconElement extends LitComponentElement {
 
-    static styles = styles
+    static styles = [defaultStyles, styles]
 
     @property() icon: MaterialIconName
 
+    @property() size: MaterialIconSize = 'md'
+
     @property() color?: string
 
-    @property() size: string = '16px'
+    constructor() {
+        super()
+
+        this.style.height = `var(--size-${this.size})`
+    }
+
 
     protected render() {
-
-        const style = {
-            color: this.color,
-            fontSize: this.size
-        }
-
-        this.style.width = style.fontSize
-        this.style.height = style.fontSize
-
         return html`
-            <span class="material-symbols-outlined" style="${styleMap(style)}">
+            <div
+                style="${styleMap({ color: this.color })}"
+                class=${classMap({
+                    'material-icon': true,
+                    'material-icon-sm': this.size == 'sm',
+                    'material-icon-md': this.size == 'md',
+                    'material-icon-lg': this.size == 'lg'
+                })}
+            >
                 ${this.icon}
-            </span>
+            </div>
         `
     }
 }

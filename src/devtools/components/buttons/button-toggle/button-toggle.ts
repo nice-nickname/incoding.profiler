@@ -3,16 +3,19 @@ import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 
+import defaultStyles from "../../styles/default-styles.css";
 import styles from "./button-toggle.css";
+
 
 export type ToggleEventDetails = {
     enabled: boolean
 }
 
+
 @customElement('btn-toggle')
 export class ButtonToggleElement extends LitComponentElement {
 
-    static styles = [styles]
+    static styles = [defaultStyles, styles]
 
     @property({ type: Boolean }) disabled: boolean = false
 

@@ -2,8 +2,13 @@ import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { LitComponentElement } from "../lit-component";
 
+import defaultStyles from "../styles/default-styles.css";
+
+
 @customElement('time-marker')
 export class TimeMarkerElement extends LitComponentElement {
+
+    static styles = [defaultStyles]
 
     @property({ type: Number })
     public timeInMs?: number | undefined

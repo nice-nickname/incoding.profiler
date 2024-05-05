@@ -9,21 +9,38 @@ import { customElement, query, state } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 import { IncodingEvent } from "src/types";
 
-const styles = css`
-    .container {
-        display: flex;
-        flex-direction: column;
-
-        height: 100%;
-
-        overflow-y: auto;
-    }
-`
 
 @customElement('event-list')
 export class EventListElement extends StatefulLitElement {
 
-    static styles = [styles, scrollStyles]
+    static styles = css`
+        ::-webkit-scrollbar {
+            background-color: #393b41;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 1px;
+        }
+
+        ::-webkit-scrollbar-button {
+            display: none;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #a4abb5;
+            border: 1px solid transparent;
+            background-clip: content-box;
+            border-radius: 0.125rem;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+
+            height: 100%;
+
+            overflow-y: auto;
+        }
+    `
 
     @state() private events: IncodingEvent[] = []
 
@@ -46,8 +63,8 @@ export class EventListElement extends StatefulLitElement {
         return html`
             <div class="container" @mousewheel=${this.handleMouseWheel} @data-selected=${this.handleDataClick}>
                 ${hasEvents
-                    ? this.renderList()
-                    : this.renderEmpty()}
+                ? this.renderList()
+                : this.renderEmpty()}
             </div>
         `
     }

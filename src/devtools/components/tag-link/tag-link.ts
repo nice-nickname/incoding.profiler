@@ -3,13 +3,14 @@ import { customElement, property } from "lit/decorators.js";
 import { Tag } from "src/types/index";
 import { LitComponentElement } from "../lit-component";
 
-import resetButtonStyles from "../../styles/reset-button.css";
+import defaultStyles from "../styles/default-styles.css";
+import resetButtonStyles from "../styles/reset-button.css";
 import styles from "./tag-link.css";
 
 @customElement('tag-link')
 export class TagLinkElement extends LitComponentElement {
 
-    static styles = [styles, resetButtonStyles]
+    static styles = [defaultStyles, resetButtonStyles, styles]
 
     @property({ attribute: false }) tag: Tag
 

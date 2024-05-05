@@ -1,4 +1,8 @@
 
+:host {
+    display: flex; /* Я не понимаю как это работает, но это работает */
+}
+
 .hidden {
     display: none;
 }

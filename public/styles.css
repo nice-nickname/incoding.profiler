@@ -54,6 +54,11 @@
     --code-token-tagName: #6eaceb;
     --code-token-classList: #fe8d59;
     --code-token-id: #fe8d59;
+
+
+    --size-sm: 16px;
+    --size-md: 20px;
+    --size-lg: 24px;
 }
 
 html {

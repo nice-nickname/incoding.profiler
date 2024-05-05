@@ -1,17 +1,14 @@
 import { LitComponentElement } from "@devtools/components/lit-component";
-import { css, html } from "lit";
+import { html } from "lit";
 import { customElement } from "lit/decorators.js";
+
+import defaultStyles from "../../styles/default-styles.css";
+import styles from "./button-group.css";
 
 @customElement('btn-group')
 export class ButtonGroupElement extends LitComponentElement {
 
-    static styles = css`
-        :host {
-            display: flex;
-
-            gap: 0.25rem;
-        }
-    `
+    static styles = [defaultStyles, styles]
 
     protected render() {
         return html`
