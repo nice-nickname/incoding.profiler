@@ -48,14 +48,14 @@ jobs:
           upload-url: ${{ steps.create_release.outputs.upload_url }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: create chrome release
+      - name: create edge release
         uses: ./.github/actions/build-release
         with:
           target: edge
           upload-url: ${{ steps.create_release.outputs.upload_url }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: create chrome release
+      - name: create firefox release
         uses: ./.github/actions/build-release
         with:
           target: firefox
