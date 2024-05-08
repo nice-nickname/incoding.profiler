@@ -10,6 +10,7 @@ import {
     resumeEvents,
     searchEvents
 } from '@devtools/store/event-list/slice';
+import { unselect } from "@devtools/store/event-viewer/slice";
 import { debounce } from "@devtools/utils/debounce";
 import { css, html } from "lit";
 import { customElement } from "lit/decorators.js";
@@ -76,6 +77,7 @@ export class EventListHeaderElement extends StatefulLitElement {
 
     private clearEventList() {
         store.dispatch(clearEvents())
+        store.dispatch(unselect())
     }
 
     private togglePauseEvents(ev: CustomEvent<ToggleEventDetails>) {
