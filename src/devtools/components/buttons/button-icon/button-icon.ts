@@ -22,7 +22,10 @@ export class IconButtonElement extends LitComponentElement {
 
     constructor() {
         super()
+    }
 
+    override connectedCallback() {
+        super.connectedCallback()
         this.style.height = `var(--size-${this.size})`
     }
 
