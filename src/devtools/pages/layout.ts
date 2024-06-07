@@ -2,10 +2,12 @@ import { LitElement, css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import routes, { Page } from "./routes";
 
+import defaultStyles from "../components/styles/default-styles.css"
+
 @customElement('pages-layout')
 export class PagesLayout extends LitElement {
 
-    static styles = css`
+    static styles = [defaultStyles, css`
         .content {
             height: 100%;
         }
@@ -17,9 +19,9 @@ export class PagesLayout extends LitElement {
         }
 
         .page {
-            height: calc(100% - 40px);
+            height: calc(100% - 26px);
         }
-    `
+    `]
 
     @state() private currentPage: Page
 

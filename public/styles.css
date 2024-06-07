@@ -38,6 +38,7 @@
 :root {
     --bg-color: #282828;
     --text-color: #c7c7c7;
+    --text-color--accent: #d8d8d8;
 
     --success-color: #84ff84;
     --warning-color: #ffcb7d;

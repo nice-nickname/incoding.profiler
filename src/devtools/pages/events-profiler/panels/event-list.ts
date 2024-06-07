@@ -3,11 +3,10 @@ import resources from "@devtools/resources";
 import store, { RootState } from "@devtools/store";
 import { selectEvents } from "@devtools/store/event-list/selectors";
 import { select } from "@devtools/store/event-viewer/slice";
-import scrollStyles from "@devtools/styles/scroll.css";
 import { css, html } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
-import { repeat } from "lit/directives/repeat.js";
 import { IncodingEvent } from "src/types";
+import { virtualize } from '@lit-labs/virtualizer/virtualize.js';
 
 
 @customElement('event-list')
@@ -32,13 +31,24 @@ export class EventListElement extends StatefulLitElement {
             border-radius: 0.125rem;
         }
 
+        .wrapper {
+            height: 100%;
+            overflow-y: auto;
+        }
+
         .container {
             display: flex;
             flex-direction: column;
 
             height: 100%;
-
             overflow-y: auto;
+
+            font-family: monospace;
+            color: var(--text-color--accent);
+        }
+
+        .container > incoding-event {
+            width: 100%
         }
     `
 
@@ -46,13 +56,13 @@ export class EventListElement extends StatefulLitElement {
 
     @state() private scrollAttached: boolean = true
 
-    @query('.container') private container: HTMLDivElement
+    @query('.wrapper') private scroller: HTMLDivElement
 
     protected onStateChanged(state: RootState): void {
         this.events = selectEvents(state)
 
         if (this.scrollAttached) {
-            this.container.scrollTop = this.container.scrollHeight
+            this.scroller.scrollTop = this.scroller.scrollHeight
         }
     }
 
@@ -61,19 +71,23 @@ export class EventListElement extends StatefulLitElement {
         const hasEvents = this.events.length != 0
 
         return html`
-            <div class="container" @mousewheel=${this.handleMouseWheel} @data-selected=${this.handleDataClick}>
+            <div class="wrapper" @mousewheel=${this.handleMouseWheel}>
                 ${hasEvents
-                ? this.renderList()
-                : this.renderEmpty()}
+                    ? this.renderList()
+                    : this.renderEmpty()}
             </div>
         `
     }
 
     private renderList() {
         return html`
-            ${repeat(this.events, event => event.uuid + event.executionTimeMs, (event) => html`
-                <incoding-event .data=${event}></incoding-event>
-            `)}
+            <div class="container" @data-selected=${this.handleDataClick}>
+                ${virtualize({
+                    items: this.events,
+                    keyFunction: event => event.uuid + event.executionTimeMs,
+                    renderItem: event => html`<incoding-event .data=${event}></incoding-event>`
+                })}
+            </div>
         `
     }
 
@@ -84,9 +98,9 @@ export class EventListElement extends StatefulLitElement {
     }
 
     private handleMouseWheel() {
-        const containerScroll = this.container.scrollHeight - this.container.clientHeight
+        const containerScroll = this.scroller.scrollHeight - this.scroller.clientHeight
 
-        this.scrollAttached = this.container.scrollTop === containerScroll;
+        this.scrollAttached = this.scroller.scrollTop === containerScroll;
     }
 
     private handleDataClick(ev: CustomEvent<IncodingEvent>) {
