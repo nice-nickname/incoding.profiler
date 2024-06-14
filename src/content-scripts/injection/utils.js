@@ -29,9 +29,7 @@ export function jqueryToSelector(elements) {
         }
     }
 
-    return result.length === 1 ?
-        result[0] :
-        result
+    return result
 
     function toSelector(el) {
         if (!('hasAttribute' in el)) {

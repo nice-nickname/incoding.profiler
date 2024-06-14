@@ -4,7 +4,8 @@ import { RootState } from '@devtools/store';
 import { selectSelectedJsonData } from '@devtools/store/event-viewer/selectors';
 import { css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { IncodingEvent } from "src/types";
+
+import defaultStyles from "../../../components/styles/default-styles.css"
 
 
 @customElement('event-viewer')
@@ -12,7 +13,7 @@ export class EventViewerElement extends StatefulLitElement {
 
     @state() private selectedEvent: IncodingEvent | null = null
 
-    static styles = css`
+    static styles = [defaultStyles, css`
         .list {
             display: flex;
             flex-direction: column;
@@ -21,11 +22,10 @@ export class EventViewerElement extends StatefulLitElement {
             color: var(--text-color--accent);
         }
 
-        .list .property {
+        .property {
             width: 100%;
         }
-
-    `
+    `]
 
     protected onStateChanged(state: RootState): void {
         this.selectedEvent = selectSelectedJsonData(state)
@@ -44,13 +44,20 @@ export class EventViewerElement extends StatefulLitElement {
     }
 
     private renderContent() {
-        var incoding = this.selectedEvent!
+        const incoding = this.selectedEvent!
+        const targets = incoding.target || []
 
         return html`
             <div class="list">
                 <div class="property">
                     <span>self:</span> <tag-link .tag=${incoding.self}></tag-link>
                 </div>
+
+                ${targets.map((tag, i) => html`
+                    <span>${i}:</span> <tag-link .tag=${tag}></tag-link>
+                `)}
+
+                ${JSON.stringify(incoding.jsonData)}
             </div>
         `
     }

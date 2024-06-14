@@ -1,6 +1,5 @@
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { Tag } from "src/types/index";
 import { LitComponentElement } from "../lit-component";
 
 import defaultStyles from "../styles/default-styles.css";

@@ -18,7 +18,7 @@ function interceptExecute(current, state) {
             action: current.name,
             eventName: current.event.type,
             jsonData: current.jsonData,
-            self: jqueryToSelector(current.self),
+            self: jqueryToSelector(current.self)[0],
             target: jqueryToSelector(current.target)
         }
     })

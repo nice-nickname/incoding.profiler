@@ -1,7 +1,6 @@
 import getColorByAction from "@devtools/utils/actionColors";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { Actions } from "src/types";
 import { LitComponentElement } from "../lit-component";
 
 import defaultStyles from "../styles/default-styles.css";
@@ -12,7 +11,7 @@ export class ActionMarkerElement extends LitComponentElement {
 
     static styles = [defaultStyles, styles]
 
-    @property() action: Actions;
+    @property() action: IncodingActions;
 
     protected render() {
         return html`

@@ -1,5 +1,4 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { IncodingEvent } from "src/types";
 import { RootState } from "..";
 
 const eventsSelector = (state: RootState) => state.eventList.events

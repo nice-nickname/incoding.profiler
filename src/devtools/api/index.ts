@@ -1,5 +1,3 @@
-import { IncodingEvent } from "src/types"
-
 export type IncodingEventMessage =
     Omit<IncodingEvent, 'executionTimeMs'>
 

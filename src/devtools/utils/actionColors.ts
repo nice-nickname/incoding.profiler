@@ -1,6 +1,5 @@
-import { Actions } from "src/types"
 
-const actionColors: { [key in Actions]: string } = {
+const actionColors: { [key in IncodingActions]: string } = {
     'Direct': 'rgb(238, 238, 238)',
     'Eval': 'rgb(243, 147, 147)',
     'Ajax': 'rgb(144, 188, 253)',
@@ -19,6 +18,6 @@ const actionColors: { [key in Actions]: string } = {
     'Validation Refresh': 'rgb(238, 238, 238)',
 }
 
-export default function getColorByAction(action: Actions) {
+export default function getColorByAction(action: IncodingActions) {
     return actionColors[action]
 }

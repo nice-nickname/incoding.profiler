@@ -1,4 +1,3 @@
-import { IconButtonElement } from "@devtools/components/buttons/button-icon/button-icon";
 import StatefulLitElement from "@devtools/components/stateful-lit-component";
 import resources from "@devtools/resources";
 import store, { RootState } from "@devtools/store";
@@ -7,7 +6,6 @@ import { select } from "@devtools/store/event-viewer/slice";
 import { virtualize } from '@lit-labs/virtualizer/virtualize.js';
 import { css, html } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
-import { IncodingEvent } from "src/types";
 
 import defaultStyles from "../../../components/styles/default-styles.css";
 
@@ -92,6 +90,7 @@ export class EventListElement extends StatefulLitElement {
     }
 
     protected render() {
+        CSS
         const hasEvents = this.events.length != 0
 
         return html`
