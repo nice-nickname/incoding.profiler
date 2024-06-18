@@ -1,3 +1,4 @@
+import '@alenaksu/json-viewer';
 import StatefulLitElement from '@devtools/components/stateful-lit-component';
 import resources from '@devtools/resources';
 import { RootState } from '@devtools/store';
@@ -5,7 +6,7 @@ import { selectSelectedJsonData } from '@devtools/store/event-viewer/selectors';
 import { css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 
-import defaultStyles from "../../../components/styles/default-styles.css"
+import defaultStyles from "../../../components/styles/default-styles.css";
 
 
 @customElement('event-viewer')
@@ -24,6 +25,18 @@ export class EventViewerElement extends StatefulLitElement {
 
         .property {
             width: 100%;
+        }
+
+        json-viewer {
+            --background-color: #282828;
+            --color: var(--text-color--accent);
+            --string-color: #fe8d59;
+            --number-color: #897bff;
+            --boolean-color: #897bff;
+            --null-color: #897bff;
+            --property-color: #7cacf8;
+            --preview-color: rgb(143 143 143);
+            --highlight-color: #7b0000;
         }
     `]
 
@@ -57,7 +70,7 @@ export class EventViewerElement extends StatefulLitElement {
                     <span>${i}:</span> <tag-link .tag=${tag}></tag-link>
                 `)}
 
-                ${JSON.stringify(incoding.jsonData)}
+                <json-viewer .data=${incoding.jsonData}></json-viewer>
             </div>
         `
     }

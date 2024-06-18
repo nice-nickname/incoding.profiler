@@ -148,5 +148,6 @@ export class EventListElement extends StatefulLitElement {
 
     private handleScrollDownClick() {
         this.scroller.scrollTop = this.scroller.scrollHeight
+        this.scrollAttached = true
     }
 }

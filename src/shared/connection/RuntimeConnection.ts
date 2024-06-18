@@ -12,7 +12,10 @@ class RuntimeConnection<
 > {
 
     private connection: chrome.runtime.Port
+
     private listeners: Partial<Record<keyof ListenMessages<TListen>, Function>> = {}
+
+    private batchers: Record<keyof ListenMessages<TEmit>, Batcher<Message<TEmit>>>
 
     connect(tab: string) {
         this.connection = chrome.runtime.connect({ name: tab })
@@ -41,6 +44,19 @@ class RuntimeConnection<
         this.connection.postMessage(message)
     }
 
+    batch<TKey extends keyof TEmit>(type: TKey, payload?: TEmit[TKey]) {
+        const message: Message<TEmit> = {
+            type: type,
+            payload: payload
+        }
+
+        if (!this.batchers[type]) {
+            this.batchers[type] = this.createBatcher()
+        }
+
+        this.batchers[type].push(message)
+    }
+
     on<Tkey extends keyof ListenMessages<TListen>>(
         type: Tkey,
         handler: (payload: ListenMessages<TListen>[Tkey]) => void) {
@@ -56,6 +72,53 @@ class RuntimeConnection<
             return
         }
         handler?.call(this, message.payload)
+    }
+
+    private createBatcher() {
+        return new Batcher<Message<TEmit>>(1000, 10, (items) => {
+            this.connection.postMessage(items)
+        })
+    }
+}
+
+class Batcher<T> {
+
+    private internalTimeout: ReturnType<typeof setTimeout> | null
+
+    private bucket: T[]
+
+    constructor(
+        private delay: number,
+        private bucketSize: number,
+        private callback: (items: T[]) => void
+    ) {
+        this.internalTimeout = null
+        this.bucket = []
+    }
+
+    public push(data: T) {
+        this.bucket.push(data)
+
+        if (this.bucket.length == this.bucketSize) {
+            this.invokeCallbackAndClearBucket()
+        }
+
+        this.restartTimer()
+    }
+
+    private restartTimer() {
+        clearTimeout(this.internalTimeout!)
+
+        if (this.bucket.length === 0) return
+
+        this.internalTimeout = setTimeout(() => {
+            this.invokeCallbackAndClearBucket()
+        }, this.delay)
+    }
+
+    private invokeCallbackAndClearBucket() {
+        this.callback([...this.bucket])
+        this.bucket = []
     }
 }
 
