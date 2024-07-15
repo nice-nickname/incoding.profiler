@@ -1,3 +1,4 @@
+import { inspectHostElement } from "@devtools/utils/evalAtHost";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { LitComponentElement } from "../lit-component";
@@ -30,11 +31,7 @@ export class TagLinkElement extends LitComponentElement {
     }
 
     private handleClick() {
-        const element = `$('[data-profiler-id="${this.tag.profilerId}"]')[0]`
-
-        chrome.devtools.inspectedWindow.eval(`inspect(${element})`, function(res, err) {
-            console.log(res, err, element)
-        })
+        inspectHostElement(this.tag.profilerId)
     }
 
     private formatTag() {
