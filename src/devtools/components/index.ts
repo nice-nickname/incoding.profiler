@@ -7,7 +7,8 @@ import "./no-content/no-content"
 
 import "./icon/icon"
 
-import "./inputs/text/input-text"
+import "./inputs/textbox/textbox"
+import "./inputs/checkbox/checkbox"
 
 import "./buttons/button/button"
 import "./buttons/button-icon/button-icon"

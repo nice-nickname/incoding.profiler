@@ -1,6 +1,7 @@
 import { ToggleEventDetails } from "@devtools/components/buttons/button-toggle/button-toggle";
-import { ValueChangeEventDetail } from "@devtools/components/inputs/text/input-text";
+import { ChangeEventDetails } from "@devtools/components/inputs/events";
 import StatefulLitElement from "@devtools/pages/stateful-lit-component";
+import resources from "@devtools/resources";
 import store, { RootState } from '@devtools/store';
 import { selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
 import {
@@ -65,17 +66,14 @@ export class EventListHeaderElement extends StatefulLitElement {
             <div class="separator"></div>
 
             <div>
-                <input-text
-                    placeholder="search..."
-                    value=${this.eventsSearch || ''}
-                    @value-change=${debounce(this.handleSearch, 300)}
-                >
-                </input-text>
+                <x-textbox
+                    .placeholder=${resources.search}
+                    .value=${this.eventsSearch || ''}
+                    @x-change=${debounce(this.handleSearch, 300)}>
+                </x-textbox>
             </div>
         `
     }
-
-
 
     private clearEventList() {
         store.dispatch(clearEvents())
@@ -90,8 +88,8 @@ export class EventListHeaderElement extends StatefulLitElement {
         }
     }
 
-    private handleSearch(ev: CustomEvent<ValueChangeEventDetail>) {
-        const search = ev.detail.search
+    private handleSearch(ev: CustomEvent<ChangeEventDetails>) {
+        const search = ev.detail.value
 
         if (search !== '') {
             store.dispatch(searchEvents(search))

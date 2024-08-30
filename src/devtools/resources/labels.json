@@ -3,5 +3,7 @@
 
   "no_items_in_list": "No elements to see here... 😞",
   "no_selected_item": "Select event to see jsonData 😗",
-  "no_incoding_framework_found": "This page does not support incoding.framework.js 😢"
+  "no_incoding_framework_found": "This page does not support incoding.framework.js 😢",
+
+  "search": "search..."
 }

@@ -1,6 +1,5 @@
 import { MaterialIcons } from "@devtools/components/icon/material-icon-name";
 import { LitComponentElement } from "@devtools/components/lit-component";
-import { Sizing } from "@devtools/components/shared";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
