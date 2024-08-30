@@ -1,4 +1,6 @@
-export type MaterialIconSize =
+export type Sizing =
     'sm' |
     'md' |
     'lg'
+
+

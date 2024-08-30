@@ -1,5 +1,5 @@
 import '@alenaksu/json-viewer';
-import StatefulLitElement from '@devtools/components/stateful-lit-component';
+import StatefulLitElement from '@devtools/pages/stateful-lit-component';
 import resources from '@devtools/resources';
 import { RootState } from '@devtools/store';
 import { selectSelectedJsonData } from '@devtools/store/event-viewer/selectors';

@@ -12,7 +12,7 @@ export type ToggleEventDetails = {
 }
 
 
-@customElement('btn-toggle')
+@customElement('x-btn-toggle')
 export class ButtonToggleElement extends LitComponentElement {
 
     static styles = [defaultStyles, styles]

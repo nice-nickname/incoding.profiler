@@ -9,6 +9,7 @@ import "./icon/icon"
 
 import "./inputs/text/input-text"
 
+import "./buttons/button/button"
 import "./buttons/button-icon/button-icon"
 import "./buttons/button-group/button-group"
 import "./buttons/button-toggle/button-toggle"

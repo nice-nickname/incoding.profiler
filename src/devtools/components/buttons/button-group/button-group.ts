@@ -5,7 +5,7 @@ import { customElement } from "lit/decorators.js";
 import defaultStyles from "../../styles/default-styles.css";
 import styles from "./button-group.css";
 
-@customElement('btn-group')
+@customElement('x-btn-group')
 export class ButtonGroupElement extends LitComponentElement {
 
     static styles = [defaultStyles, styles]

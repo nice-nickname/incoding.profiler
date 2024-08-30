@@ -4,7 +4,7 @@
  * @see https://github.com/acro5piano/ts-material-icon-name-list
  */
 
-export type MaterialIconName =
+export type MaterialIcons =
   | '10k'
   | '10mp'
   | '11mp'

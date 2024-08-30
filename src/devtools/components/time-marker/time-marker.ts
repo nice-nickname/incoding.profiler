@@ -23,7 +23,7 @@ export class TimeMarkerElement extends LitComponentElement {
         return html`${displayTime}`
     }
 
-    formatNumber(timeInMs: number) {
+    private formatNumber(timeInMs: number) {
         const formats: ([limit: number, label: string])[] = [
             [1000, 'ms'],
             [60, 's'],

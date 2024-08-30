@@ -17,15 +17,15 @@ export class TagLinkElement extends LitComponentElement {
     protected render() {
         const { tagName, classList, id } = this.formatTag()
 
-        const openBrace = html`<span class="brace"><</span>`
-        const closingBrace = html`<span class="brace">></span>`
-        const tagElement = html`<span class="tag">${tagName}</span>`
-        const classElement = html`<span class="classList">${classList}</span>`
-        const idElement = html`<span class="id">${id}</span>`
+        const openBrace = html`<span class="tag__brace"><</span>`
+        const closingBrace = html`<span class="tag__brace">></span>`
+        const tagElement = html`<span class="tag__element">${tagName}</span>`
+        const classElement = html`<span class="tag__classList">${classList}</span>`
+        const idElement = html`<span class="tag__id">${id}</span>`
 
         return html`
             <button @click=${this.handleClick}>
-                <pre>${openBrace}${tagElement}${classElement}${idElement}${closingBrace}</pre>
+                <pre class="tag">${openBrace}${tagElement}${classElement}${idElement}${closingBrace}</pre>
             </button>
         `
     }

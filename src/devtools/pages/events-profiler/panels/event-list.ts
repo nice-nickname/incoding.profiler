@@ -1,4 +1,4 @@
-import StatefulLitElement from "@devtools/components/stateful-lit-component";
+import StatefulLitElement from "@devtools/pages/stateful-lit-component";
 import resources from "@devtools/resources";
 import store, { RootState } from "@devtools/store";
 import { selectEvents } from "@devtools/store/event-list/selectors";

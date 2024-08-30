@@ -1,6 +1,6 @@
 import { ToggleEventDetails } from "@devtools/components/buttons/button-toggle/button-toggle";
 import { ValueChangeEventDetail } from "@devtools/components/inputs/text/input-text";
-import StatefulLitElement from "@devtools/components/stateful-lit-component";
+import StatefulLitElement from "@devtools/pages/stateful-lit-component";
 import store, { RootState } from '@devtools/store';
 import { selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
 import {
@@ -47,18 +47,20 @@ export class EventListHeaderElement extends StatefulLitElement {
 
     protected render() {
         return html`
-            <btn-group>
-                <btn-toggle @toggle=${this.togglePauseEvents} ?disabled=${this.isEventsPaused}>
-                    <btn-icon slot="disabled" icon="stop_circle"></btn-icon>
-                    <btn-icon slot="enabled" icon="stop_circle" color="var(--danger-color)"></btn-icon>
-                </btn-toggle>
+            <x-btn-group>
+                <x-btn-toggle @toggle=${this.togglePauseEvents} ?disabled=${this.isEventsPaused}>
+                    <x-btn-icon icon="stop_circle" slot="disabled"></x-btn-icon>
+                    <x-btn-icon icon="stop_circle" slot="enabled" color="var(--danger-color)"></x-btn-icon>
+                </x-btn-toggle>
 
-                <btn-icon icon="block" @click=${this.clearEventList}></btn-icon>
-            </btn-group>
+                <x-btn-icon icon="block" @click=${this.clearEventList}></x-btn-icon>
+            </x-btn-group>
 
             <div class="separator"></div>
 
-            <div>select</div>
+            <x-btn>
+                Select
+            </x-btn>
 
             <div class="separator"></div>
 

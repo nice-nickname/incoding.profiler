@@ -1,14 +1,13 @@
 
-export function evalAtHost(code: string): Promise<unknown> {
-    return new Promise<unknown>(
+export function evalAtHost<T = unknown>(code: string): Promise<T> {
+    return new Promise<T>(
         (resolve, reject) => {
             chrome.devtools.inspectedWindow.eval(code, function (res, err) {
                 if (err.isError || err.isException) {
-                    reject(err)
-                    return
+                    return reject(err)
                 }
 
-                resolve(res)
+                resolve(res as T)
             })
         })
 }

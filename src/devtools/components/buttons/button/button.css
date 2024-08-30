@@ -1,0 +1,62 @@
+:host {
+    display: inline-flex !important;
+    position: relative;
+    width: auto;
+    cursor: pointer;
+}
+
+.button {
+    all: unset;
+    font-size: 1rem;
+
+    display: inline-flex;
+}
+
+.button__label {
+    display: inline-block;
+
+    align-content: center;
+    padding: 0 0.5rem;
+}
+
+.button__prefix,
+.button__postfix {
+    display: inline-flex;
+}
+
+.button__prefix + .button__label {
+    padding-left: 0.25rem;
+}
+
+
+
+/* sizing */
+
+.button--small {
+
+}
+
+.button--medium {
+
+}
+
+.button--medium :is(.button__prefix, .button__postfix) {
+    font-size: 18px;
+}
+
+.button--large {
+
+}
+
+.button--large :is(.button__prefix, .button__postfix) {
+    font-size: 20px;
+}
+
+
+
+/* default color */
+
+.button--default {
+
+}
+

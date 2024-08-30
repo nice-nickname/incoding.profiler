@@ -7,19 +7,20 @@ button {
     cursor: pointer !important;
 }
 
-pre {
+.tag {
     all: unset;
     font-family: 'Consolas';
 }
 
-.tag, .brace {
+.tag__element,
+.tag__brace {
     color: var(--code-token-tagName);
 }
 
-.classList {
+.tag__classList {
     color: var(--code-token-classList);
 }
 
-.id {
+.tag__id {
     color: var(--code-token-id);
 }
