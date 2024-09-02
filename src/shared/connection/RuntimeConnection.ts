@@ -1,6 +1,7 @@
 import Message, {
     BrowserMessages,
     DevtoolsMessages,
+    Peer,
     SharedMessages
 } from "./types"
 
@@ -9,16 +10,18 @@ type ListenMessages<T> = T & SharedMessages
 class RuntimeConnection<
     TListen extends object,
     TEmit extends object
-> {
+    > {
 
     private connection: chrome.runtime.Port
 
     private listeners: Partial<Record<keyof ListenMessages<TListen>, Function>> = {}
 
-    private batchers: Record<keyof ListenMessages<TEmit>, Batcher<Message<TEmit>>>
+    constructor(
+        private name: Peer
+    ) { }
 
-    connect(tab: string) {
-        this.connection = chrome.runtime.connect({ name: tab })
+    connect(tabId: string) {
+        this.connection = chrome.runtime.connect({ name: tabId })
 
         this.connection.onMessage.addListener(this.onMessage)
 
@@ -35,26 +38,14 @@ class RuntimeConnection<
         this.connection.disconnect()
     }
 
-    emit<TKey extends keyof TEmit>(type: TKey, payload?: TEmit[TKey]) {
-        const message: Message<TEmit> = {
-            type: type,
-            payload: payload
-        }
+    emit<TKey extends keyof TEmit>(to: Peer, type: TKey, payload?: TEmit[TKey]) {
+        const data: Message<TEmit> = { type: type, payload: payload }
 
-        this.connection.postMessage(message)
-    }
-
-    batch<TKey extends keyof TEmit>(type: TKey, payload?: TEmit[TKey]) {
-        const message: Message<TEmit> = {
-            type: type,
-            payload: payload
-        }
-
-        if (!this.batchers[type]) {
-            this.batchers[type] = this.createBatcher()
-        }
-
-        this.batchers[type].push(message)
+        this.connection.postMessage({
+            from: this.name,
+            to: to,
+            data: data
+        })
     }
 
     on<Tkey extends keyof ListenMessages<TListen>>(
@@ -68,57 +59,11 @@ class RuntimeConnection<
         const handler = this.listeners[message.type]
 
         if (!handler) {
-            console.warn(`there is no handler assosiated with ${String(message.type)}`)
+            console.warn('devtools.js', `there is no handler assosiated with ${String(message.type)}`)
             return
         }
+
         handler?.call(this, message.payload)
-    }
-
-    private createBatcher() {
-        return new Batcher<Message<TEmit>>(1000, 10, (items) => {
-            this.connection.postMessage(items)
-        })
-    }
-}
-
-class Batcher<T> {
-
-    private internalTimeout: ReturnType<typeof setTimeout> | null
-
-    private bucket: T[]
-
-    constructor(
-        private delay: number,
-        private bucketSize: number,
-        private callback: (items: T[]) => void
-    ) {
-        this.internalTimeout = null
-        this.bucket = []
-    }
-
-    public push(data: T) {
-        this.bucket.push(data)
-
-        if (this.bucket.length == this.bucketSize) {
-            this.invokeCallbackAndClearBucket()
-        }
-
-        this.restartTimer()
-    }
-
-    private restartTimer() {
-        clearTimeout(this.internalTimeout!)
-
-        if (this.bucket.length === 0) return
-
-        this.internalTimeout = setTimeout(() => {
-            this.invokeCallbackAndClearBucket()
-        }, this.delay)
-    }
-
-    private invokeCallbackAndClearBucket() {
-        this.callback([...this.bucket])
-        this.bucket = []
     }
 }
 

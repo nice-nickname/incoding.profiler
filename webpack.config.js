@@ -14,7 +14,7 @@ module.exports = (env) => {
         entry: {
             popup: './src/popup/index.ts',
             devtools: './src/devtools/index.ts',
-            background: './src/background/background.js',
+            background: './src/background/background.ts',
             content_script: './src/content-scripts/content-script.ts',
             inject_profiler: './src/content-scripts/injection/inject-profiler.js'
         },
@@ -27,7 +27,9 @@ module.exports = (env) => {
             alias: {
                 '@devtools': path.resolve(__dirname, 'src/devtools/'),
                 '@content-scripts': path.resolve(__dirname, 'src/content-scripts/'),
-                '@connection': path.resolve(__dirname, 'src/shared/connection/')
+                '@connection': path.resolve(__dirname, 'src/shared/connection/'),
+                '@background': path.resolve(__dirname, 'src/background'),
+                '@popup': path.resolve(__dirname, 'src/popup')
             }
         },
         module: {

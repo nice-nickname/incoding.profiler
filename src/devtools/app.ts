@@ -18,7 +18,7 @@ export class IncodingProfilerDevtools extends LitElement {
     private status: 'loading' | 'started' | 'failed'
 
     @provide({ context: runtimeConnectionCtx })
-    private connection: DevtoolsConnection = new RuntimeConnection()
+    private connection: DevtoolsConnection = new RuntimeConnection('devtools')
 
     override connectedCallback(): void {
         super.connectedCallback()

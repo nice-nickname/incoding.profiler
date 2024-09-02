@@ -21,4 +21,12 @@ export {
     BrowserMessages
 }
 
+export type Peer = 'devtools' | 'popup' | 'content-script'
+
+export interface IBackgroundMessage {
+    from: Peer,
+    to: Peer,
+    data: unknown
+}
+
 export default Message

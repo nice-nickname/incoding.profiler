@@ -4,7 +4,7 @@
  * @see https://developer.chrome.com/docs/extensions/migrating/to-service-workers
  */
 
-let keepingAliveInterval
+let keepingAliveInterval: ReturnType<typeof setInterval>
 
 function keepBackgroundAlive() {
     keepingAliveInterval = setInterval(ping, 5 * 1000)
@@ -15,7 +15,7 @@ function keepBackgroundAlive() {
 }
 
 async function ping() {
-    await chrome.storage.local.set({ '_': 'pong' + Date.now() })
+    await chrome.storage.local.set({ '_': 'pong' })
 }
 
 export {

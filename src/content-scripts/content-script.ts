@@ -6,7 +6,7 @@
 
 import RuntimeConnection, { BrowserConnection } from "@connection/RuntimeConnection";
 
-const connection: BrowserConnection = new RuntimeConnection()
+const connection: BrowserConnection = new RuntimeConnection('content-script')
 
 connection.on('connected', () => {
     window.addEventListener('message', onWindowMessage)
@@ -32,7 +32,7 @@ document.onreadystatechange = () => {
     }
 
     if (document.readyState === 'complete') {
-        connection.emit('refresh')
+        connection.emit('devtools', 'refresh')
     }
 };
 
