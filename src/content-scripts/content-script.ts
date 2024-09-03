@@ -4,9 +4,9 @@
  * Establishing window listener to direct messages from injected script to background service-worker
  */
 
-import RuntimeConnection, { BrowserConnection } from "@connection/RuntimeConnection";
+import BackgroundConnection, { BrowserConnection } from "@connection/background-connection";
 
-const connection: BrowserConnection = new RuntimeConnection('content-script')
+const connection: BrowserConnection = new BackgroundConnection('content-script')
 
 connection.on('connected', () => {
     window.addEventListener('message', onWindowMessage)
@@ -15,14 +15,6 @@ connection.on('connected', () => {
 connection.on('disconnected', () => {
     window.removeEventListener('message', onWindowMessage)
 })
-
-function onWindowMessage({ source, data }: any) {
-    if (source !== window || !data) {
-        return;
-    }
-
-    connection.emit(data.type, data.payload)
-}
 
 document.onreadystatechange = () => {
     if (document.readyState === 'interactive') {
@@ -35,6 +27,16 @@ document.onreadystatechange = () => {
         connection.emit('devtools', 'refresh')
     }
 };
+
+
+function onWindowMessage({ source, data }: any) {
+    if (source !== window || !data) {
+        return;
+    }
+
+    connection.emit('devtools', data.type, data.payload)
+};
+
 
 /**
  * Firefox manifest does not support executionWorld.MAIN, so we have to

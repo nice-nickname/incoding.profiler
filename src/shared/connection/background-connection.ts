@@ -2,12 +2,14 @@ import Message, {
     BrowserMessages,
     DevtoolsMessages,
     Peer,
+    PopupMessages,
     SharedMessages
 } from "./types"
 
 type ListenMessages<T> = T & SharedMessages
 
-class RuntimeConnection<
+class BackgroundConnection<
+    TName extends Peer,
     TListen extends object,
     TEmit extends object
     > {
@@ -17,7 +19,7 @@ class RuntimeConnection<
     private listeners: Partial<Record<keyof ListenMessages<TListen>, Function>> = {}
 
     constructor(
-        private name: Peer
+        private name: TName
     ) { }
 
     connect(tabId: string) {
@@ -38,7 +40,7 @@ class RuntimeConnection<
         this.connection.disconnect()
     }
 
-    emit<TKey extends keyof TEmit>(to: Peer, type: TKey, payload?: TEmit[TKey]) {
+    emit<TKey extends keyof TEmit>(to: Exclude<Peer, TName>, type: TKey, payload?: TEmit[TKey]) {
         const data: Message<TEmit> = { type: type, payload: payload }
 
         this.connection.postMessage({
@@ -67,7 +69,8 @@ class RuntimeConnection<
     }
 }
 
-export type DevtoolsConnection = RuntimeConnection<DevtoolsMessages, BrowserMessages>
-export type BrowserConnection = RuntimeConnection<BrowserMessages, DevtoolsMessages>
+export type DevtoolsConnection = BackgroundConnection<'devtools', DevtoolsMessages, BrowserMessages & PopupMessages>
+export type BrowserConnection = BackgroundConnection<'content-script', BrowserMessages, DevtoolsMessages>
+export type PopupConnection = BackgroundConnection<'popup', PopupMessages, DevtoolsMessages>
 
-export default RuntimeConnection
+export default BackgroundConnection

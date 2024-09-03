@@ -22,7 +22,9 @@
     "paths": {
       "@devtools/*": ["./src/devtools/*"],
       "@content-scripts/*": ["./src/content-scripts/*"],
-      "@connection/*": ["./src/shared/connection/*"]
+      "@connection/*": ["./src/shared/connection/*"],
+      "@popup/*": ["./src/popup/*"],
+      "@background": ["./src/background/*"]
     },
     "resolveJsonModule": true
   }

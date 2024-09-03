@@ -16,7 +16,7 @@ module.exports = (env) => {
             devtools: './src/devtools/index.ts',
             background: './src/background/background.ts',
             content_script: './src/content-scripts/content-script.ts',
-            inject_profiler: './src/content-scripts/injection/inject-profiler.js'
+            inject_profiler: './src/content-scripts/injections/index.js'
         },
         output: {
             filename: '[name].js',

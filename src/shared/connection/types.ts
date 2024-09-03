@@ -1,5 +1,6 @@
 import type DevtoolsMessages from "@devtools/api"
 import type BrowserMessages from "@content-scripts/api"
+import type PopupMessages from "@popup/api"
 
 type Message<TMessages> = {
     type: keyof TMessages,
@@ -18,7 +19,8 @@ export {
     SharedMessages,
 
     DevtoolsMessages,
-    BrowserMessages
+    BrowserMessages,
+    PopupMessages
 }
 
 export type Peer = 'devtools' | 'popup' | 'content-script'

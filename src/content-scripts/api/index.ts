@@ -1,4 +1,6 @@
 
-type BrowserMessages = { }
+type BrowserMessages = {
+
+}
 
 export default BrowserMessages

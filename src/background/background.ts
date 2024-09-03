@@ -1,26 +1,32 @@
-import { Peer } from "@connection/types"
 import { keepBackgroundAlive } from "./persist-connection"
-import { Session, SessionFactory } from "./session"
+import { SessionFactory } from "./session-factory"
 
 if (!__FIREFOX__) {
     keepBackgroundAlive()
 }
 
 chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
-    let sessionId: string
-    let peer: Peer
+    let tab: string
+    let name: string
 
     if (isDevtools(port)) {
-        sessionId = port.name
-        peer = 'devtools'
+        tab = port.name
+        name = 'devtools'
     } else {
-        sessionId = port.sender?.tab?.id?.toString()!
-        peer = port.name as Peer
+        // @ts-ignore
+        tab = port.sender.tab.id.toString()
+        name = port.name
     }
 
-    const session: Session = SessionFactory.get(sessionId)
+    const session = SessionFactory.create(tab)
 
-    session.connect(peer, port)
+    if (name === 'content-script') {
+        port.onDisconnect.addListener(() => {
+            session.dispose()
+        })
+    }
+
+    session.connect(name, port)
 })
 
 function isDevtools(port: chrome.runtime.Port) {

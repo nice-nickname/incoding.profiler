@@ -1,4 +1,4 @@
-import RuntimeConnection, { DevtoolsConnection } from "@connection/RuntimeConnection";
+import BackgroundConnection, { DevtoolsConnection } from "@connection/background-connection";
 import runtimeConnectionCtx from "@devtools/context/connection";
 import resources from "@devtools/resources";
 import store from "@devtools/store";
@@ -18,7 +18,7 @@ export class IncodingProfilerDevtools extends LitElement {
     private status: 'loading' | 'started' | 'failed'
 
     @provide({ context: runtimeConnectionCtx })
-    private connection: DevtoolsConnection = new RuntimeConnection('devtools')
+    private connection: DevtoolsConnection = new BackgroundConnection('devtools')
 
     override connectedCallback(): void {
         super.connectedCallback()

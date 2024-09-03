@@ -1,4 +1,4 @@
-import { DevtoolsConnection } from "@connection/RuntimeConnection"
+import { DevtoolsConnection } from "@connection/background-connection"
 import { createContext } from "@lit/context"
 
 const runtimeConnectionCtx = createContext<DevtoolsConnection>(Symbol('runtime-connection'))
