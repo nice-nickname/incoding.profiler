@@ -8,40 +8,23 @@ import { css, html } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 
 import defaultStyles from "../../../components/styles/default-styles.css";
+import scrollStyles from "../../../components/styles/scroll-styles.css";
 
 
 @customElement('event-list')
 export class EventListElement extends StatefulLitElement {
 
-    static styles = [defaultStyles, css`
+    static styles = [defaultStyles, scrollStyles, css`
         :host {
             position: relative;
         }
 
-        ::-webkit-scrollbar {
-            background-color: #393b41;
-            width: 0.5rem;
-            height: 0.5rem;
-            border-radius: 1px;
-        }
-
-        ::-webkit-scrollbar-button {
-            display: none;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: #a4abb5;
-            border: 1px solid transparent;
-            background-clip: content-box;
-            border-radius: 0.125rem;
-        }
-
-        .wrapper {
+        .events-list {
             height: 100%;
             overflow-y: auto;
         }
 
-        .container {
+        .events-list__container {
             display: flex;
             flex-direction: column;
 
@@ -52,11 +35,11 @@ export class EventListElement extends StatefulLitElement {
             color: var(--text-color--accent);
         }
 
-        .container > incoding-event {
-            width: 100%
+        .events-list__container > incoding-event {
+            width: 100%;
         }
 
-        .floating-button-down {
+        .events-list__scroll-button {
             position: absolute;
             right: 0;
             bottom: 0;
@@ -77,20 +60,19 @@ export class EventListElement extends StatefulLitElement {
 
     private isScrollable: boolean = false
 
-    @query('.wrapper') private scroller: HTMLDivElement
+    @query('.events-list') private scroller: HTMLDivElement
 
-    @query('.floating-button-down') private scrollDownButton: HTMLDivElement
+    @query('.events-list__scroll-button') private scrollDownButton: HTMLDivElement
 
     protected onStateChanged(state: RootState): void {
         this.events = selectEvents(state)
 
-        if (this.scrollAttached) {
+        if (this.scrollAttached && this.scroller?.scrollTop) {
             this.scroller.scrollTop = this.scroller.scrollHeight
         }
     }
 
     protected render() {
-        CSS
         const hasEvents = this.events.length != 0
 
         return html`
@@ -102,8 +84,8 @@ export class EventListElement extends StatefulLitElement {
 
     private renderList() {
         return html`
-            <div class="wrapper" @scroll=${this.handleScroll}>
-                <div class="container" @data-selected=${this.handleDataClick}>
+            <div class="events-list" @scroll=${this.handleScroll}>
+                <div class="events-list__container" @data-selected=${this.handleDataClick}>
                     ${virtualize({
                         items: this.events,
                         keyFunction: event => event.uuid + event.executionTimeMs,
@@ -111,12 +93,11 @@ export class EventListElement extends StatefulLitElement {
                     })}
                 </div>
 
-                <div class="floating-button-down" hidden>
-                    <btn-icon
+                <div class="events-list__scroll-button" hidden>
+                    <x-btn-icon
                         @click=${this.handleScrollDownClick}
-                        icon="arrow_downward"
-                        size="lg">
-                    </btn-icon>
+                        icon="arrow_downward">
+                    </x-btn-icon>
                 </div>
             </div>
         `

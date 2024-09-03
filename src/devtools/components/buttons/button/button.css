@@ -44,12 +44,8 @@
     font-size: 18px;
 }
 
-.button--large {
-
-}
-
 .button--large :is(.button__prefix, .button__postfix) {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 
