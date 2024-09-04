@@ -11,4 +11,10 @@ export class SessionFactory {
 
         return this.sessions[tabId]
     }
+
+    static active: Session
+
+    static setActive(tabId: string) {
+        this.active = this.sessions[tabId]
+    }
 }

@@ -1,2 +1,9 @@
+import BackgroundConnection, { PopupConnection } from "@connection/background-connection"
 
-document.getElementById('root')!.innerText = '</>'
+const connection: PopupConnection = new BackgroundConnection('popup')
+
+connection.on('connected', () => {
+    document.getElementById('root')!.innerText = '</>'
+})
+
+connection.connect('popup')

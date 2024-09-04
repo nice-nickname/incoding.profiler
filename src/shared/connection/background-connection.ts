@@ -22,8 +22,8 @@ class BackgroundConnection<
         private name: TName
     ) { }
 
-    connect(tabId: string) {
-        this.connection = chrome.runtime.connect({ name: tabId })
+    connect(name: string) {
+        this.connection = chrome.runtime.connect({ name: name })
 
         this.connection.onMessage.addListener(this.onMessage)
 
