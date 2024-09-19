@@ -5,13 +5,15 @@ if (!__FIREFOX__) {
     keepBackgroundAlive()
 }
 
+const sessionTimeoutMs = 10 * 1000
+
 chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
     let tab: string
     let name: string
 
     if (port.name === 'popup') {
         const session = SessionFactory.active
-        session.connect('popup', port)
+        session?.connect('popup', port)
         return
     }
 
@@ -27,8 +29,10 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
     const session = SessionFactory.create(tab)
 
     if (name === 'content-script') {
+        session.cancelDispose()
+
         port.onDisconnect.addListener(() => {
-            session.dispose()
+            session.requestDispose(sessionTimeoutMs)
         })
     }
 

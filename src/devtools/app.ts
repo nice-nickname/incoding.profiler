@@ -15,7 +15,7 @@ import '@devtools/pages';
 export class IncodingProfilerDevtools extends LitElement {
 
     @state()
-    private status: 'loading' | 'started' | 'failed'
+    private status: 'loading' | 'disconnected' | 'started' | 'failed'
 
     @provide({ context: runtimeConnectionCtx })
     private connection: DevtoolsConnection = new BackgroundConnection('devtools')
@@ -39,10 +39,12 @@ export class IncodingProfilerDevtools extends LitElement {
     protected render() {
         return html`
             ${choose(this.status, [
-            ['loading', () => html`${resources.profiler_loading}`],
-            ['failed', () => html`${resources.no_incoding_framework_found}`],
-            ['started', () => html`<pages-layout></pages-layout>`],
-        ])}
+                ['loading', () => html`${resources.profiler_loading}`],
+                ['disconnected', () => html`${resources.profiler_disconnected}`],
+                ['failed', () => html`${resources.no_incoding_framework_found}`],
+
+                ['started', () => html`<pages-layout></pages-layout>`],
+            ])}
         `
     }
 
@@ -62,6 +64,10 @@ export class IncodingProfilerDevtools extends LitElement {
     private startProfiler() {
         const tabId = String(chrome.devtools.inspectedWindow.tabId)
 
+        this.connection.on('connected', () => {
+            this.status = 'started'
+        })
+
         this.connection.on('event-execution-start', event => {
             store.dispatch(addEvent(event))
         })
@@ -74,8 +80,10 @@ export class IncodingProfilerDevtools extends LitElement {
             store.dispatch(clearEvents())
         })
 
-        this.connection.connect(tabId)
+        this.connection.on('disconnected', () => {
+            this.status = 'disconnected'
+        })
 
-        this.status = 'started'
+        this.connection.connect(tabId)
     }
 }

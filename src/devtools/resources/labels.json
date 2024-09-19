@@ -1,5 +1,6 @@
 {
   "profiler_loading": "incoding.profiler is loading... ⏳",
+  "profiler_disconnected": "incoding.profiler disconnected from page 🐢",
 
   "no_items_in_list": "No elements to see here... 😞",
   "no_selected_item": "Select event to see jsonData 😗",

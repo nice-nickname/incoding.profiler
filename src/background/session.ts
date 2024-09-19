@@ -1,8 +1,10 @@
-import { IBackgroundMessage, Peer } from "@connection/types";
+import { IBackgroundMessage } from "@connection/types";
 
 export class Session {
 
     private ports: Record<string, chrome.runtime.Port> = { }
+
+    private disposeTimeout: ReturnType<typeof setTimeout>
 
     constructor(
         public id: string
@@ -14,6 +16,8 @@ export class Session {
         port.onMessage.addListener(this.onMessage)
         port.onDisconnect.addListener(this.onDisconnect)
 
+        port.postMessage({ type: "connected" })
+
         this.ports[key] = port
     }
 
@@ -21,6 +25,16 @@ export class Session {
         for (const key in this.ports) {
             this.disconnectIfExist(key)
         }
+    }
+
+    requestDispose(timeoutMs: number) {
+        this.disposeTimeout = setTimeout(() => {
+            this.dispose()
+        }, timeoutMs)
+    }
+
+    cancelDispose() {
+        clearTimeout(this.disposeTimeout)
     }
 
     private disconnectIfExist(key: string) {

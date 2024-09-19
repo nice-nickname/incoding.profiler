@@ -12,9 +12,9 @@ export class SessionFactory {
         return this.sessions[tabId]
     }
 
-    static active: Session
+    static active: Session | null
 
     static setActive(tabId: string) {
-        this.active = this.sessions[tabId]
+        this.active = this.sessions[tabId] || null
     }
 }

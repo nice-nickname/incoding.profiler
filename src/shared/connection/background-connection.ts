@@ -32,8 +32,6 @@ class BackgroundConnection<
 
             this.connection.onMessage.removeListener(this.onMessage)
         })
-
-        this.onMessage({ type: "connected" })
     }
 
     disconnect() {
