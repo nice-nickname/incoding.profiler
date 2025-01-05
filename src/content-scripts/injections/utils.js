@@ -12,8 +12,8 @@ export function uuid() {
 
 /**
  * Converting jQuery array of element to array of selectors
- * @param {JQuery} elements
- * @returns {string[]}
+ * @param { JQuery } elements
+ * @returns { string[] }
  */
 export function jqueryToSelector(elements) {
     const result = []
