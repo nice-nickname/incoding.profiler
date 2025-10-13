@@ -19,11 +19,6 @@ export class IconButtonElement extends LitComponentElement {
 
     @property() size: Sizing = 'lg'
 
-
-    override connectedCallback() {
-        super.connectedCallback()
-    }
-
     protected render() {
         return html`
             <x-btn size="${this.size}">

@@ -4,55 +4,18 @@ import store, { RootState } from "@devtools/store";
 import { selectEvents } from "@devtools/store/event-list/selectors";
 import { select } from "@devtools/store/event-viewer/slice";
 import { virtualize } from '@lit-labs/virtualizer/virtualize.js';
-import { css, html } from "lit";
+import { html } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 
 import defaultStyles from "../../../components/styles/default-styles.css";
 import scrollStyles from "../../../components/styles/scroll-styles.css";
+import styles from "./event-list.css";
 
 
 @customElement('event-list')
 export class EventListElement extends StatefulLitElement {
 
-    static styles = [defaultStyles, scrollStyles, css`
-        :host {
-            position: relative;
-        }
-
-        .events-list {
-            height: 100%;
-            overflow-y: auto;
-        }
-
-        .events-list__container {
-            display: flex;
-            flex-direction: column;
-
-            height: 100%;
-            overflow-y: auto;
-
-            font-family: monospace;
-            color: var(--text-color--accent);
-        }
-
-        .events-list__container > incoding-event {
-            width: 100%;
-        }
-
-        .events-list__scroll-button {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-
-            display: flex;
-            padding: 0.125rem;
-            background: var(--bg-color);
-            border-radius: 100%;
-            border: 1px solid var(--border-color);
-        }
-    `]
+    static styles = [defaultStyles, scrollStyles, styles]
 
     @state() private events: IncodingEvent[] = []
 
@@ -105,7 +68,7 @@ export class EventListElement extends StatefulLitElement {
 
     private renderEmpty() {
         return html`
-            <no-content .text=${resources.no_items_in_list}></no-content>
+            <no-content text=${resources.no_items_in_list}></no-content>
         `
     }
 
@@ -119,7 +82,7 @@ export class EventListElement extends StatefulLitElement {
         if (this.isScrollable && !this.scrollAttached) {
             this.scrollDownButton.removeAttribute('hidden')
         } else {
-            this.scrollDownButton.setAttribute('hidden',  '')
+            this.scrollDownButton.setAttribute('hidden', '')
         }
     }
 

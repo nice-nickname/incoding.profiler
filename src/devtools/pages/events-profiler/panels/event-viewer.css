@@ -1,0 +1,23 @@
+.list {
+    display: flex;
+    flex-direction: column;
+
+    font-family: monospace;
+    color: var(--text-color-accent);
+}
+
+.property {
+    width: 100%;
+}
+
+json-viewer {
+    --background-color: #282828;
+    --color: var(--text-color-accent);
+    --string-color: #fe8d59;
+    --number-color: #897bff;
+    --boolean-color: #897bff;
+    --null-color: #897bff;
+    --property-color: #7cacf8;
+    --preview-color: rgb(143 143 143);
+    --highlight-color: #7b0000;
+}

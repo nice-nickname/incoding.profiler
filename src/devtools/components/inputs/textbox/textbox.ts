@@ -17,6 +17,8 @@ export class ATextboxElement extends LitComponentElement {
 
     @property() value: string = ''
 
+    @property() onChange: (value: string) => void
+
     @query('input') input: HTMLInputElement
 
     protected render() {
@@ -38,5 +40,7 @@ export class ATextboxElement extends LitComponentElement {
         this.fireEvent<ChangeEventDetails>('x-change', {
             value: this.value
         })
+
+        this.onChange(this.value)
     }
 }

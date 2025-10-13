@@ -37,14 +37,17 @@
 
 :root {
     --bg-color: #282828;
+    --bg-panel-color: #414141;
+
     --text-color: #c7c7c7;
-    --text-color--accent: #d8d8d8;
+    --text-color-accent: #d8d8d8;
+
+    --border-color: #474747;
+    --border-panel-color: #666;
 
     --success-color: #84ff84;
     --warning-color: #ffcb7d;
     --danger-color: #ff6e6e;
-
-    --border-color: #474747;
 
     --bg-color-highlight: #3e3e3e;
 
@@ -60,6 +63,10 @@
     --size-sm: 16px;
     --size-md: 20px;
     --size-lg: 24px;
+
+    --font-size: 12px;
+
+    --border-radius: 0.25rem;
 }
 
 html {
@@ -69,7 +76,7 @@ html {
 }
 
 html, body {
-    font-size: 12px !important;
+    font-size: var(--font-size) !important;
 }
 
 #root {

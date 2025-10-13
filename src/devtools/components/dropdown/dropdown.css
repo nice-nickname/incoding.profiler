@@ -1,0 +1,23 @@
+
+:host {
+    display: inline-flex;
+}
+
+.dropdown {
+
+}
+
+.dropdown__button {
+
+}
+
+.dropdown__menu {
+    position: fixed;
+    z-index: 1000;
+
+    display: none;
+}
+
+.dropdown__menu.show {
+    display: unset;
+}

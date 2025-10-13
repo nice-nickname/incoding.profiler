@@ -3,10 +3,11 @@ import StatefulLitElement from '@devtools/pages/stateful-lit-component';
 import resources from '@devtools/resources';
 import { RootState } from '@devtools/store';
 import { selectSelectedJsonData } from '@devtools/store/event-viewer/selectors';
-import { css, html } from "lit";
+import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 
 import defaultStyles from "../../../components/styles/default-styles.css";
+import styles from "./event-viewer.css";
 
 
 @customElement('event-viewer')
@@ -14,31 +15,7 @@ export class EventViewerElement extends StatefulLitElement {
 
     @state() private selectedEvent: IncodingEvent | null = null
 
-    static styles = [defaultStyles, css`
-        .list {
-            display: flex;
-            flex-direction: column;
-
-            font-family: monospace;
-            color: var(--text-color--accent);
-        }
-
-        .property {
-            width: 100%;
-        }
-
-        json-viewer {
-            --background-color: #282828;
-            --color: var(--text-color--accent);
-            --string-color: #fe8d59;
-            --number-color: #897bff;
-            --boolean-color: #897bff;
-            --null-color: #897bff;
-            --property-color: #7cacf8;
-            --preview-color: rgb(143 143 143);
-            --highlight-color: #7b0000;
-        }
-    `]
+    static styles = [defaultStyles, styles]
 
     protected onStateChanged(state: RootState): void {
         this.selectedEvent = selectSelectedJsonData(state)
@@ -53,7 +30,7 @@ export class EventViewerElement extends StatefulLitElement {
     }
 
     private renderEmpty() {
-        return html`<no-content .text=${resources.no_selected_item}></no-content>`
+        return html`<no-content text=${resources.no_selected_item}></no-content>`
     }
 
     private renderContent() {

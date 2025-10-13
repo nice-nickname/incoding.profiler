@@ -3,47 +3,43 @@ import { ChangeEventDetails } from "@devtools/components/inputs/events";
 import StatefulLitElement from "@devtools/pages/stateful-lit-component";
 import resources from "@devtools/resources";
 import store, { RootState } from '@devtools/store';
-import { selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
+import { selectActions, selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
 import {
     clearEvents,
     pauseEvents,
     resetSearch,
     resumeEvents,
-    searchEvents
+    searchEvents,
+    setActions,
+    toggleAction
 } from '@devtools/store/event-list/slice';
 import { unselect } from "@devtools/store/event-viewer/slice";
 import { debounce } from "@devtools/utils/debounce";
-import { css, html } from "lit";
-import { customElement } from "lit/decorators.js";
+import { html } from "lit";
+import { customElement, state } from "lit/decorators.js";
+import { allIncActions } from "@devtools/utils/const";
+
+import styles from "./event-list-header.css";
 
 
 @customElement('event-list-header')
 export class EventListHeaderElement extends StatefulLitElement {
 
-    static styles = css`
-        :host {
-            display: flex;
-            align-items: center;
-            padding: 0 6px;
-
-            height: 26px;
-        }
-
-        .separator {
-            width: 1px;
-            height: 1rem;
-
-            background: var(--border-color);
-            margin: 0 6px;
-        }
-    `
+    static styles = [styles]
 
     private isEventsPaused: boolean
     private eventsSearch: string | null
 
+    @state() private actions: IncodingActions[]
+
     protected onInitializeState(state: RootState): void {
         this.isEventsPaused = selectIsEventsPaused(state)
         this.eventsSearch = selectEventsSearch(state)
+        this.actions = selectActions(state)
+    }
+
+    protected onStateChanged(state: RootState): void {
+        this.actions = selectActions(state)
     }
 
     protected render() {
@@ -59,9 +55,34 @@ export class EventListHeaderElement extends StatefulLitElement {
 
             <div class="separator"></div>
 
-            <x-btn>
-                Select
-            </x-btn>
+            <x-dropdown>
+                <x-btn slot="trigger">
+                    Select
+                </x-btn>
+
+                <x-dropdown-menu>
+                    <x-dropdown-menu-item>
+                        <x-checkbox
+                            .label=${resources.selectAll}
+                            .checked=${this.actions.length === allIncActions.length}
+                            .indeterminate=${this.actions.length > 0 && this.actions.length !== allIncActions.length}
+                            .onChange=${this.toggleAllItems}>
+                        </x-checkbox>
+                    </x-dropdown-menu-item>
+
+                    <x-dropdown-divider></x-dropdown-divider>
+
+                    ${allIncActions.map((incAction) => html`
+                        <x-dropdown-menu-item>
+                            <x-checkbox
+                                .label=${incAction}
+                                .checked=${this.actions.includes(incAction)}
+                                .onChange=${() => this.toggleItem(incAction)}>
+                            </x-checkbox>
+                        </x-dropdown-menu-item>
+                    `)}
+                </x-dropdown-menu>
+            </x-dropdown>
 
             <div class="separator"></div>
 
@@ -96,5 +117,13 @@ export class EventListHeaderElement extends StatefulLitElement {
         } else {
             store.dispatch(resetSearch())
         }
+    }
+
+    private toggleAllItems(value: boolean) {
+        store.dispatch(setActions(value ? allIncActions : []))
+    }
+
+    private toggleItem(incAction: IncodingActions) {
+        store.dispatch(toggleAction(incAction))
     }
 }

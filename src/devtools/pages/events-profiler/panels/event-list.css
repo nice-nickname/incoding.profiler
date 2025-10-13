@@ -1,0 +1,37 @@
+:host {
+    position: relative;
+}
+
+.events-list {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.events-list__container {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    overflow-y: auto;
+
+    font-family: monospace;
+    color: var(--text-color-accent);
+}
+
+.events-list__container>incoding-event {
+    width: 100%;
+}
+
+.events-list__scroll-button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+
+    display: flex;
+    padding: 0.125rem;
+    background: var(--bg-color);
+    border-radius: 100%;
+    border: 1px solid var(--border-color);
+}

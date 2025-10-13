@@ -1,12 +1,14 @@
 
 .checkbox {
-
+    display: inline-block;
 }
 
 .checkbox__input {
-
+    vertical-align: middle;
+    margin: 0.25rem;
 }
 
 .checkbox__label {
-
+    vertical-align: middle;
+    line-height: 1;
 }

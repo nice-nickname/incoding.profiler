@@ -15,3 +15,9 @@ import "./buttons/button-icon/button-icon"
 import "./buttons/button-group/button-group"
 import "./buttons/button-toggle/button-toggle"
 
+import "./dropdown/dropdown"
+import "./dropdown/dropdown-menu"
+import "./dropdown/dropdown-menu-item"
+import "./dropdown/dropdown-menu-divider"
+
+
