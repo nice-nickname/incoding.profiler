@@ -3,6 +3,11 @@
     display: inline-block;
 }
 
+.checkbox[readonly] {
+    cursor: pointer;
+    pointer-events: none;
+}
+
 .checkbox__input {
     vertical-align: middle;
     margin: 0.25rem;

@@ -16,19 +16,26 @@ export class CheckboxElement extends LitComponentElement {
 
     @property({ type: Boolean }) indeterminate: boolean = false
 
+    @property({ type: Boolean }) readOnly: boolean = false
+
+    @property({ type: Boolean }) disabled: boolean = false
+
     @property() label: string = ''
+
 
     @property() onChange: (value: boolean) => void
 
-    @query('input') input: HTMLInputElement
+
+    @query('input') private input: HTMLInputElement
 
     protected render() {
         return html`
-            <label class="checkbox" @change=${this.handleChange}>
+            <label class="checkbox" ?readonly=${this.readOnly} ?disabled=${this.disabled} @change=${this.handleChange}>
                 <input class="checkbox__input" type="checkbox"
                     .checked=${this.checked}
-                    .indeterminate=${this.indeterminate} />
-
+                    .indeterminate=${this.indeterminate}
+                    .readOnly=${this.readOnly}
+                    .disabled=${this.disabled} />
                 <span class="checkbox__label">
                     ${this.label}
                 </span>
@@ -40,6 +47,6 @@ export class CheckboxElement extends LitComponentElement {
         const checked = this.input.checked
 
         this.fireEvent<ChangeEventDetails<boolean>>('x-change', { value: checked })
-        this.onChange(checked)
+        this.onChange?.call(this, checked)
     }
 }

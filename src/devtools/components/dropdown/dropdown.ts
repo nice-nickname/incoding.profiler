@@ -29,7 +29,7 @@ export class DropdownElement extends LitComponentElement {
         return html`
             <div class="dropdown">
                 <slot class="dropdown__button" name="trigger" @click=${this.handleClick}></slot>
-                <slot class="dropdown__menu ${this.isOpen ? 'show' : ''}" @click=${() => false}></slot>
+                <slot class="dropdown__menu" ?open=${this.isOpen}></slot>
             </div>
         `;
     }

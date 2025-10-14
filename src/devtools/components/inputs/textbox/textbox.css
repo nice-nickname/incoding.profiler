@@ -3,6 +3,11 @@
 
 }
 
+.textbox[readonly] {
+    cursor: pointer;
+    pointer-events: none;
+}
+
 .textbox__input {
 
 }

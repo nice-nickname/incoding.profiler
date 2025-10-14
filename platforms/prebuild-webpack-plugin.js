@@ -2,9 +2,9 @@ const path = require('path')
 const fse = require('fs-extra')
 const chalk = require('chalk')
 
-const pluginName = 'prebuild-extension-plugin'
-
 module.exports = class PrebuildWebpackPlugin {
+
+    static name = 'prebuild-extension-plugin'
 
     constructor(env) {
         this.mode = this.validateMode(env.mode)
@@ -14,7 +14,7 @@ module.exports = class PrebuildWebpackPlugin {
     }
 
     apply(compiler) {
-        compiler.hooks.initialize.tap(pluginName, () => {
+        compiler.hooks.initialize.tap(PrebuildWebpackPlugin.name, () => {
             const publicPath = path.join(__dirname, `../public`)
             const platformPath = path.join(__dirname, `../platforms/${this.platform}`)
             const destination = this.getDestinationPath()

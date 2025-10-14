@@ -18,6 +18,6 @@
     display: none;
 }
 
-.dropdown__menu.show {
+.dropdown__menu[open] {
     display: unset;
 }
