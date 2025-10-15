@@ -36,8 +36,10 @@
 }
 
 :root {
+    --bg-transparent: transparent;
     --bg-color: #282828;
     --bg-panel-color: #414141;
+    --bg-color-highlight: #3e3e3e;
 
     --text-color: #c7c7c7;
     --text-color-accent: #d8d8d8;
@@ -48,8 +50,6 @@
     --success-color: #84ff84;
     --warning-color: #ffcb7d;
     --danger-color: #ff6e6e;
-
-    --bg-color-highlight: #3e3e3e;
 
     --icon-color: #c7c7c7;
     --icon-color-hover: #e8eaed;

@@ -1,8 +1,7 @@
-import { html, nothing } from "lit";
-import { customElement, state } from "lit/decorators.js";
-import { createRef, Ref, ref } from "lit/directives/ref.js";
+import { html, PropertyValues } from "lit";
+import { customElement, query, state } from "lit/decorators.js";
+import { styleMap } from "lit/directives/style-map.js";
 import { LitComponentElement } from "../lit-component";
-
 
 import defaultStyles from "../styles/default-styles.css";
 import styles from "./dropdown.css";
@@ -15,6 +14,11 @@ export class DropdownElement extends LitComponentElement {
 
     @state() private isOpen: boolean = false
 
+
+    @query('.dropdown') private dropdown: HTMLElement
+
+    @query('.dropdown__menu') private menu: HTMLElement
+
     override connectedCallback() {
         super.connectedCallback()
         document.addEventListener('click', this.handleGlobalClick)
@@ -25,11 +29,25 @@ export class DropdownElement extends LitComponentElement {
         document.removeEventListener('click', this.handleGlobalClick)
     }
 
+    protected override updated(changes: PropertyValues) {
+        if (this.dropdown && this.menu) {
+            const position = this.dropdown.getBoundingClientRect()
+            this.menu.style.top = position.bottom + 'px'
+            this.menu.style.left = position.left + 'px'
+        }
+    }
+
     protected render() {
+        const position = this.dropdown?.getBoundingClientRect()
+        const positionCss = styleMap({
+            top: position?.bottom,
+            left: position?.left
+        })
+
         return html`
             <div class="dropdown">
                 <slot class="dropdown__button" name="trigger" @click=${this.handleClick}></slot>
-                <slot class="dropdown__menu" ?open=${this.isOpen}></slot>
+                <slot class="dropdown__menu" ?open=${this.isOpen} style=${positionCss}></slot>
             </div>
         `;
     }

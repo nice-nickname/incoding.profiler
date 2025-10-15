@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import routes, { Page } from "./routes";
 
 import defaultStyles from "../components/styles/default-styles.css"
@@ -16,6 +17,21 @@ export class PagesLayout extends LitElement {
             height: 26px;
 
             border-bottom: 1px solid var(--border-color);
+        }
+
+        .tabs-list {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0 0.5rem;
+        }
+
+        .tabs-list__button {
+            all: unset;
+        }
+
+        .tabs-list__button.active {
+
         }
 
         .page {
@@ -36,9 +52,13 @@ export class PagesLayout extends LitElement {
 
         return html`
             <div class="content">
-                <div class="header">
-                    <button @click=${() => this.setPage('events-profiler')}>profiler</button>
-                    <button @click=${() => this.setPage('preferences-page')}>preferences</button>
+                <div class="header tabs-list">
+                    <button class="tabs-list__button ${classMap({ 'active': this.currentPage === 'events-profiler' })}" @click=${() => this.setPage('events-profiler')}>
+                        profiler
+                    </button>
+                    <button class="tabs-list__button ${classMap({ 'active': this.currentPage === 'preferences-page' })}" @click=${() => this.setPage('preferences-page')}>
+                        preferences
+                    </button>
                 </div>
 
                 <div class="page">

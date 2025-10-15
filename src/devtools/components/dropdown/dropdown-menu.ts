@@ -2,7 +2,6 @@ import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { LitComponentElement } from "../lit-component";
 
-
 import defaultStyles from "../styles/default-styles.css";
 import styles from "./dropdown-menu.css";
 

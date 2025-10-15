@@ -1,6 +1,6 @@
 import { LitComponentElement } from "@devtools/components/lit-component";
 import { Colors, Sizing } from "@devtools/components/shared";
-import { HasSlotController } from "@devtools/components/shared/controllers/has-slot-controller";
+import { RemoveEmptySlotController } from "@devtools/components/shared/controllers/remove-empty-slot-controller";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
@@ -17,13 +17,9 @@ export class ButtonComponent extends LitComponentElement {
 
     @property() color: Colors = 'default'
 
+    private slotsController = new RemoveEmptySlotController(this)
+
     protected render() {
-        const hasSlot = new HasSlotController(this)
-
-        hasSlot.removeIfExists('prefix')
-        hasSlot.removeIfExists('postfix')
-        hasSlot.removeIfExists('default')
-
         return html`
             <button class=${classMap({
                 button: true,
@@ -39,3 +35,4 @@ export class ButtonComponent extends LitComponentElement {
         `
     }
 }
+``

@@ -17,7 +17,7 @@ export class ProfilerEventElement extends LitComponentElement {
         return html`
             <div class="event" @click="${this.handleClick}">
                 <action-marker .action=${this.data.action}></action-marker>
-                <time-marker .timeInMs=${this.data.executionTimeMs}></time-marker>
+                <time-format .timeInMs=${this.data.executionTimeMs}></time-format>
                 <div>${this.data.eventName}</div>
 
                 <tag-link .tag=${this.data.self}></tag-link>

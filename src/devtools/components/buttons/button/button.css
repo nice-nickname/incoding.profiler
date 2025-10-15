@@ -8,8 +8,15 @@
 .button {
     all: unset;
     font-size: 1rem;
-
     display: inline-flex;
+    gap: 0.25rem;
+
+    background: var(--bg-transparent);
+    border-radius: 0.5rem;
+}
+
+.button:is(:hover, :active, :focus-visible) {
+    background: var(--bg-color-highlight);
 }
 
 .button__label {
@@ -23,11 +30,6 @@
 .button__postfix {
     display: inline-flex;
 }
-
-.button__prefix + .button__label {
-    padding-left: 0.25rem;
-}
-
 
 
 /* sizing */

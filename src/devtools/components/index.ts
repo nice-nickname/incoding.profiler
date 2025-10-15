@@ -1,6 +1,6 @@
 import "./action-marker/action-marker"
 import "./incoding-event/incoding-event"
-import "./time-marker/time-marker"
+import "./time-format/time-format"
 import "./tag-link/tag-link"
 
 import "./no-content/no-content"
