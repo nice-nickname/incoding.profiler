@@ -9,7 +9,7 @@
     all: unset;
     font-size: 1rem;
     display: inline-flex;
-    gap: 0.25rem;
+    align-items: center;
 
     background: var(--bg-transparent);
     border-radius: 0.5rem;
@@ -24,6 +24,14 @@
 
     align-content: center;
     padding: 0 0.5rem;
+}
+
+.button__prefix + .button__label {
+    padding-left: 0;
+}
+
+.button__label:has(+ .button__postfix) {
+    padding-right: 0;
 }
 
 .button__prefix,

@@ -3,7 +3,7 @@ import { ChangeEventDetails } from "@devtools/components/inputs/events";
 import StatefulLitElement from "@devtools/pages/stateful-lit-component";
 import resources from "@devtools/resources";
 import store, { RootState } from '@devtools/store';
-import { selectActions, selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
+import { selectActions, selectEvents, selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
 import {
     clearEvents,
     pauseEvents,
@@ -58,6 +58,7 @@ export class EventListHeaderElement extends StatefulLitElement {
             <x-dropdown>
                 <x-btn slot="trigger">
                     Select
+                    <x-icon style="font-size: 22px;" icon="arrow_drop_down" slot="postfix"></x-icon>
                 </x-btn>
 
                 <x-dropdown-menu>

@@ -7,6 +7,13 @@ button {
     cursor: pointer !important;
 }
 
+button:is(:hover, :active, :focus) {
+    text-decoration: underline;
+    text-decoration-color: var(--code-token-tagName);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+}
+
 .tag {
     all: unset;
     font-family: 'Consolas';

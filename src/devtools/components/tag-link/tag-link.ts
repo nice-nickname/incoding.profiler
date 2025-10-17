@@ -6,6 +6,7 @@ import { LitComponentElement } from "../lit-component";
 import defaultStyles from "../styles/default-styles.css";
 import resetButtonStyles from "../styles/reset-button.css";
 import styles from "./tag-link.css";
+import resources from "@devtools/resources";
 
 @customElement('tag-link')
 export class TagLinkElement extends LitComponentElement {
@@ -24,7 +25,7 @@ export class TagLinkElement extends LitComponentElement {
         const idElement = html`<span class="tag__id">${id}</span>`
 
         return html`
-            <button @click=${this.handleClick}>
+            <button @click=${this.handleClick} title="${resources.clickToInspect}">
                 <pre class="tag">${openBrace}${tagElement}${classElement}${idElement}${closingBrace}</pre>
             </button>
         `

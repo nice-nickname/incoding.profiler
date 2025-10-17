@@ -7,5 +7,7 @@
   "no_incoding_framework_found": "This page does not support incoding.framework.js 😢",
 
   "search": "Search...",
-  "selectAll": "Select all"
+  "selectAll": "Select all",
+
+  "clickToInspect": "Click to inspect"
 }

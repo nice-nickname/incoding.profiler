@@ -13,3 +13,7 @@
     background: var(--border-color);
     margin: 0 6px;
 }
+
+.last {
+    margin-left: auto;
+}
