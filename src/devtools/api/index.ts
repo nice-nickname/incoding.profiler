@@ -1,8 +1,6 @@
-export type IncodingEventMessage =
-    Omit<IncodingEvent, 'executionTimeMs'>
+export type IncodingEventMessage = Omit<IncodingEvent, 'executionTimeMs'>
 
-export type IncodingEventExecutedMessage =
-    Pick<IncodingEvent, 'uuid' | 'jsonData' | 'executionTimeMs'>
+export type IncodingEventExecutedMessage = Pick<IncodingEvent, 'uuid' | 'jsonData' | 'executionTimeMs'>
 
 export type RefreshMessage = void
 

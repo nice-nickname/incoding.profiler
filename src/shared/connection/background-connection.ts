@@ -12,18 +12,20 @@ class BackgroundConnection<
     TName extends Peer,
     TListen extends object,
     TEmit extends object
-    > {
+> {
 
     private connection: chrome.runtime.Port
 
-    private listeners: Partial<Record<keyof ListenMessages<TListen>, Function>> = {}
+    private listeners: Partial<{
+        [K in keyof ListenMessages<TListen>]: Function
+    }> = {}
 
     constructor(
         private name: TName
     ) { }
 
-    connect(name: string) {
-        this.connection = chrome.runtime.connect({ name: name })
+    connect(name?: string) {
+        this.connection = chrome.runtime.connect({ name: name ?? this.name })
 
         this.connection.onMessage.addListener(this.onMessage)
 
@@ -39,19 +41,23 @@ class BackgroundConnection<
     }
 
     emit<TKey extends keyof TEmit>(to: Exclude<Peer, TName>, type: TKey, payload?: TEmit[TKey]) {
-        const data: Message<TEmit> = { type: type, payload: payload }
-
-        this.connection.postMessage({
+        const msg: {
+            from: string,
+            to: string,
+            data: Message<TEmit>
+        } = {
             from: this.name,
             to: to,
-            data: data
-        })
+            data: { type: type, payload: payload }
+        }
+
+        this.connection.postMessage(msg)
     }
 
     on<Tkey extends keyof ListenMessages<TListen>>(
         type: Tkey,
-        handler: (payload: ListenMessages<TListen>[Tkey]) => void) {
-
+        handler: (payload: ListenMessages<TListen>[Tkey]) => void
+    ) {
         this.listeners[type] = handler
     }
 
@@ -63,7 +69,7 @@ class BackgroundConnection<
             return
         }
 
-        handler?.call(this, message.payload)
+        handler(message.payload)
     }
 }
 

@@ -18,7 +18,7 @@ connection.on('disconnected', () => {
 
 document.onreadystatechange = () => {
     if (document.readyState === 'interactive') {
-        connection.connect('content-script')
+        connection.connect()
 
         injectProfilerToPage()
     }
@@ -35,7 +35,7 @@ function onWindowMessage({ source, data }: any) {
     }
 
     connection.emit('devtools', data.type, data.payload)
-};
+}
 
 
 /**

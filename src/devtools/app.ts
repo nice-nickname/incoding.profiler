@@ -62,8 +62,6 @@ export class IncodingProfilerDevtools extends LitElement {
     }
 
     private startProfiler() {
-        const tabId = String(chrome.devtools.inspectedWindow.tabId)
-
         this.connection.on('connected', () => {
             this.status = 'started'
         })
@@ -84,6 +82,7 @@ export class IncodingProfilerDevtools extends LitElement {
             this.status = 'disconnected'
         })
 
+        const tabId = String(chrome.devtools.inspectedWindow.tabId)
         this.connection.connect(tabId)
     }
 }

@@ -6,4 +6,8 @@ connection.on('connected', () => {
     document.getElementById('root')!.innerText = '</>'
 })
 
-connection.connect('popup')
+connection.on('disconnected', () => {
+    document.getElementById('root')!.innerText = ''
+})
+
+connection.connect()

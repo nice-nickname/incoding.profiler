@@ -1,5 +1,5 @@
 
-export class IncodingProfilerClient {
+class IncodingProfilerClient {
 
     constructor() {
 
@@ -7,8 +7,4 @@ export class IncodingProfilerClient {
 
 }
 
-const incodingProfiler =  new IncodingProfilerClient()
-
-window.incodingProfiler = incodingProfiler
-
-export default incodingProfiler;
+export default (window.incodingProfiler = new IncodingProfilerClient());
