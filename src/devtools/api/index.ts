@@ -5,8 +5,8 @@ export type IncodingEventExecutedMessage = Pick<IncodingEvent, 'uuid' | 'jsonDat
 export type RefreshMessage = void
 
 type DevtoolsMessages =  {
-    'event-execution-start': IncodingEventMessage
-    'event-execution-finish': IncodingEventExecutedMessage
+    'event-execution:start': IncodingEventMessage
+    'event-execution:finish': IncodingEventExecutedMessage
     'refresh': RefreshMessage
 }
 

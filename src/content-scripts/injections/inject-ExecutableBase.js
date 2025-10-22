@@ -4,9 +4,8 @@
  * Script to intercept executing messages from incoding.framework and pass them to content-script
  */
 
-import { jqueryToSelector, uuid } from "./utils"
-
 /* eslint-disable */
+import { nanoid } from "nanoid";
 
 if (window.ExecutableBase != undefined) {
     window.ExecutableBase.prototype.execute = function(state) {
@@ -37,14 +36,14 @@ if (window.ExecutableBase != undefined) {
         const messageId = uuid()
 
         window.postMessage({
-            type: 'event-execution-start',
+            type: 'event-execution:start',
             payload: {
                 uuid: messageId,
                 action: current.name,
                 eventName: current.event.type,
                 jsonData: current.jsonData,
-                self: jqueryToSelector(current.self)[0],
-                target: jqueryToSelector(current.target)
+                self: convertJqueryToTag(current.self)?.[0],
+                target: convertJqueryToTag(current.target)
             }
         })
 
@@ -56,7 +55,7 @@ if (window.ExecutableBase != undefined) {
         const tock = performance.now()
 
         window.postMessage({
-            type: 'event-execution-finish',
+            type: 'event-execution:finish',
             payload: {
                 uuid: messageId,
                 executionTimeMs: tock - tick,
@@ -64,4 +63,48 @@ if (window.ExecutableBase != undefined) {
             }
         })
     }
+}
+
+const PROFILER_ELEMENT_Id = 'data-profiler-id'
+
+/**
+ * @param { JQuery } elements
+ * @returns { string[] }
+ */
+function convertJqueryToTag(elements) {
+    const result = []
+
+    if (!elements) {
+        return result
+    }
+
+    for (const element of elements.get()) {
+        let selector = toSelector(element)
+
+        if (selector) {
+            result.push(selector)
+        }
+    }
+
+    return result
+
+    function toSelector(el) {
+        if (!('hasAttribute' in el)) {
+            return null
+        }
+
+        if (!el.hasAttribute(PROFILER_ELEMENT_Id)) {
+            el.setAttribute(PROFILER_ELEMENT_Id, uuid())
+        }
+        return {
+            profilerId: el.getAttribute(PROFILER_ELEMENT_Id),
+            classes: Array.from(el.classList),
+            id: el.id,
+            tagName: el.tagName.toLowerCase()
+        }
+    }
+}
+
+function uuid() {
+    return nanoid(10)
 }

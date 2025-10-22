@@ -66,11 +66,11 @@ export class IncodingProfilerDevtools extends LitElement {
             this.status = 'started'
         })
 
-        this.connection.on('event-execution-start', event => {
+        this.connection.on('event-execution:start', event => {
             store.dispatch(addEvent(event))
         })
 
-        this.connection.on('event-execution-finish', event => {
+        this.connection.on('event-execution:finish', event => {
             store.dispatch(updateEvent(event))
         })
 

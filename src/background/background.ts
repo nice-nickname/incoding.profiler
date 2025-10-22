@@ -21,6 +21,7 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
         tab = port.name
         name = 'devtools'
     } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         tab = port.sender.tab.id.toString()
         name = port.name
