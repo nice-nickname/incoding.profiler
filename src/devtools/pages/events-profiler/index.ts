@@ -1,11 +1,11 @@
-import './panels/event-list'
-import './panels/event-viewer'
-import './panels/event-list-header'
-
-import { LitElement, css, html } from "lit";
+import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import styles from './index.css'
+import styles from './index.css';
+
+import './event-viewer/event-viewer';
+import './events-list/events-list';
+import './events-list/events-list-header';
 
 
 @customElement("event-profiler-page")

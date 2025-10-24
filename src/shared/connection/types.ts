@@ -2,7 +2,7 @@ import type DevtoolsMessages from "@devtools/api"
 import type BrowserMessages from "@content-scripts/api"
 import type PopupMessages from "@popup/api"
 
-type Message<TMessages> = {
+type MessageData<TMessages> = {
     type: keyof TMessages,
     payload?: TMessages[keyof TMessages]
 }
@@ -25,10 +25,10 @@ export {
 
 export type Peer = 'devtools' | 'popup' | 'content-script'
 
-export interface IBackgroundMessage {
+export interface IBackgroundMessage<T = unknown> {
     from: Peer,
     to: Peer,
-    data: unknown
+    data: MessageData<T>
 }
 
-export default Message
+export default MessageData

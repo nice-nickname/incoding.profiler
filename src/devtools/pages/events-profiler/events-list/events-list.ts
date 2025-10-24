@@ -9,7 +9,7 @@ import { customElement, query, state } from "lit/decorators.js";
 
 import defaultStyles from "../../../components/styles/default-styles.css";
 import scrollStyles from "../../../components/styles/scroll-styles.css";
-import styles from "./event-list.css";
+import styles from "./events-list.css";
 
 
 @customElement('event-list')

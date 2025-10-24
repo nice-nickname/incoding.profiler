@@ -1,6 +1,7 @@
-import Message, {
+import MessageData, {
     BrowserMessages,
     DevtoolsMessages,
+    IBackgroundMessage,
     Peer,
     PopupMessages,
     SharedMessages
@@ -41,11 +42,7 @@ class BackgroundConnection<
     }
 
     emit<TKey extends keyof TEmit>(to: Exclude<Peer, TName>, type: TKey, payload?: TEmit[TKey]) {
-        const msg: {
-            from: string,
-            to: string,
-            data: Message<TEmit>
-        } = {
+        const msg: IBackgroundMessage<TEmit> = {
             from: this.name,
             to: to,
             data: { type: type, payload: payload }
@@ -61,7 +58,7 @@ class BackgroundConnection<
         this.listeners[type] = handler
     }
 
-    private onMessage = (message: Message<ListenMessages<TListen>>) => {
+    private onMessage = (message: MessageData<ListenMessages<TListen>>) => {
         const handler = this.listeners[message.type]
 
         if (!handler) {

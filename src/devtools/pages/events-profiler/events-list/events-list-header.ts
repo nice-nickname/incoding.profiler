@@ -3,7 +3,7 @@ import { ChangeEventDetails } from "@devtools/components/inputs/events";
 import StatefulLitElement from "@devtools/pages/stateful-lit-component";
 import resources from "@devtools/resources";
 import store, { RootState } from '@devtools/store';
-import { selectActions, selectEvents, selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
+import { selectActions, selectEventsSearch, selectIsEventsPaused } from "@devtools/store/event-list/selectors";
 import {
     clearEvents,
     pauseEvents,
@@ -14,12 +14,12 @@ import {
     toggleAction
 } from '@devtools/store/event-list/slice';
 import { unselect } from "@devtools/store/event-viewer/slice";
+import { allIncActions } from "@devtools/utils/const";
 import { debounce } from "@devtools/utils/debounce";
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { allIncActions } from "@devtools/utils/const";
 
-import styles from "./event-list-header.css";
+import styles from "./events-list-header.css";
 
 
 @customElement('event-list-header')

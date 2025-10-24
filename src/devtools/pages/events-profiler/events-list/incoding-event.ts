@@ -1,6 +1,6 @@
+import { LitComponentElement } from "@devtools/components/lit-component";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { LitComponentElement } from "../lit-component";
 
 import defaultStyles from "../styles/default-styles.css";
 import styles from "./incoding-event.css";
