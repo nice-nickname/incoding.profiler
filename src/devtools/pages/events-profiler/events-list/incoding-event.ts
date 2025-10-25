@@ -2,7 +2,7 @@ import { LitComponentElement } from "@devtools/components/lit-component";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import defaultStyles from "../styles/default-styles.css";
+import defaultStyles from "@devtools/components/styles/default-styles.css";
 import styles from "./incoding-event.css";
 
 
@@ -26,6 +26,6 @@ export class ProfilerEventElement extends LitComponentElement {
     }
 
     private handleClick() {
-        this.fireEvent('data-selected', this.data)
+        this.fireEvent('event-selected', this.data)
     }
 }

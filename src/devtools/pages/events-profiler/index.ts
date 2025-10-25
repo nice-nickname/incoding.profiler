@@ -6,6 +6,7 @@ import styles from './index.css';
 import './event-viewer/event-viewer';
 import './events-list/events-list';
 import './events-list/events-list-header';
+import './events-list/incoding-event';
 
 
 @customElement("event-profiler-page")

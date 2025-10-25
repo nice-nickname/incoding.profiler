@@ -48,7 +48,7 @@ export class EventListElement extends StatefulLitElement {
     private renderList() {
         return html`
             <div class="events-list" @scroll=${this.handleScroll}>
-                <div class="events-list__container" @data-selected=${this.handleDataClick}>
+                <div class="events-list__container" @event-selected=${this.handleDataClick}>
                     ${virtualize({
                         items: this.events,
                         keyFunction: event => event.uuid + event.executionTimeMs,

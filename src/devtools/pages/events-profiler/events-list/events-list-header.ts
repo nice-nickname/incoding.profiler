@@ -1,5 +1,4 @@
 import { ToggleEventDetails } from "@devtools/components/buttons/button-toggle/button-toggle";
-import { ChangeEventDetails } from "@devtools/components/inputs/events";
 import StatefulLitElement from "@devtools/pages/stateful-lit-component";
 import resources from "@devtools/resources";
 import store, { RootState } from '@devtools/store';
@@ -91,7 +90,7 @@ export class EventListHeaderElement extends StatefulLitElement {
                 <x-textbox
                     .placeholder=${resources.search}
                     .value=${this.eventsSearch || ''}
-                    @x-change=${debounce(this.handleSearch, 300)}>
+                    .onChange=${this.handleSearch}>
                 </x-textbox>
             </div>
         `
@@ -110,15 +109,15 @@ export class EventListHeaderElement extends StatefulLitElement {
         }
     }
 
-    private handleSearch(ev: CustomEvent<ChangeEventDetails>) {
-        const search = ev.detail.value
+    private handleSearch = debounce((search: string) => {
+        console.log(search)
 
         if (search !== '') {
             store.dispatch(searchEvents(search))
         } else {
             store.dispatch(resetSearch())
         }
-    }
+    }, 300)
 
     private toggleAllItems(value: boolean) {
         store.dispatch(setActions(value ? allIncActions : []))

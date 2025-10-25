@@ -21,8 +21,7 @@ export class ATextboxElement extends LitComponentElement {
 
     @property() value: string = ''
 
-
-    @property() onChange: (value: string) => void
+    public onChange: (value: string) => void
 
 
     @query('input') private input: HTMLInputElement

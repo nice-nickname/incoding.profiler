@@ -51,9 +51,9 @@ class BackgroundConnection<
         this.connection.postMessage(msg)
     }
 
-    on<Tkey extends keyof ListenMessages<TListen>>(
-        type: Tkey,
-        handler: (payload: ListenMessages<TListen>[Tkey]) => void
+    on<TKey extends keyof ListenMessages<TListen>>(
+        type: TKey,
+        handler: (payload: ListenMessages<TListen>[TKey]) => void
     ) {
         this.listeners[type] = handler
     }
