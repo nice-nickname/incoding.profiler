@@ -14,28 +14,60 @@ export class PagesLayout extends LitElement {
         }
 
         .header {
-            height: 26px;
+            height: 27px;
 
             border-bottom: 1px solid var(--border-color);
+        }
+
+        .page {
+            height: calc(100% - 27px);
         }
 
         .tabs-list {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
             padding: 0 0.5rem;
         }
 
         .tabs-list__button {
-            all: unset;
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            color: var(--text-color);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0 0.75rem
+        }
+
+        .tabs-list__button:hover,
+        .tabs-list__button:focus-visible {
+            background: var(--bg-color-highlight)
+        }
+
+        .tabs-list__button:visited {
+            text-decoration: none;
+            color: unset;
         }
 
         .tabs-list__button.active {
-
+            color: var(--color-primary);
         }
 
-        .page {
-            height: calc(100% - 26px);
+        .tabs-list__button.active::after {
+            content: " ";
+            display: block;
+
+            position: absolute;
+            left: 0;
+            bottom: 0px;
+            height: 3px;
+            width: 100%;
+
+            background: var(--color-primary);
+            border-radius: 3px 3px 0 0;
         }
     `]
 
@@ -53,12 +85,16 @@ export class PagesLayout extends LitElement {
         return html`
             <div class="content">
                 <div class="header tabs-list">
-                    <button class="tabs-list__button ${classMap({ 'active': this.currentPage === 'events-profiler' })}" @click=${() => this.setPage('events-profiler')}>
-                        profiler
-                    </button>
-                    <button class="tabs-list__button ${classMap({ 'active': this.currentPage === 'preferences-page' })}" @click=${() => this.setPage('preferences-page')}>
-                        preferences
-                    </button>
+                    <a class="tabs-list__button ${classMap({ 'active': this.currentPage === 'events-profiler' })}" @click=${() => this.setPage('events-profiler')} href="#">
+                        <span>
+                            Profiler
+                        </span>
+                    </a>
+                    <a class="tabs-list__button ${classMap({ 'active': this.currentPage === 'preferences-page' })}" @click=${() => this.setPage('preferences-page')} href="#">
+                        <span>
+                            Preferences
+                        </span>
+                    </a>
                 </div>
 
                 <div class="page">
