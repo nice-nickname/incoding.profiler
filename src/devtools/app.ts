@@ -39,9 +39,9 @@ export class IncodingProfilerDevtools extends LitElement {
     protected render() {
         return html`
             ${choose(this.status, [
-                ['loading', () => html`${resources.profiler_loading}`],
-                ['disconnected', () => html`${resources.profiler_disconnected}`],
-                ['failed', () => html`${resources.no_incoding_framework_found}`],
+                ['loading', () => html`<no-content text=${resources.profiler_loading}></no-content>`],
+                ['disconnected', () => html`<no-content text=${resources.profiler_disconnected}></no-content>`],
+                ['failed', () => html`<no-content text=${resources.no_incoding_framework_found}></no-content>`],
 
                 ['started', () => html`<pages-layout></pages-layout>`],
             ])}
