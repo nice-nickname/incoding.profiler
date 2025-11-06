@@ -3,6 +3,7 @@ import runtimeConnectionCtx from "@devtools/context/connection";
 import resources from "@devtools/resources";
 import store from "@devtools/store";
 import { addEvent, clearEvents, updateEvent } from "@devtools/store/event-list/slice";
+import { isIncodingFrameworkExistsOnHostPage } from "@devtools/utils/evalAtHost";
 import { provide } from "@lit/context";
 import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
@@ -42,23 +43,17 @@ export class IncodingProfilerDevtools extends LitElement {
                 ['loading', () => html`<no-content text=${resources.profiler_loading}></no-content>`],
                 ['disconnected', () => html`<no-content text=${resources.profiler_disconnected}></no-content>`],
                 ['failed', () => html`<no-content text=${resources.no_incoding_framework_found}></no-content>`],
-
                 ['started', () => html`<pages-layout></pages-layout>`],
             ])}
         `
     }
 
-    private checkIncodingFrameworkAndStart() {
-        chrome.devtools.inspectedWindow.eval(
-            'ExecutableBase.name',
-            (result, error) => {
-                if (result !== 'ExecutableBase' || error) {
-                    this.status = 'failed'
-                    return;
-                }
+    private async checkIncodingFrameworkAndStart() {
+        const isExists = await isIncodingFrameworkExistsOnHostPage()
 
-                this.startProfiler()
-            })
+        if (isExists) {
+            this.startProfiler()
+        }
     }
 
     private startProfiler() {

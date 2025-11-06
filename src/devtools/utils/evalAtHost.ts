@@ -1,9 +1,18 @@
 
+export async function isIncodingFrameworkExistsOnHostPage(): Promise<boolean> {
+    try {
+        const name = await evalAtHost<string>('ExecutableBase.name')
+        return name === 'ExecutableBase'
+    } catch {
+        return false
+    }
+}
+
 export function evalAtHost<T = unknown>(code: string): Promise<T> {
     return new Promise<T>(
         (resolve, reject) => {
             chrome.devtools.inspectedWindow.eval(code, function (res, err) {
-                if (err.isError || err.isException) {
+                if (err) {
                     return reject(err)
                 }
 
