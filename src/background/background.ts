@@ -40,10 +40,14 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
     session.connect(name, port)
 })
 
-chrome.tabs.onActivated.addListener((activeInfo) => {
-    const tabId = activeInfo.tabId.toString()
+chrome.tabs.onCreated.addListener(({ active, id: tabId }) => {
+    if (active && tabId) {
+        SessionFactory.setActive(tabId.toString())
+    }
+})
 
-    SessionFactory.setActive(tabId)
+chrome.tabs.onActivated.addListener(({ tabId }) => {
+    SessionFactory.setActive(tabId.toString())
 })
 
 function isDevtools(port: chrome.runtime.Port) {
